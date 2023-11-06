@@ -1,4 +1,4 @@
-package com.ssafy.house.model.dto;
+package com.ssafy.house.board.model.dto;
 
 // 게시글(공지사항) detail 정보
 public class BoardDto {

@@ -1,4 +1,4 @@
-package com.ssafy.house.model.dto;
+package com.ssafy.house.board.model.dto;
 
 import java.util.List;
 

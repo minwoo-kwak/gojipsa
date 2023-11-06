@@ -1,4 +1,4 @@
-package com.ssafy.house.controller;
+package com.ssafy.house.board.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.house.model.dto.BoardDto;
-import com.ssafy.house.model.dto.BoardPaginationResponse;
-import com.ssafy.house.model.service.BoardService;
+import com.ssafy.house.board.model.dto.BoardDto;
+import com.ssafy.house.board.model.dto.BoardPaginationResponse;
+import com.ssafy.house.board.model.service.BoardService;
 import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.ApiOperation;
@@ -41,14 +41,46 @@ public class BoardController {
 	// 전체 게시글 가져오기
 	
 	@ApiOperation(value="공지사항 정보 목록 가져오기", 
-			notes="등록된 공지사항 글 목록을 가져옵니다."
+			notes="pagination을 적용한 공지사항 글 목록을 가져옵니다. page 번호를 Query String 형식으로 받는다. data: 글 목록 데이터, pageInfo: pagination 정보"
 			)
 	@ResponseBody
 	@GetMapping(path="/list")
 	public ResponseEntity<?> listBoard(@RequestParam(value="page",required=false) String pageNo){
-		System.out.println(pageNo);
+		HashMap<String,Object> hMap=new HashMap<>();
+		
+		// pagination이 적용된 글 목록 데이터 리스트
 		List<BoardDto> boardList= (List<BoardDto>)boardService.getAllBoard(pageNo);
-		return new ResponseEntity<List<BoardDto>>(boardList,HttpStatus.OK);
+		
+		// 페이지 정보를 저장할 HashMap
+		HashMap<String,Object> pageInfo=new HashMap<>();
+		
+		int pgno=pageNo==null?1:Integer.parseInt(pageNo);
+		
+		// pagination에 필요한 정보
+		// 1. 총 페이지 개수 (totalPageCnt)
+		// 전체 컨텐츠 개수
+		long totalBoardCnt=boardService.countBoard();
+		long totalPageCnt=(long) Math.ceil(totalBoardCnt/BoardPageConstant.LIST_SIZE);
+		System.out.println((long)Math.ceil(3/2));
+		pageInfo.put("totalPageCnt", totalPageCnt);
+		
+		// 2. 화면에 보여질 페이지의 첫 번째 페이지 번호
+		long startPage=((pgno-1)*BoardPageConstant.LIST_SIZE)+1;
+		pageInfo.put("startPage", startPage);
+		
+		// 3. 화면에 보여질 페이지의 마지막 페이지 번호
+		long lastPage=(pgno)*BoardPageConstant.LIST_SIZE;
+		if (lastPage>totalPageCnt) lastPage=totalPageCnt;
+		pageInfo.put("lastPage",lastPage);
+		
+		// Navigation Bar에 보여질 페이지 개수
+		pageInfo.put("navigationSize",BoardPageConstant.NAVIGATION_SIZE);
+		
+		// 게시글 정보와 pagination 정보를 담는다.
+		hMap.put("data", boardList);
+		hMap.put("pageInfo", pageInfo);
+		
+		return ResponseEntity.ok().body(hMap);
 
 	}
 	

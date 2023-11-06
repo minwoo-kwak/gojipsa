@@ -1,4 +1,4 @@
-package com.ssafy.house.model.service;
+package com.ssafy.house.board.model.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.house.model.dto.BoardDto;
-import com.ssafy.house.model.mapper.BoardMapper;
+import com.ssafy.house.board.model.dto.BoardDto;
+import com.ssafy.house.board.model.mapper.BoardMapper;
 import com.ssafy.house.util.BoardPageConstant;
 
 @Service
@@ -49,6 +49,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int deleteBoard(int boardNo) {
 		return boardMapper.deleteBoard(boardNo);
+	}
+
+	@Override
+	public long countBoard() {
+		return boardMapper.countBoard();
 	}
 
 }
