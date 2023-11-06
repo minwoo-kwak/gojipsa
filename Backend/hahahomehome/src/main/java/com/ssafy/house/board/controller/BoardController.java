@@ -60,8 +60,7 @@ public class BoardController {
 		// 1. 총 페이지 개수 (totalPageCnt)
 		// 전체 컨텐츠 개수
 		long totalBoardCnt=boardService.countBoard();
-		long totalPageCnt=(long) Math.ceil(totalBoardCnt/BoardPageConstant.LIST_SIZE);
-		System.out.println((long)Math.ceil(3/2));
+		long totalPageCnt=(long) Math.ceil((totalBoardCnt*1.0)/BoardPageConstant.LIST_SIZE);
 		pageInfo.put("totalPageCnt", totalPageCnt);
 		
 		// 2. 화면에 보여질 페이지의 첫 번째 페이지 번호
@@ -142,5 +141,6 @@ public class BoardController {
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
+	
 	
 }
