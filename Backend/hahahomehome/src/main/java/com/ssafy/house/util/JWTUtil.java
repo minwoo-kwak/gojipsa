@@ -30,7 +30,7 @@ public class JWTUtil {
 	 */
 	public String createToken(String userId) throws UnsupportedEncodingException {
 		// 토큰의 만료 시간 (초)
-		final long expiredSecond = 30;
+		final long expiredSecond = 1800;
 
 		// JWT 빌더 객체를 생성
 		JwtBuilder jwtBuilder = Jwts.builder();
