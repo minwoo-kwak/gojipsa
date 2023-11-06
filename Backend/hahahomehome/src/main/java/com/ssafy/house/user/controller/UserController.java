@@ -24,6 +24,8 @@ import com.ssafy.house.user.model.dto.User;
 import com.ssafy.house.user.model.service.UserService;
 import com.ssafy.house.util.JWTUtil;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
@@ -41,6 +43,9 @@ public class UserController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
+	@ApiOperation(value="로그인", 
+			notes="userId와 password로 로그인을 합니다."
+			)
 	@ResponseBody
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser) throws UnsupportedEncodingException {
