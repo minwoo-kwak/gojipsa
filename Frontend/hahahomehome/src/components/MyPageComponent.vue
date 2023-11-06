@@ -11,6 +11,8 @@ const userInfo = ref({
 {
     axios.get('/user/mypage').then((response) => {
         userInfo.value = response.data
+
+        console.log(decodeURI(userInfo.value.name));
     })
 }
     

@@ -81,10 +81,10 @@ public class UserController {
 		JSONObject jsonObject = (JSONObject) parser.parse(payload);
 		String userId = (String) jsonObject.get("userId");
 		
-		System.out.println(userId);
 		
 		User user = userService.myPage(userId);
 		
+		System.out.println(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 }
