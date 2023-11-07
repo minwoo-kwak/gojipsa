@@ -142,5 +142,6 @@ public class BoardController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 	
+
 	
 }
