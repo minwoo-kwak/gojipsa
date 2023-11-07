@@ -9,18 +9,11 @@ const { menuList } = storeToRefs(userStore);
 /**
  * 로그아웃 함수
  */
-function logout() {
-    // 세션 스토리지에서 "userStore"를 가져와서 "menuList" 추출
-    const menuList = JSON.parse(sessionStorage.getItem('userStore'))['menuList'];
-
-    // 각 메뉴의 "loginStatus"를 토글.
-    for (let menu of menuList.value) {
-        menu.loginStatus = !menu.loginStatus;
-    }
-    
-    // 서버에서 로그아웃 성공 응답을 받으면 로컬 스토리지의 토큰을 삭제.
-    sessionStorage.removeItem("userStore");
+ async function logout() {
+    // JWT 토큰 삭제
+    userStore.logout()
 }
+
 </script>
 
 <template>
@@ -33,7 +26,7 @@ function logout() {
                     <list-item v-if="menu.loginStatus" :key="menu.name">
                         <!-- "menu.name"이 '로그아웃'인 경우 로그아웃 링크를 생성합니다. -->
                         <template v-if="menu.name == '로그아웃'">
-                            <router-link to="/" @click:prevent="logout()">{{ menu.name }}</router-link>
+                            <router-link to="/" @click="logout()">{{ menu.name }}</router-link>
                         </template>
                         <!-- 그 외 메뉴 항목은 해당 routeName으로 라우팅 링크를 생성합니다. -->
                         <template v-else>

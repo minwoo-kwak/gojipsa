@@ -68,6 +68,9 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CREATED);
 	}
 
+	@ApiOperation(value="마이페이지", 
+			notes="현재 JWT이 유효한지 판별하고, 유저정보를 넘겨줍니다."
+			)
 	@AuthRequired
 	@GetMapping("/mypage")
 	public ResponseEntity<User> myPage(HttpServletRequest request) throws ParseException {
@@ -87,4 +90,6 @@ public class UserController {
 		System.out.println(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
+	
+	
 }

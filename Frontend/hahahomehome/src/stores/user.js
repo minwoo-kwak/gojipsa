@@ -37,15 +37,27 @@ export const useUserStore = defineStore('userStore', () => {
         }
     }
 
+    async function logout() {
+        Authorization.value = null
+
+        if (Authorization.value === null) {
+            menuList.value.forEach(element => {
+                element.loginStatus = !element.loginStatus;
+            });
+        }
+        
+    }
+
     return {
         Authorization,
         menuList,
-        login
+        login,
+        logout
     }
 },
 {
     // 상태 유지 설정
     persist: {
-        storage: sessionStorage // 세션 스토리지를 사용하여 상태를 유지합니다.
+        storage: localStorage // 세션 스토리지를 사용하여 상태를 유지합니다.
     }
 })

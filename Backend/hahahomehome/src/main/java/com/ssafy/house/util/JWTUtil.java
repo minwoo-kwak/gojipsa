@@ -2,11 +2,14 @@ package com.ssafy.house.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,8 +32,8 @@ public class JWTUtil {
 	 * @throws UnsupportedEncodingException - 지원되지 않는 문자 인코딩 예외 처리
 	 */
 	public String createToken(String userId) throws UnsupportedEncodingException {
-		// 토큰의 만료 시간 (초)
-		final long expiredSecond = 1800;
+		// 토큰의 만료 시간 (초) : 1시간
+		final long expiredSecond = 60 * 60;
 
 		// JWT 빌더 객체를 생성
 		JwtBuilder jwtBuilder = Jwts.builder();
@@ -62,5 +65,18 @@ public class JWTUtil {
 				.setSigningKey(environment.getProperty("jwt.salt").getBytes("UTF-8"))
 				// JWT 토큰을 파싱하고 클레임 추출
 				.parseClaimsJws(token);
+	}
+	
+
+	// 토큰에 담긴 정보를 가져오기 메서드
+	public Map<String, Object> getInfo(String token) throws Exception {
+		Jws<Claims> claims = null;
+		try {
+			claims = Jwts.parser().setSigningKey(environment.getProperty("jwt.salt").getBytes()).parseClaimsJws(token); // secretKey를 사용하여 복호화
+		} catch(Exception e) {
+			throw new Exception();
+		}
+		
+		return claims.getBody();
 	}
 }
