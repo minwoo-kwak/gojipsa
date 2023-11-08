@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '../stores/user'
+import { useUserStore } from '../../stores/user'
 
 const userStore = useUserStore()
 // "userStore"에서 "menuList"를 가져와서 reactive reference로 사용.
@@ -9,17 +9,10 @@ const { menuList } = storeToRefs(userStore)
 /**
  * 로그아웃 함수
  */
-function logout() {
-  // 세션 스토리지에서 "userStore"를 가져와서 "menuList" 추출
-  const menuList = JSON.parse(sessionStorage.getItem('userStore'))['menuList']
 
-  // 각 메뉴의 "loginStatus"를 토글.
-  for (let menu of menuList.value) {
-    menu.loginStatus = !menu.loginStatus
-  }
-
-  // 서버에서 로그아웃 성공 응답을 받으면 로컬 스토리지의 토큰을 삭제.
-  sessionStorage.removeItem('userStore')
+async function logout() {
+  // JWT 토큰 삭제
+  userStore.logout()
 }
 </script>
 
