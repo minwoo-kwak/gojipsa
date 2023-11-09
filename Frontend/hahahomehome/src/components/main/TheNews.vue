@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+const navigateToNews = (url) => {
+  window.open(url, '_blank')
+}
+</script>
 
 <template>
   <div class="news">
@@ -14,16 +18,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr @click="navigateToNews('https://www.mk.co.kr/news/realestate/10870756')">
           <th scope="row">1</th>
-          <td>
-            <a
-              href="https://www.mk.co.kr/news/realestate/10870756"
-              target="_blank"
-              rel="noopener noreferrer"
-              >뉴스 제목입니다.</a
-            >
-          </td>
+          <td>뉴스 제목입니다.</td>
           <td>매일경제</td>
           <td>2023-11-09 17:02:41</td>
           <td>@mdo</td>
