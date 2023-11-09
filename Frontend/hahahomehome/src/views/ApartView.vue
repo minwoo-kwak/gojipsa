@@ -4,8 +4,15 @@ import TheApartList from '../components/apart/TheApartList.vue'
 </script>
 
 <template>
-  <TheApartList />
-  <KakaoMap />
+  <div class="apart-view">
+    <TheApartList />
+    <KakaoMap />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.apart-view {
+  display: flex;
+  padding-top: 65px;
+}
+</style>
