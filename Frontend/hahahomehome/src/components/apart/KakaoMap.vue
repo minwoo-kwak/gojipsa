@@ -1,11 +1,13 @@
 <template>
   <div class="map-wrap">
+    <TheFilter />
     <div id="map"></div>
   </div>
 </template>
 
 <script>
 import { toRaw } from 'vue'
+import TheFilter from './TheFilter.vue'
 export default {
   name: 'KakaoMap',
   data() {
@@ -47,20 +49,21 @@ export default {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 5
       }
-
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options)
     }
-  }
+  },
+  components: { TheFilter }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #map {
+  top: -50px;
   width: 90rem;
-  height: 58.2em;
+  height: 58.3rem;
 }
 
 button {
