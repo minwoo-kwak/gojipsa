@@ -39,5 +39,7 @@
 .notice {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 40%;
 }
 </style>
