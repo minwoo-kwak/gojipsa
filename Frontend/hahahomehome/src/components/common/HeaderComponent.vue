@@ -48,6 +48,14 @@ async function logout() {
 </template>
 
 <style scoped>
+/* 헤더 스타일 */
+
+.v-toolbar {
+  display: fixed;
+  width: 100%; /* 전체 너비 차지 */
+  margin-bottom: 15rem;
+}
+
 a {
   text-decoration: none;
   margin: 0.5rem;
