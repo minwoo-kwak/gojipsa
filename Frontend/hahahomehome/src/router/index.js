@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '../views/MainView.vue'
 import UserView from '../views/UserView.vue'
+import ApartView from '../views/ApartView.vue'
 import LoginComponent from '../components/user/LoginComponent.vue'
 import SignUpComponent from '../components/user/SignUpComponent.vue'
 import MyPageComponent from '../components/user/MyPageComponent.vue'
@@ -11,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: MainView
+      component: MainView,
     },
     {
       path: '/user',
@@ -34,6 +35,11 @@ const router = createRouter({
           component: MyPageComponent,
         }
       ]
+    },
+    {
+      path:'/apart',
+      name:'apart',
+      component: ApartView
     }
     
   ]

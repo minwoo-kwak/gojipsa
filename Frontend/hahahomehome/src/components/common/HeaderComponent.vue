@@ -17,6 +17,7 @@ async function logout() {
 </script>
 
 <template>
+  <div></div>
   <v-app-bar>
     <v-app-bar-title
       text="HaHaHomeHome"
@@ -24,7 +25,7 @@ async function logout() {
       @click="$router.push('/')"
     ></v-app-bar-title>
     <v-list class="v-col-1">
-      <router-link to="/">실거래가 확인</router-link>
+      <router-link :to="{ name: 'apart' }">실거래가 확인</router-link>
     </v-list>
     <v-list class="v-col-8">
       <v-row class="justify-end">
