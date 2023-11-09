@@ -60,7 +60,7 @@ export default {
 <style scoped>
 #map {
   width: 90rem;
-  height: 58.2em;
+  height: 58.2rem;
 }
 
 button {
