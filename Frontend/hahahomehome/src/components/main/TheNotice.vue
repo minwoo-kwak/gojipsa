@@ -21,27 +21,23 @@
           <td>2023-00-00</td>
           <td>@mdo</td>
         </tr>
-        <tr>
+        <tr @click="dialog = true">
           <th scope="row">2</th>
           <td>
-            <div class="">
-              <a color="primary"
-                >공지사항 제목
-                <v-dialog v-model="dialog" activator="parent" width="auto">
-                  <v-card>
-                    <v-card-text>
-                      <p>
-                        공지사항 내용내용내용 공지사항 내용내용내용 <br />
-                        공지사항 내용내용내용 공지사항<br />
-                        내용내용내용
-                      </p>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn color="primary" block @click="dialog = false">X</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </a>
+            <div class="text-center">
+              공지사항 제목
+              <v-dialog v-model="dialog" width="auto">
+                <v-card>
+                  <v-card-text>
+                    공지사항 내용내용내용 공지사항 내용내용내용 <br />
+                    공지사항 내용내용내용 공지사항<br />
+                    내용내용내용
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </div>
           </td>
           <td>Thornton</td>
