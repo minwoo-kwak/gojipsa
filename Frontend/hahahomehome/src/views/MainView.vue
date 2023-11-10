@@ -2,9 +2,11 @@
 import TheNotice from '../components/main/TheNotice.vue'
 import TheNews from '../components/main/TheNews.vue'
 import TheSearch from '../components/common/TheSearch.vue'
+import HeaderComponent from '../components/common/HeaderComponent.vue'
 </script>
 
 <template>
+  <HeaderComponent />
   <div>
     <div class="img-box">
       <div class="main-img"></div>

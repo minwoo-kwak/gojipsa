@@ -4,7 +4,6 @@ import HeaderComponent from './components/common/HeaderComponent.vue'
 
 <template>
   <v-layout>
-    <HeaderComponent />
     <!-- 라우터 경로에 따라서 보여지는 화면 -->
     <RouterView />
   </v-layout>

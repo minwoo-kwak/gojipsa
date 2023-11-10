@@ -1,11 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '../../stores/user'
-
+import { ref } from 'vue'
 const userStore = useUserStore()
 // "userStore"에서 "menuList"를 가져와서 reactive reference로 사용.
 const { menuList } = storeToRefs(userStore)
-
+const dongcode = ref('')
 /**
  * 로그아웃 함수
  */
@@ -25,7 +25,7 @@ async function logout() {
       @click="$router.push('/')"
     ></v-app-bar-title>
     <v-list class="v-col-1">
-      <router-link :to="{ name: 'apart' }">실거래가 확인</router-link>
+      <router-link :to="{ name: 'apart', params: { code: dongcode } }">실거래가 확인</router-link>
     </v-list>
     <v-list class="v-col-8">
       <v-row class="justify-end">

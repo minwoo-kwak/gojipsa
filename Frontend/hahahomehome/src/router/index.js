@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '../views/MainView.vue'
 import UserView from '../views/UserView.vue'
 import ApartView from '../views/ApartView.vue'
+
 import LoginComponent from '../components/user/LoginComponent.vue'
 import SignUpComponent from '../components/user/SignUpComponent.vue'
 import MyPageComponent from '../components/user/MyPageComponent.vue'
@@ -37,9 +38,14 @@ const router = createRouter({
       ]
     },
     {
-      path:'/apart',
+      path:'/apart/:code?',
       name:'apart',
-      component: ApartView
+      component: ApartView,
+    },
+    {
+      path:'/calculate',
+      name:'calculate',
+      component:()=>import('../views/CalculatorPopUpView.vue')
     }
     
   ]
