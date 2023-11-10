@@ -34,10 +34,13 @@ const getNoticeList = () => {
       // 데이터를 받아올 때마다 dialogStates 초기화
       dialogStates.value = {}
 
-      // 동적으로 dialog 속성 추가
       notices.value.forEach((notice) => {
+        // 동적으로 dialog 속성 추가
         const dialogKey = `dialog${notice.board_no}`
         dialogStates.value[dialogKey] = false
+
+        // 날짜 변환
+        notice.register_time = new Date(notice.register_time).toLocaleString()
       })
     },
     (error) => {
@@ -73,7 +76,15 @@ const getNoticeList = () => {
           <td>{{ notice.hit }}</td>
           <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
             <v-card>
-              <v-card-text>{{ notice.content }}</v-card-text>
+              <v-card-text>
+                <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
+                <hr />
+                <div>
+                  {{ notice.content }}
+                </div>
+                <hr />
+                <div>작성일: {{ notice.register_time }}</div>
+              </v-card-text>
               <v-card-actions>
                 <v-btn
                   color="primary"
@@ -84,42 +95,6 @@ const getNoticeList = () => {
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>2023-00-00</td>
-          <td>@mdo</td>
-        </tr>
-        <tr @click="dialog1 = true">
-          <th scope="row">2</th>
-          <td>
-            <div class="text-center">
-              공지사항 제목
-              <v-dialog v-model="dialog1" width="auto">
-                <v-card>
-                  <v-card-text>
-                    공지사항 내용내용내용 공지사항 내용내용내용 <br />
-                    공지사항 내용내용내용 공지사항<br />
-                    내용내용내용
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn color="primary" block @click="dialog1 = false">Close Dialog</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </div>
-          </td>
-          <td>Thornton</td>
-          <td>2023-00-00</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>2023-00-00</td>
-          <td>@twitter</td>
         </tr>
       </tbody>
     </table>

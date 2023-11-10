@@ -2,15 +2,15 @@ package com.ssafy.house.user.model.service;
 
 import org.springframework.stereotype.Service;
 
-import com.ssafy.house.user.model.dao.UserDao;
 import com.ssafy.house.user.model.dto.User;
+import com.ssafy.house.user.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
-	private final UserDao userDao;
+	private final UserMapper userDao;
 	
-	public UserServiceImpl(UserDao userDao) {
+	public UserServiceImpl(UserMapper userDao) {
 		this.userDao = userDao;
 	}
 
