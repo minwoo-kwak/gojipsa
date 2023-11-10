@@ -1,13 +1,17 @@
 package com.ssafy.house.board.model.dto;
 
+import java.sql.Date;
+
 // 게시글(공지사항) detail 정보
 public class BoardDto {
 	
 	int board_no;
 	String title;
 	String content;
+	Date register_time;
 	int hit;
 	String user_id;
+	
 	
 	public int getBoard_no() {
 		return board_no;
@@ -39,6 +43,13 @@ public class BoardDto {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
+	public Date getRegister_time() {
+		return register_time;
+	}
+	public void setRegister_time(Date register_time) {
+		this.register_time = register_time;
+	}
+	
 	
 	
 }
