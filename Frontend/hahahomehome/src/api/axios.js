@@ -5,9 +5,9 @@ const SERVER_URL = ref("http://localhost")
 const PORT = ref(":8080")
 const VERSION = ref("/api/v1")
 
-axios({
-    responseEncoding: 'utf8',
-  });
+// axios({
+//     responseEncoding: 'utf8',
+//   });
 
 export const instance = axios.create({
     baseURL: SERVER_URL.value + PORT.value + VERSION.value
