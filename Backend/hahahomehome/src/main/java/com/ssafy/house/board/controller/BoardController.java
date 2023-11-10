@@ -1,5 +1,6 @@
 package com.ssafy.house.board.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.house.board.model.dto.BoardDto;
-import com.ssafy.house.board.model.dto.BoardPaginationResponse;
 import com.ssafy.house.board.model.service.BoardService;
 import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/board")
