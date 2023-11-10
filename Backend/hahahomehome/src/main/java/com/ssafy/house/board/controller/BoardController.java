@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/v1/board")
 public class BoardController {
 	
 	// Service

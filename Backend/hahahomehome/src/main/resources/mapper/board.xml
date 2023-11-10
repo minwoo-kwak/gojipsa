@@ -6,7 +6,7 @@
 	
 	<!-- 모든 게시글 정보를 반환 -->
 	<select id="getAllBoard" parameterType="map" resultType="boardDto">
-		select board_no, title, hit, user_id
+		select board_no, title, content, register_time, hit, user_id
 		FROM board
 		LIMIT #{start},#{listSize}
 	</select>
