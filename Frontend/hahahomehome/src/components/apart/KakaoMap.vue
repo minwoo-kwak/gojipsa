@@ -2,12 +2,14 @@
   <div class="map-wrap">
     <TheFilter />
     <div id="map"></div>
+    <TheCalculator />
   </div>
 </template>
 
 <script>
 import { toRaw } from 'vue'
 import TheFilter from './TheFilter.vue'
+import TheCalculator from './TheCalculator.vue'
 export default {
   name: 'KakaoMap',
   data() {
@@ -38,7 +40,9 @@ export default {
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap)
       script.src =
-        '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8612e6beecff9694c0c0797bb7bbe718&libraries=clusterer,drawing,services'
+        '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=' +
+        import.meta.env.VITE_KAKAO_OPEN_API_JAVASCIPRT_KEY +
+        '&libraries=clusterer,drawing,services'
       document.head.appendChild(script)
     }
   },
@@ -54,7 +58,7 @@ export default {
       this.map = new kakao.maps.Map(container, options)
     }
   },
-  components: { TheFilter }
+  components: { TheFilter, TheCalculator }
 }
 </script>
 
