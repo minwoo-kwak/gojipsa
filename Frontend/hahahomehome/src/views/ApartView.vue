@@ -2,9 +2,9 @@
 import axios from 'axios'
 import KakaoMap from '../components/apart/KakaoMap.vue'
 import TheApartList from '../components/apart/TheApartList.vue'
-import HeaderComponent from '../components/common/HeaderComponent.vue'
 import { onBeforeMount, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import TheHeading from '../components/common/TheHeading.vue'
 
 // main page에서 들어온 매개변수
 const route = useRoute()
@@ -45,7 +45,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <HeaderComponent />
+  <TheHeading />
   <div class="apart-view">
     <TheApartList />
     <KakaoMap />

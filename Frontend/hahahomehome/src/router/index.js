@@ -3,9 +3,9 @@ import MainView from '../views/MainView.vue'
 import UserView from '../views/UserView.vue'
 import ApartView from '../views/ApartView.vue'
 
-import LoginComponent from '../components/user/LoginComponent.vue'
-import SignUpComponent from '../components/user/SignUpComponent.vue'
-import MyPageComponent from '../components/user/MyPageComponent.vue'
+import UserLogin from '../components/user/UserLogin.vue'
+import UserSignUp from '../components/user/UserSignUp.vue'
+import UserMyPage from '../components/user/UserMyPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,17 +23,17 @@ const router = createRouter({
         {
           path: 'login',
           name: 'login',
-          component: LoginComponent,
+          component: UserLogin,
         },
         {
           path: 'signup',
           name: 'signup',
-          component: SignUpComponent,
+          component: UserSignUp,
         },
         {
           path: 'mypage',
           name: 'mypage',
-          component: MyPageComponent,
+          component: UserMyPage,
         }
       ]
     },

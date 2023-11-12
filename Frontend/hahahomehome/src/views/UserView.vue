@@ -1,9 +1,9 @@
 <script setup>
-import HeaderComponent from '../components/common/HeaderComponent.vue'
+import TheHeading from '../components/common/TheHeading.vue';
 </script>
 
 <template>
-  <HeaderComponent />
+  <TheHeading />
   <v-main class="user-form d-flex justify-center align-center">
     <router-view />
   </v-main>

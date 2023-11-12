@@ -1,12 +1,12 @@
 <script setup>
-import TheNotice from '../components/main/TheNotice.vue'
-import TheNews from '../components/main/TheNews.vue'
+import BoardNotice from '../components/board/BoardNotice.vue'
+import BoardNews from '../components/board/BoardNews.vue'
 import TheSearch from '../components/common/TheSearch.vue'
-import HeaderComponent from '../components/common/HeaderComponent.vue'
+import TheHeading from '../components/common/TheHeading.vue'
 </script>
 
 <template>
-  <HeaderComponent />
+  <TheHeading />
   <div>
     <div class="img-box">
       <div class="main-img"></div>
@@ -15,8 +15,8 @@ import HeaderComponent from '../components/common/HeaderComponent.vue'
       </div>
     </div>
     <div class="contents">
-      <TheNotice />
-      <TheNews />
+      <BoardNotice />
+      <BoardNews />
     </div>
   </div>
 </template>
