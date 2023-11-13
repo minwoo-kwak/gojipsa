@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import axios from "axios"
 
+
+
 const SERVER_URL = ref("http://localhost")
 const PORT = ref(":8080")
 const VERSION = ref("/api/v1")

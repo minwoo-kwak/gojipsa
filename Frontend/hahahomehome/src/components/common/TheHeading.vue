@@ -11,6 +11,7 @@ const dongcode = ref('')
  */
 
 async function logout() {
+  console.log('로그아웃 실행')
   // JWT 토큰 삭제
   userStore.logout()
 }
@@ -24,10 +25,10 @@ async function logout() {
       class="v-col-2"
       @click="$router.push('/')"
     ></v-app-bar-title>
-    <v-list class="v-col-1">
+    <v-list class="v-col-2">
       <router-link :to="{ name: 'apart', params: { code: dongcode } }">실거래가 확인</router-link>
     </v-list>
-    <v-list class="v-col-8">
+    <v-list class="v-col-7">
       <v-row class="justify-end">
         <!-- "menuList"에 대한 루프를 수행하여 메뉴 항목을 생성합니다. -->
         <template v-for="menu in menuList">

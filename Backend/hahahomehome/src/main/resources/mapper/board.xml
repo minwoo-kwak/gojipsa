@@ -8,6 +8,7 @@
 	<select id="getAllBoard" parameterType="map" resultType="boardDto">
 		select board_no, title, content, register_time, hit, user_id
 		FROM board
+		ORDER BY board_no DESC
 		LIMIT #{start},#{listSize}
 	</select>
 	<!-- 
