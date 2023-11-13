@@ -43,6 +43,8 @@ public class BoardController {
 	@ResponseBody
 	@GetMapping(path="/list")
 	public ResponseEntity<?> listBoard(@RequestParam(value="page",required=false) String pageNo){
+		System.out.println("RequestParam page == " + pageNo);
+		
 		HashMap<String,Object> hMap=new HashMap<>();
 		
 		// pagination이 적용된 글 목록 데이터 리스트

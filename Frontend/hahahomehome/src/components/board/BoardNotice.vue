@@ -1,14 +1,17 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { listNotice } from '@/api/board'
+import PageNavigation from '@/components/common/PageNavigation.vue'
 
+// 공지사항 글 리스트
 const notices = ref([])
+// 현재 페이지
 const currentPage = ref(1)
-const param = ref({
-  pgno: currentPage.value,
-  key: '',
-  word: ''
-})
+// 총 페이지 수
+const totalPage = ref(0)
+
+// 다이얼로그 상태를 저장하는 객체
+const dialogStates = ref({})
 
 /**
  * MainPage 들어올 때 list를 가지고 시작
@@ -17,19 +20,18 @@ onMounted(() => {
   getNoticeList()
 })
 
-// 다이얼로그 상태를 저장하는 객체
-const dialogStates = ref({})
-
 /**
  * 리스트 가져오기
  */
 const getNoticeList = () => {
   listNotice(
-    param.value,
+    currentPage,
+    // then
     ({ data }) => {
-      console.log(data)
       notices.value = data.data
-      console.log('notices = ', notices.value)
+
+      // 페이지 네이션 정보 받아오기
+      totalPage.value = data.pageInfo.totalPageCnt
 
       // 데이터를 받아올 때마다 dialogStates 초기화
       dialogStates.value = {}
@@ -48,6 +50,16 @@ const getNoticeList = () => {
     }
   )
 }
+
+/**
+ * 페이지 네이션 : 해당 페이지로 이동
+ * @param {*} page : 해당 페이지
+ */
+const onPageChange = (page) => {
+  console.log(page + '번 페이지로 이동 준비 끝!!!')
+  currentPage.value = page
+  getNoticeList()
+}
 </script>
 
 <template>
@@ -64,6 +76,7 @@ const getNoticeList = () => {
         </tr>
       </thead>
       <tbody>
+        <!-- Start : NoticeItem -->
         <tr
           v-for="notice in notices"
           :key="notice.board_no"
@@ -96,8 +109,14 @@ const getNoticeList = () => {
             </v-card>
           </v-dialog>
         </tr>
+        <!-- End : NoticeItem -->
       </tbody>
     </table>
+    <PageNavigation
+      :current-page="currentPage"
+      :total-page="totalPage"
+      @pageChange="onPageChange"
+    />
   </div>
 </template>
 
