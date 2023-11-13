@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.house.annotation.AuthRequired;
 import com.ssafy.house.board.model.dto.BoardDto;
 import com.ssafy.house.board.model.service.BoardService;
 import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/v1/board")
@@ -114,9 +116,12 @@ public class BoardController {
 	}
 	
 	// 게시글 수정하기
+	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)	
 	@ResponseBody
-	@PutMapping("/")
-	public ResponseEntity<Map<String,Object>> modifyBoard(@RequestBody BoardDto boardDto){
+	@PutMapping("/modify")
+	public ResponseEntity<Map<String,Object>> modifyBoard(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto){
+		System.out.println(boardDto);
+		
 		
 		int resultCode=boardService.modifyBoard(boardDto);
 		
@@ -126,6 +131,7 @@ public class BoardController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
 	}
+
 	
 	// 게시글 삭제하기
 	@ResponseBody

@@ -18,7 +18,6 @@ async function logout() {
 </script>
 
 <template>
-  <div></div>
   <v-app-bar>
     <v-app-bar-title
       text="HaHaHomeHome"
@@ -35,7 +34,7 @@ async function logout() {
           <list-item v-if="menu.loginStatus" :key="menu.name">
             <!-- "menu.name"이 '로그아웃'인 경우 로그아웃 링크를 생성합니다. -->
             <template v-if="menu.name == '로그아웃'">
-              <router-link to="/" @click:prevent="logout()">{{ menu.name }}</router-link>
+              <router-link to="/" @click="logout()">{{ menu.name }}</router-link>
             </template>
             <!-- 그 외 메뉴 항목은 해당 routeName으로 라우팅 링크를 생성합니다. -->
             <template v-else>
