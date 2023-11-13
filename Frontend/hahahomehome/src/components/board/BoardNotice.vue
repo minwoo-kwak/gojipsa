@@ -2,9 +2,7 @@
 import { ref, onMounted, onBeforeMount, inject } from 'vue'
 import { listNotice, modifyNotice, deleteNotice } from '@/api/board'
 import PageNavigation from '@/components/common/PageNavigation.vue'
-import { useRouter } from 'vue-router'
 
-const router = useRouter();
 
 // 공지사항 글 리스트
 const notices = ref([])

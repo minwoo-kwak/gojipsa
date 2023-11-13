@@ -1,4 +1,28 @@
 <script setup>
+import { ref, onMounted, inject } from 'vue'
+import {getNews} from '@/api/news'
+
+const axios = inject("axios");
+
+const newsList = ref("");
+
+/**
+ * MainPage 들어올 때 newslist를 가지고 시작
+ */
+ onMounted(() => {
+  getNewsList()
+})
+
+const getNewsList = () => {
+  getNews(({data}) => {
+    console.log("news == ", data);
+    newsList.value = data.data;
+  },
+  (error) => {
+    console.log(error);
+  })
+}
+
 const navigateToNews = (url) => {
   window.open(url, '_blank')
 }
