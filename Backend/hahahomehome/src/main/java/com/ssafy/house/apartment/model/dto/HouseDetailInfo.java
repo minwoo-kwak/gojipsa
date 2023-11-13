@@ -7,14 +7,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class HouseInfo {
+public class HouseDetailInfo {
 	long aptCode;
-	String apartmentName;
+	int buildYear;
 	String roadName;
+	String roadNameCode;
+	String dong;
+	String dongCode;
+	String apartmentName;
 	String jibun;
-	String area;
-	String floor;
-	String avgPrice;
-	String lat;
 	String lng;
+	String lat;
 }

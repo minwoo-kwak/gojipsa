@@ -6,6 +6,9 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.house.apartment.model.dto.DongCode;
+import com.ssafy.house.apartment.model.dto.HouseDeal;
+import com.ssafy.house.apartment.model.dto.HouseDetailInfo;
+import com.ssafy.house.apartment.model.dto.HouseInfo;
 
 
 public interface ApartmentService {
@@ -17,5 +20,12 @@ public interface ApartmentService {
 	public List<String> getGugunName(String sidoName);
 
 	public List<String> getDongNameList(String gugunName);
+	
+	public List<HouseInfo> getApartList(Map<String,Object> map);
 
+	public int countApart(String dongcode);
+	
+	public HouseDetailInfo getApartDetail(long aptCode);
+	
+	public List<HouseDeal> getDeal(long aptCode);
 }

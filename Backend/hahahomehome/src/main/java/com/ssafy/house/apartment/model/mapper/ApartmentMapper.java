@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.house.apartment.model.dto.DongCode;
+import com.ssafy.house.apartment.model.dto.HouseDeal;
+import com.ssafy.house.apartment.model.dto.HouseDetailInfo;
+import com.ssafy.house.apartment.model.dto.HouseInfo;
 
 @Mapper
 public interface ApartmentMapper {
@@ -18,4 +21,11 @@ public interface ApartmentMapper {
 	
 	List<String> getDongNameList(String gugunName);
 
+	List<HouseInfo> getApartList(Map<String, Object> map);
+	
+	int countApart(String dongcode);
+	
+	HouseDetailInfo getHouseByCode(long aptCode);
+	
+	List<HouseDeal> getDealByCode(long aptCode);
 }
