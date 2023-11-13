@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { listNotice } from '@/api/board'
+import { ref, onMounted, onBeforeUpdate, inject } from 'vue'
+import { listNotice, modifyNotice } from '@/api/board'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 
 // 공지사항 글 리스트
@@ -13,11 +13,32 @@ const totalPage = ref(0)
 // 다이얼로그 상태를 저장하는 객체
 const dialogStates = ref({})
 
+const axios = inject('axios')
+
+const isAdmin = ref(false)
+
+const editNow = ref(false)
+
 /**
  * MainPage 들어올 때 list를 가지고 시작
  */
 onMounted(() => {
   getNoticeList()
+})
+
+onBeforeUpdate(() => {
+  // 권한 인증
+  axios.get('/user/valid').then((response) => {
+    if (response.status === 202) {
+      // 권한이 "관리자"인 경우
+      console.log('사용자는 관리자입니다.')
+      isAdmin.value = true
+    } else if (response.status === 200) {
+      // 권한이 "관리자"가 아닌 경우
+      console.log('사용자는 권한이 없습니다.')
+      isAdmin.value = false
+    }
+  })
 })
 
 /**
@@ -44,6 +65,24 @@ const getNoticeList = () => {
         // 날짜 변환
         notice.register_time = new Date(notice.register_time).toLocaleString()
       })
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+}
+
+const onModifySubmit = (user_id, board_no, title, content) => {
+  const article = {
+    user_id: user_id,
+    board_no: board_no,
+    title: title,
+    content: content
+  }
+  modifyNotice(
+    article,
+    (response) => {
+      console.log(response)
     },
     (error) => {
       console.log(error)
@@ -87,29 +126,63 @@ const onPageChange = (page) => {
           <td>{{ notice.user_id }}</td>
           <td>{{ notice.register_time }}</td>
           <td>{{ notice.hit }}</td>
-          <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
-            <v-card>
-              <v-card-text>
-                <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
-                <hr />
-                <div>
-                  {{ notice.content }}
+          <!-- 수정할 경우 -->
+          <div v-if="editNow">
+            <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
+              <v-card>
+                <v-card-text>
+                  <form
+                    @submit="
+                      onModifySubmit(notice.user_id, notice.board_no, notice.title, notice.content)
+                    "
+                  >
+                    {{ notice.board_no }}. <input v-model.lazy="notice.title" /><br />
+                    <textarea v-model="notice.content" rows="10" cols="100"></textarea>
+                    <hr />
+                    <div>작성일: {{ notice.register_time }}</div>
+                    <v-btn color="primary" type="submit">수정하기</v-btn>
+                  </form>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-btn
+                    color="primary"
+                    block
+                    @click="dialogStates[`dialog${notice.board_no}`] = false"
+                    >닫기</v-btn
+                  >
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
+          <!-- 평상시 -->
+          <div v-else>
+            <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
+              <v-card>
+                <v-card-text>
+                  <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
+                  <hr />
+                  <div>
+                    {{ notice.content }}
+                  </div>
+                  <hr />
+                  <div>작성일: {{ notice.register_time }}</div>
+                </v-card-text>
+                <div v-if="isAdmin">
+                  <v-btn color="success" v-model="editNow" @click="editNow = !editNow">수정</v-btn>
+                  <v-btn color="danger">삭제</v-btn>
                 </div>
-                <hr />
-                <div>작성일: {{ notice.register_time }}</div>
-              </v-card-text>
-              <v-btn color="success">수정</v-btn>
-              <v-btn color="danger">삭제</v-btn>
-              <v-card-actions>
-                <v-btn
-                  color="primary"
-                  block
-                  @click="dialogStates[`dialog${notice.board_no}`] = false"
-                  >닫기</v-btn
-                >
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+                <v-card-actions>
+                  <v-btn
+                    color="primary"
+                    block
+                    @click="dialogStates[`dialog${notice.board_no}`] = false"
+                    >닫기</v-btn
+                  >
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
         </tr>
         <!-- End : NoticeItem -->
       </tbody>

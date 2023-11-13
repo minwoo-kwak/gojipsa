@@ -31,7 +31,7 @@ public class JWTUtil {
 	 * @return - 생성된 JWT 토큰
 	 * @throws UnsupportedEncodingException - 지원되지 않는 문자 인코딩 예외 처리
 	 */
-	public String createToken(String userId) throws UnsupportedEncodingException {
+	public String createToken(String userId, String grad) throws UnsupportedEncodingException {
 		// 토큰의 만료 시간 (초) : 1시간
 		final long expiredSecond = 60 * 60;
 
@@ -40,6 +40,7 @@ public class JWTUtil {
 
 		// 클레임(claims) 추가: 사용자 ID
 		jwtBuilder.claim("userId", userId);
+		jwtBuilder.claim("grad", grad);
 
 		// 현재 시간 및 토큰 만료 시간 설정
 		long currentTime = System.currentTimeMillis();

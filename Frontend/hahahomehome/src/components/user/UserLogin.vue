@@ -13,6 +13,8 @@ const password = ref('')
 
 async function login() {
   await userStore.login(userId.value, password.value)
+
+  router.push('/')
 }
 </script>
 
