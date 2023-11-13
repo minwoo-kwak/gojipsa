@@ -29,8 +29,12 @@ function range(start, end) {
   //     .map((val, i) => start + i);
 }
 
+/**
+ * 페이지가 변경되면 pageChange이벤트를 발생 시키고
+ * 해당 pg를 부모 컴포넌트(BoardNotice.vue)에 전달합니다.
+ * @param {*} pg : 이동할 page
+ */
 function onPageChange(pg) {
-  console.log(pg + '로 이동!!!')
   emit('pageChange', pg)
 }
 </script>

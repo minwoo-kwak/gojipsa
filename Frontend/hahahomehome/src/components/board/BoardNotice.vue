@@ -98,12 +98,14 @@ const onPageChange = (page) => {
                 <hr />
                 <div>작성일: {{ notice.register_time }}</div>
               </v-card-text>
+              <v-btn color="success">수정</v-btn>
+              <v-btn color="danger">삭제</v-btn>
               <v-card-actions>
                 <v-btn
                   color="primary"
                   block
                   @click="dialogStates[`dialog${notice.board_no}`] = false"
-                  >Close Dialog</v-btn
+                  >닫기</v-btn
                 >
               </v-card-actions>
             </v-card>

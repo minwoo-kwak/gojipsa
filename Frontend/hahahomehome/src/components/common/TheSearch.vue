@@ -31,7 +31,6 @@ const getSidoList = () => {
   getSido(
     ({ data }) => {
       sidoList.value = data
-      console.log('sidoList.value = ', sidoList.value)
     },
     (error) => {
       console.log(error)
@@ -92,7 +91,6 @@ const onDongNameChange = () => {
 }
 
 const getDongCode = () => {
-  console.log('param == ', param)
   getDongCodeFromLocalAPI(
     param.value,
     ({ data }) => {

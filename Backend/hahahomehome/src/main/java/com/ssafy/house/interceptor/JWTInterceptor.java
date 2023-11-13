@@ -3,6 +3,7 @@ package com.ssafy.house.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -22,15 +23,19 @@ public class JWTInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-
+		// handler가 메소드에서 호출된 것인지 확인.
+		// 그렇지 않다면 모두 패스.
 		if (!(handler instanceof HandlerMethod)) {
 			return true;
 		}
 
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-		if (handlerMethod.getMethodAnnotation(AuthRequired.class) != null
-				|| handlerMethod.getBeanType().getAnnotation(AuthRequired.class) != null) {
+		// 호출된 메소드의 Annotation이 AuthRequired인지 확인.
+		if (handlerMethod.getMethodAnnotation(AuthRequired.class) != null || 
+			handlerMethod.getBeanType().getAnnotation(AuthRequired.class) != null) {
+			
+			// accessToken 확인
 			String jwt = request.getHeader(AUTHORIZATION_HEADER);
 
 			// jwt를 가지고 있을 때
@@ -39,7 +44,7 @@ public class JWTInterceptor implements HandlerInterceptor {
 				try {
 					jwtUtil.valid(jwt);
 				} catch (Exception e) {
-					System.out.println("jwtUtil.valid 에러남");
+					System.out.println("jwtUtil.valid 에러발생");
 					e.printStackTrace();
 				}
 
@@ -47,11 +52,12 @@ public class JWTInterceptor implements HandlerInterceptor {
 				return true;
 			}
 
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			// 그렇지 않을 경우는 허용 x
+			// 권한이 없음을 클라이언트에 전송
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			return false;
 		}
 
+		// AuthRequired가 붙지 않은 메소드인 경우 모두 통과
 		return true;
 	}
 

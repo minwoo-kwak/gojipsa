@@ -17,12 +17,24 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-
+// Material-Icon
+// https://vuetifyjs.com/en/features/icon-fonts/#installing-icon-fonts
+// npm install @mdi/font -D
+import '@mdi/font/css/materialdesignicons.css'
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 
 const vuetify = createVuetify({
   components,
   directives,
+ // Material-Icon
+ icons: {
+  defaultSet: 'mdi',
+  aliases,
+  sets: {
+      mdi,
+  },
+},
 })
 // ###########  Vuetify 기본 세팅
 
