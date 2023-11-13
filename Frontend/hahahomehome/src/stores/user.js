@@ -58,6 +58,6 @@ export const useUserStore = defineStore('userStore', () => {
 {
     // 상태 유지 설정
     persist: {
-        storage: localStorage // 세션 스토리지를 사용하여 상태를 유지합니다.
+        storage: sessionStorage // 세션 스토리지를 사용하여 상태를 유지합니다.
     }
 })

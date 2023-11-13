@@ -45,7 +45,6 @@ public class BoardController {
 	@ResponseBody
 	@GetMapping(path="/list")
 	public ResponseEntity<?> listBoard(@RequestParam(value="page",required=false) String pageNo){
-		System.out.println("RequestParam page == " + pageNo);
 		
 		HashMap<String,Object> hMap=new HashMap<>();
 		
@@ -135,8 +134,8 @@ public class BoardController {
 	
 	// 게시글 삭제하기
 	@ResponseBody
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Map<String,Object>> deleteBoard(@PathVariable("id") int boardNo){
+	@DeleteMapping("delete/{boardNo}")
+	public ResponseEntity<Map<String,Object>> deleteBoard(@PathVariable("boardNo") int boardNo){
 		
 		int resultCode=boardService.deleteBoard(boardNo);
 		

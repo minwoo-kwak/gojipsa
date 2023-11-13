@@ -100,7 +100,6 @@ public class UserController {
 	@GetMapping("/valid")
 	public ResponseEntity valid(HttpServletRequest request) throws ParseException {
 		String authorization = request.getHeader("Authorization");
-		
 		if(authorization == null || authorization.equals("")) {
 			return new ResponseEntity(HttpStatus.OK);
 		}
@@ -112,6 +111,7 @@ public class UserController {
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) parser.parse(payload);
 		String grad = (String) jsonObject.get("grad");
+		System.out.println("uservalid grad  == " + grad);
 
 		if (grad.equals("관리자")) {
 			return new ResponseEntity(HttpStatus.ACCEPTED);
