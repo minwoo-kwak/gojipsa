@@ -43,6 +43,11 @@ const router = createRouter({
       component: ApartView,
     },
     {
+      path: '/apart/detail',
+      name: 'apartdetail',
+      component: () => import('../views/ApartDetailView.vue')
+    },
+    {
       path:'/calculate',
       name:'calculate',
       component:()=>import('../views/CalculatorPopUpView.vue')
