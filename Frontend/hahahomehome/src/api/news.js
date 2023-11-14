@@ -4,8 +4,8 @@ const local = localAxios();
 
 const url = "/news"
 
-function getNews(success, fail) {
-    local.get(`${url}/`).then(success).catch(fail);
+function getNews(start, success, fail) {
+    local.get(`${url}/${start}`).then(success).catch(fail);
 }
 
 
