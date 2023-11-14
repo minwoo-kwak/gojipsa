@@ -9,10 +9,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -30,11 +34,12 @@ public class NewsServiceImpl implements NewsService {
 	private static final String CLIENT_SECRET = "MFXDrjdCNo"; // 애플리케이션 클라이언트 시크릿
 
 	@Override
-	public List<NewsDto> getNews() throws ParseException, UnsupportedEncodingException {
+	public List<NewsDto> getNews(String currentPage) throws ParseException, UnsupportedEncodingException {
 		List<NewsDto> newsList = null;
 
-		String apiURL = String.format("https://openapi.naver.com/v1/search/news.json?query=%s&display=5&sort=date",
-				URLEncoder.encode("부동산", "UTF-8"));
+		String apiURL = String.format("https://openapi.naver.com/v1/search/news.json?query=%s&display=5&start=%s&sort=date",
+				URLEncoder.encode("부동산", "UTF-8"), currentPage);
+		
 
 		Map<String, String> requestHeaders = new HashMap<>();
 		requestHeaders.put("X-Naver-Client-Id", CLIENT_ID);
@@ -50,12 +55,10 @@ public class NewsServiceImpl implements NewsService {
 			NewsDto newsDto = new NewsDto();
 			JSONObject item = (JSONObject) items.get(idx);
 
-			System.out.println(item);
+			newsDto.setId(idx + 1);
 			newsDto.setTitle((String) item.get("title"));
 			newsDto.setLink((String) item.get("link"));
-			System.out.println(item.get("pubDate"));
-//			newsDto.setPubDate((Date) item.get("pubDate"));
-
+			newsDto.setPubDate((String) item.get("pubDate"));
 			newsList.add(newsDto);
 		}
 
