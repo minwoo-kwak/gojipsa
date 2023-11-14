@@ -100,6 +100,8 @@ public class UserController {
 	@GetMapping("/valid")
 	public ResponseEntity valid(HttpServletRequest request) throws ParseException {
 		String authorization = request.getHeader("Authorization");
+		System.out.println("valid authorization == "+ authorization);
+		
 		if(authorization == null || authorization.equals("")) {
 			return new ResponseEntity(HttpStatus.OK);
 		}
@@ -120,6 +122,8 @@ public class UserController {
 		}
 
 	}
+	
+	
 	
 
 }

@@ -1,8 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeMount, inject } from 'vue'
-import { listNotice, modifyNotice, deleteNotice } from '@/api/board'
+import { listNotice, modifyNotice, deleteNotice, writeNotice } from '@/api/board'
 import PageNavigation from '@/components/common/PageNavigation.vue'
-
 
 // 공지사항 글 리스트
 const notices = ref([])
@@ -20,6 +19,13 @@ const isAdmin = ref(false)
 
 const editNow = ref(false)
 
+const writeNow = ref(false)
+
+const article = ref({
+  title: '',
+  content: ''
+})
+
 /**
  * MainPage 들어올 때 list를 가지고 시작
  */
@@ -29,8 +35,7 @@ onMounted(() => {
 
 onBeforeMount(() => {
   // 권한 인증
-  axios.get('/user/valid')
-  .then((response) => {
+  axios.get('/user/valid').then((response) => {
     if (response.status === 202) {
       // 권한이 "관리자"인 경우
       console.log('사용자는 관리자입니다.')
@@ -74,12 +79,26 @@ const getNoticeList = () => {
   )
 }
 
+const onWriteSubmit = () => {
+  console.log('공지사항 작성')
+  console.log('article = ', article.value)
+  writeNotice(
+    article.value,
+    (response) => {
+      console.log(response)
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
+}
+
 /**
  * 공지사항 수정하는 메서드
- * @param {String} user_id 
- * @param {String} board_no 
- * @param {String} title 
- * @param {String} content 
+ * @param {String} user_id
+ * @param {String} board_no
+ * @param {String} title
+ * @param {String} content
  */
 const onModifySubmit = (user_id, board_no, title, content) => {
   // 공지사항 수정 정보
@@ -89,7 +108,7 @@ const onModifySubmit = (user_id, board_no, title, content) => {
     title: title,
     content: content
   }
-  // local API 수정하기 
+  // local API 수정하기
   modifyNotice(
     article,
     (response) => {
@@ -103,32 +122,28 @@ const onModifySubmit = (user_id, board_no, title, content) => {
 
 /**
  * 공지사항 삭제하는 메서드
- * @param {*} board_no 
+ * @param {*} board_no
  */
 const onDeleteSubmit = (board_no) => {
-
- // 확인 메시지를 띄우고 사용자가 확인하면 삭제를 진행
+  // 확인 메시지를 띄우고 사용자가 확인하면 삭제를 진행
   if (window.confirm('정말로 삭제하시겠습니까?')) {
     // local API 공지사항 삭제하기
     deleteNotice(
       board_no,
       (response) => {
-        console.log(response);
+        console.log(response)
         // 목록 다시 불러오기
-        getNoticeList();
+        getNoticeList()
       },
       (error) => {
-        console.log(error);
+        console.log(error)
       }
-    );
+    )
   } else {
     // 사용자가 확인을 취소하면 아무 동작도 하지 않음
-    console.log('삭제가 취소되었습니다.');
+    console.log('삭제가 취소되었습니다.')
   }
-};
-
-
-
+}
 
 /**
  * 페이지 네이션 : 해당 페이지로 이동
@@ -143,7 +158,29 @@ const onPageChange = (page) => {
 
 <template>
   <div class="notice">
-    <h2>공지사항</h2>
+    <h2>
+      공지사항
+      <span v-if="isAdmin" class="mdi mdi-plus-box-outline" @click="writeNow = !writeNow">
+        <v-dialog v-model="writeNow" width="auto">
+          <v-card>
+            <v-card-text>
+              <form @submit="onWriteSubmit()">
+                <label for="title">제목 : </label>
+                <input id="title" v-model="article.title" /><br />
+                <label for="content">내용 : </label><br />
+                <textarea id="content" v-model="article.content" rows="10" cols="100"></textarea>
+                <hr />
+                <v-btn color="primary" type="submit">작성하기</v-btn>
+              </form>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-btn color="primary" block @click="writeNow = false">닫기</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog></span
+      >
+    </h2>
     <table class="table table-hover">
       <thead>
         <tr>

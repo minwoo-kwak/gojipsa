@@ -36,6 +36,7 @@ const getNewsList = () => {
       // 이스케이프 태그 처리
       newsList.value.forEach((news) => {
         news.title = new DOMParser().parseFromString(news.title, 'text/html').body.textContent
+        news.pubDate = new Date(news.pubDate).toLocaleString()
       })
       console.log('newsList == ', newsList)
     },
