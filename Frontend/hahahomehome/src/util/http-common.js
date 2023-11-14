@@ -10,6 +10,11 @@ function localAxios() {
             "Content-Type": "application/json;charset=utf-8",
         },
     });
+
+    instance.defaults.headers.common['Authorization']
+    = sessionStorage.getItem('userStore') == null
+        ? '' : JSON.parse(sessionStorage.getItem('userStore'))['Authorization']
+
     return instance;
 }
 

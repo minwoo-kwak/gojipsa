@@ -27,7 +27,6 @@ public class NewsController {
 	@GetMapping("/{start}")
 	public ResponseEntity<List<NewsDto>> getNews(@PathVariable("start") String start) {
 		List<NewsDto> newsList = null;
-		System.out.println("start : " + start);
 		try {
 			newsList = newsService.getNews(start);
 		} catch (UnsupportedEncodingException | ParseException e) {

@@ -54,6 +54,7 @@ public class JWTInterceptor implements HandlerInterceptor {
 
 			// 권한이 없음을 클라이언트에 전송
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			System.out.println("권한 없음");
 			return false;
 		}
 
