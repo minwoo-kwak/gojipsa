@@ -17,7 +17,8 @@ public class NewsDto {
 	 * "title":"30억 넘는 회삿돈 횡령\u2026경리 女직원 수법 보니",
 	 * "pubDate":"Mon, 13 Nov 2023 23:42:00 +0900"}
 	 */
+	private int id;
 	private String title;
 	private String link;
-	private Date pubDate;
+	private String pubDate;
 }

@@ -1,28 +1,41 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue'
-import {getNews} from '@/api/news'
+import { getNews } from '@/api/news'
 
-const axios = inject("axios");
+const axios = inject('axios')
 
-const newsList = ref("");
+const newsList = ref('')
 
 /**
  * MainPage 들어올 때 newslist를 가지고 시작
  */
- onMounted(() => {
+onMounted(() => {
   getNewsList()
 })
 
 const getNewsList = () => {
-  getNews(({data}) => {
-    console.log("news == ", data);
-    newsList.value = data.data;
-  },
-  (error) => {
-    console.log(error);
-  })
+  getNews(
+    ({ data }) => {
+      console.log('news == ', data)
+
+      newsList.value = data
+
+      // 이스케이프 태그 처리
+      newsList.value.forEach((news) => {
+        news.title = new DOMParser().parseFromString(news.title, 'text/html').body.textContent
+      })
+      console.log('newsList == ', newsList)
+    },
+    (error) => {
+      console.log(error)
+    }
+  )
 }
 
+/**
+ * 뉴스 창 띄우기
+ * @param {string} url
+ */
 const navigateToNews = (url) => {
   window.open(url, '_blank')
 }
@@ -36,31 +49,16 @@ const navigateToNews = (url) => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">제목</th>
-          <th scope="col">언론사</th>
           <th scope="col">날짜</th>
           <th scope="col">조회수</th>
         </tr>
       </thead>
       <tbody>
-        <tr @click="navigateToNews('https://www.mk.co.kr/news/realestate/10870756')">
-          <th scope="row">1</th>
-          <td>뉴스 제목입니다.</td>
-          <td>매일경제</td>
-          <td>2023-11-09 17:02:41</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>2023-11-09 17:02:41</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>2023-11-09 17:02:41</td>
-          <td>@twitter</td>
+        <tr v-for="news in newsList" :key="news.id" @click="navigateToNews(news.link)">
+          <th scope="row">{{ news.id }}</th>
+          <td v-html="news.title"></td>
+          <td>{{ news.pubDate }}</td>
+          <td>0</td>
         </tr>
       </tbody>
     </table>

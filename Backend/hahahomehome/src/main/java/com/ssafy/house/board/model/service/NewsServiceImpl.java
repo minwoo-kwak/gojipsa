@@ -9,10 +9,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -50,13 +54,12 @@ public class NewsServiceImpl implements NewsService {
 			NewsDto newsDto = new NewsDto();
 			JSONObject item = (JSONObject) items.get(idx);
 
-			System.out.println(item);
+			newsDto.setId(idx);
 			newsDto.setTitle((String) item.get("title"));
 			newsDto.setLink((String) item.get("link"));
-			System.out.println(item.get("pubDate"));
-//			newsDto.setPubDate((Date) item.get("pubDate"));
-
+			newsDto.setPubDate((String) item.get("pubDate"));
 			newsList.add(newsDto);
+			System.out.println(newsDto.getTitle());
 		}
 
 		return newsList;
