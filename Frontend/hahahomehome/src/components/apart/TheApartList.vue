@@ -1,11 +1,50 @@
 <script setup>
 import TheSearch from '../common/TheSearch.vue'
 import TheApartCard from './TheApartCard.vue'
+import { useApartStore } from '../../stores/apart'
+import { storeToRefs } from 'pinia'
+import { getApartListAPI } from '@/api/apartment'
+import { onMounted, ref, onUpdated, watch, toRaw } from 'vue'
 
 const props = defineProps({
-  apartData: Object
+  dongcode: String
 })
-console.log(props)
+const apartStore = useApartStore()
+const { dongcode } = storeToRefs(apartStore)
+const page = ref(1)
+const apartList = ref([])
+watch(
+  dongcode,
+  (newCode, oldCode) => {
+    console.log(dongcode.value)
+    getApartInfos()
+  },
+  { deep: true }
+)
+// api로부터 apartment 정보를 가져온다.
+const getApartInfos = () => {
+  getApartListAPI(
+    {
+      dongcode: dongcode.value,
+      page: page.value
+    },
+    ({ data }) => {
+      apartList.value = []
+      console.log(data.data.length)
+      console.log(apartList.value)
+      for (var idx = 0; idx < data.data.length; idx++) {
+        apartList.value.push(data.data[idx])
+      }
+      console.log(apartList.value)
+    }
+  ),
+    (err) => {
+      console.log(err)
+    }
+}
+onMounted(() => {
+  console.log('mounted')
+})
 </script>
 
 <!--아파트 정보를 표시하는 사이드 바-->
@@ -14,10 +53,11 @@ console.log(props)
     <div class="search">
       <TheSearch />
     </div>
-    <div class="search-list" v-for="apartInfo in apartData.data" :key="apartInfo.aptCode">
-      <!--axios를 통해 얻어온 아파트를 보여준다(for문)-->
-      <TheApartCard />
+    <div v-for="apart in apartList.value" :key="apart.aptCode">
+      {{ apart.aptCode }}
+      {{ apart.dongCode }}
     </div>
+    <TheApartCard />
   </div>
 </template>
 
