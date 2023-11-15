@@ -6,6 +6,10 @@ import {
   getDongNameListFromLocalAPI,
   getDongCodeFromLocalAPI
 } from '../../api/apartment'
+import { storeToRefs } from 'pinia'
+import { useApartStore } from '@/stores/apart'
+const apartStore = useApartStore()
+const { dongcode } = storeToRefs(apartStore)
 
 const sidoList = ref([])
 const gugunList = ref([])
@@ -94,8 +98,8 @@ const getDongCode = () => {
   getDongCodeFromLocalAPI(
     param.value,
     ({ data }) => {
-      console.log(data)
       selectedDongCode.value = data.dongCode
+      dongcode.value = selectedDongCode.value
     },
     (error) => {
       console.log(error)
