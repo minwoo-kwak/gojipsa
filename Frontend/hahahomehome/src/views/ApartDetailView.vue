@@ -13,7 +13,7 @@ import KakaoDetailMap from '../components/apart/KakaoDetailMap.vue'
 
 <style scoped>
 .apart-detail-view {
-  display: flex;
   padding-top: 65px;
+  width: 100%;
 }
 </style>
