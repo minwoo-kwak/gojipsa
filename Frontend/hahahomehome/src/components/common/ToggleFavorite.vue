@@ -90,8 +90,9 @@ $icon-border-color: hsl(0, 0%, 10%);
   position: relative;
 
   &__icon {
-    height: 1em;
-    width: 1em;
+    // 크기 수정하는 부분
+    height: 2em;
+    width: 2em;
 
     // Transition mainly for when un-favoriting
     transition:
