@@ -1,6 +1,7 @@
 <script setup>
 import TheHeading from '../components/common/TheHeading.vue'
 import KakaoDetailMap from '../components/apart/KakaoDetailMap.vue'
+import TheApartDetail from '../components/apart/TheApartDetail.vue';
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import KakaoDetailMap from '../components/apart/KakaoDetailMap.vue'
   <div class="apart-detail-view">
     <!-- <KakaoDetailMap /> -->
     <KakaoDetailMap />
+    <TheApartDetail/>
   </div>
 </template>
 
