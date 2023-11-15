@@ -19,10 +19,17 @@ function getDongCodeFromLocalAPI(param, success, fail) {
     console.log("param in apartment.js == ", param);
     local.get(`${url}/dongcode`, { params: param }).then(success).catch(fail);
 }
-
+// dongcode를 기준으로 아파트 리스트 가져오기
+function getApartListAPI(param,success,fail){
+    //console.log("param : ",param)
+    let dongcode=param.dongcode;
+    let page=param.page;
+    local.get(`${url}/${dongcode}`,{params:{page:page}}).then(success).catch(fail);
+}
 export {
     getSido,
     getGugun,
     getDongNameListFromLocalAPI,
-    getDongCodeFromLocalAPI
+    getDongCodeFromLocalAPI,
+    getApartListAPI
 }

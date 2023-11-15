@@ -44,11 +44,19 @@ public class ApartmentServiceImpl implements ApartmentService {
 
 	@Override
 	public List<HouseInfo> getApartList(Map<String,Object> map) {
+		Map<String,Object> paramMap=new HashMap<>();
+		paramMap.put("dongcode", map.get("dongcode"));
+		// 페이지 번호
 		int pgno=(int) map.get("page");
-		int start=pgno*ApartPageConstant.LIST_SIZE-BoardPageConstant.LIST_SIZE;
-		map.put("start",start);
-		map.put("listSize", ApartPageConstant.LIST_SIZE);
-		return apartmentMapper.getApartList(map);
+		
+		// 페이지 번호로 데이터를 가져올 시작 지점 구하기
+		int start=pgno*ApartPageConstant.LIST_SIZE-ApartPageConstant.LIST_SIZE;
+		
+		// 계산 결과를 map에 담아 mapper로 보냄
+		paramMap.put("start",start);
+		paramMap.put("listSize", ApartPageConstant.LIST_SIZE);
+		
+		return apartmentMapper.getApartList(paramMap);
 	}
 
 	@Override
