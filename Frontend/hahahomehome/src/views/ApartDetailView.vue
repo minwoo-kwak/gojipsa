@@ -6,7 +6,7 @@ import KakaoDetailMap from '../components/apart/KakaoDetailMap.vue'
 <template>
   <TheHeading />
   <div class="apart-detail-view">
-    <TheApartList />
+    <!-- <KakaoDetailMap /> -->
     <KakaoDetailMap />
   </div>
 </template>
