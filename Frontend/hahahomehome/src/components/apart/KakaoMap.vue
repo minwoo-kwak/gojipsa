@@ -28,6 +28,7 @@ onMounted(() => {
     document.head.appendChild(script)
   }
 })
+
 const initMap = () => {
   const container = document.getElementById('map')
   const options = {
