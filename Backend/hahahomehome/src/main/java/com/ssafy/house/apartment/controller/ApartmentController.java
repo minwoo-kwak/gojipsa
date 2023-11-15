@@ -19,6 +19,7 @@ import com.ssafy.house.apartment.model.dto.HouseDetailInfo;
 import com.ssafy.house.apartment.model.dto.HouseInfo;
 import com.ssafy.house.apartment.model.service.ApartmentService;
 import com.ssafy.house.util.ApartPageConstant;
+import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.Api;
 
@@ -80,6 +81,8 @@ public class ApartmentController {
 		map.put("dongcode", dongcode);
 		int pgno=pageNo==null?1:Integer.parseInt(pageNo);
 		map.put("page",pgno);
+		map.put("listSize",ApartPageConstant.LIST_SIZE);
+		
 		// 아파트 목록
 		List<HouseInfo> apartList=apartmentService.getApartList(map);
 		

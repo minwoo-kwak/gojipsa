@@ -29,19 +29,11 @@
 		AND dongName = #{dongName}
 	</select>
 
-	<!-- dongcode를 기준으로 apart 정보 반환 : 매매 가격은 평균가로 계산 -->
+	<!-- dongcode를 기준으로 apart 정보 반환 -->
 	<select id="getApartList" parameterType="map" resultType="houseInfo">
-		select info.aptCode,apartmentName, roadName, jibun, area, floor, round(avg(dealAmount),2) as avgPrice, lat, lng 
-		from (
-			select aptCode, apartmentName, roadName, jibun, lat, lng
-			from houseinfo
-			where dongCode=#{dongcode}
-		) as info join (
-			select aptCode, dealAmount, area, floor
-			from housedeal
-			group by aptCode, area, floor
-		) as deal on info.aptCode=deal.aptCode
-		group by aptCode, roadName, jibun, lat, lng, area, floor
+		select aptCode,dongCode,buildYear, dong, roadName,jibun, lat, lng
+		from houseinfo
+		where dongCode=#{dongcode}
 		LIMIT #{start},#{listSize}
 	</select>
 
@@ -49,14 +41,8 @@
 	<!-- dongcode를 기준으로 apart -->
 	<select id="countApart" parameterType="string" resultType="int">
 		select count(*)
-		from (
-			select aptCode
-    		from houseinfo
-    		where dongCode=#{dongcode}
-		) as info join (
-			select distinct aptCode, area, floor
-    		from housedeal
-		) as deal on info.aptCode=deal.aptCode;
+		from houseinfo
+		where dongCode=#{dongcode}
 	</select>
 	
 	<!-- aptCode를 기준으로 apartment 상세 정보 가져오기 -->

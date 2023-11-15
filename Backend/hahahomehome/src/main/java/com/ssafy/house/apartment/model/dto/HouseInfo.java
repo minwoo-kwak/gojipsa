@@ -9,12 +9,11 @@ import lombok.ToString;
 @ToString
 public class HouseInfo {
 	long aptCode;
-	String apartmentName;
+	String dongCode;
+	int buildYear;
+	String dong;
 	String roadName;
 	String jibun;
-	String area;
-	String floor;
-	String avgPrice;
 	String lat;
 	String lng;
 }
