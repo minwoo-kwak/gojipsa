@@ -31,7 +31,7 @@
 
 	<!-- dongcode를 기준으로 apart 정보 반환 -->
 	<select id="getApartList" parameterType="map" resultType="houseInfo">
-		select aptCode,dongCode,buildYear, dong, roadName,jibun, lat, lng
+		select aptCode,dongCode,apartmentName,buildYear, dong, roadName,jibun, lat, lng
 		from houseinfo
 		where dongCode=#{dongcode}
 		LIMIT #{start},#{listSize}

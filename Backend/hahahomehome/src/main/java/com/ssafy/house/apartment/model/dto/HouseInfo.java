@@ -10,6 +10,7 @@ import lombok.ToString;
 public class HouseInfo {
 	long aptCode;
 	String dongCode;
+	String apartmentName;
 	int buildYear;
 	String dong;
 	String roadName;
