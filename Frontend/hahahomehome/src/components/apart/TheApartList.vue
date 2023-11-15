@@ -4,7 +4,7 @@ import TheApartCard from './TheApartCard.vue'
 import { useApartStore } from '../../stores/apart'
 import { storeToRefs } from 'pinia'
 import { getApartListAPI } from '@/api/apartment'
-import { onMounted, ref, onUpdated, watch, toRaw } from 'vue'
+import { onMounted, ref, onUpdated, watch, toRaw, reactive } from 'vue'
 
 const props = defineProps({
   dongcode: String
@@ -12,11 +12,12 @@ const props = defineProps({
 const apartStore = useApartStore()
 const { dongcode } = storeToRefs(apartStore)
 const page = ref(1)
-const apartList = ref([])
+const apartList = reactive([])
+const pageInfo = reactive({})
 watch(
   dongcode,
   (newCode, oldCode) => {
-    console.log(dongcode.value)
+    //console.log(dongcode.value)
     getApartInfos()
   },
   { deep: true }
@@ -29,13 +30,16 @@ const getApartInfos = () => {
       page: page.value
     },
     ({ data }) => {
+      console.log(data)
       apartList.value = []
-      console.log(data.data.length)
-      console.log(apartList.value)
+      //console.log(data.data.length)
+      //console.log(apartList.value)
       for (var idx = 0; idx < data.data.length; idx++) {
         apartList.value.push(data.data[idx])
       }
-      console.log(apartList.value)
+      //console.log(apartList.value)
+      pageInfo.value = data.pageInfo
+      console.log(pageInfo.value)
     }
   ),
     (err) => {
@@ -53,11 +57,19 @@ onMounted(() => {
     <div class="search">
       <TheSearch />
     </div>
+
     <div v-for="apart in apartList.value" :key="apart.aptCode">
-      {{ apart.aptCode }}
-      {{ apart.dongCode }}
+      <TheApartCard
+        :aptCode="apart.aptCode"
+        :apartName="apart.apartmentName"
+        :year="apart.buildYear"
+        :dong="apart.dong"
+        :roadName="apart.roadName"
+        :jibun="apart.jibun"
+        :lat="apart.lat"
+        :lng="apart.lng"
+      />
     </div>
-    <TheApartCard />
   </div>
 </template>
 

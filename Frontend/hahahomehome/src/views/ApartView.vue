@@ -11,22 +11,6 @@ import { getApartListAPI } from '@/api/apartment'
 const route = useRoute()
 const dongcode = ref(route.params.code)
 const page = ref(1)
-
-// api로부터 apartment 정보를 가져온다.
-const getApartInfos = () => {
-  getApartListAPI(
-    {
-      dongcode: dongcode.value,
-      page: page.value
-    },
-    ({ data }) => {
-      console.log(data.data)
-    }
-  ),
-    (err) => {
-      console.log(err)
-    }
-}
 </script>
 
 <template>
