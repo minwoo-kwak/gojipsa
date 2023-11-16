@@ -1,11 +1,12 @@
-import { ref, inject } from 'vue'
+import { ref, inject,reactive } from 'vue'
 import { defineStore } from "pinia"
 
 
 export const useApartStore = defineStore('apartStore', () => {
     
     const dongcode=ref('')
-
+    
+    const apartMarker=ref([])
     const setDongcode=function(code){
         
         dongcode.value=code;
@@ -15,7 +16,8 @@ export const useApartStore = defineStore('apartStore', () => {
 
     return {
         dongcode,
-        setDongcode
+        setDongcode,
+        apartMarker
     }
 },
 {

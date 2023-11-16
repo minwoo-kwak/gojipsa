@@ -1,6 +1,4 @@
 <script setup>
-import ToggleFavorite from '../common/ToggleFavorite.vue'
-
 const props = defineProps({
   aptCode: String,
   apartName: String,
@@ -11,7 +9,6 @@ const props = defineProps({
   lat: String,
   lng: String
 })
-console.log(props)
 </script>
 
 <template>
