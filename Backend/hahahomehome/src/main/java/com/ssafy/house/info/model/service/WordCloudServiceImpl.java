@@ -1,10 +1,9 @@
 package com.ssafy.house.info.model.service;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,14 +16,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
+import com.ssafy.house.info.controller.WordCloudController;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
@@ -121,33 +119,22 @@ public class WordCloudServiceImpl implements WordCloudService {
 
 	@Override
 	public List<Map<String, Object>> doWordAnalysis() throws Exception {
-		BufferedReader br = new BufferedReader(new FileReader("data.txt"));
-		String line = br.readLine();
-		StringBuilder sb = new StringBuilder();
+		// 파일 경로를 지정합니다.
+		String filePath = "data.txt";
 
-		while (line != null) {
-			sb.append(line).append("\n");
-			line = br.readLine();
-		}
+		// 파일을 읽어오기 위해 ClassLoader를 사용합니다.
+		ClassLoader classLoader = WordCloudController.class.getClassLoader();
+		URL resource = classLoader.getResource(filePath);
 
-		String fileAsString = sb.toString();
-		System.out.println(fileAsString);
+		// 파일의 경로를 얻습니다.
+		Path path = Paths.get(resource.toURI());
 
-//		List<String> pList = this.getNounList(parsePDF());
-//		ClassPathResource resource = new ClassPathResource("data.txt");
-//
-//		Path path = Paths.get(resource.getPath());
-//		
-//		System.out.println("paht ==" +  path);
-//		Stream<String> lines = Files.lines(path);
-//
-//		String content = lines.collect(Collectors.joining(System.lineSeparator()));
-//		System.out.println(content);
-//		lines.close();
+		// 파일의 내용을 문자열로 읽어옵니다.
+		String content = new String(Files.readAllBytes(path));
 
-//		List<String> pList = this.getNounList(parsePDF());
-//		List<String> pList = this.getNounList(content);
-		List<String> pList = this.getNounList(fileAsString);
+		// 읽어온 내용을 출력하거나 다른 작업을 수행합니다.
+		System.out.println("파일 내용:\n" + content);
+		List<String> pList = this.getNounList(content);
 
 		if (pList == null) {
 			pList = new ArrayList<String>();
