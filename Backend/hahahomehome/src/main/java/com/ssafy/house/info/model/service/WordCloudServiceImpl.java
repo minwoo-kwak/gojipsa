@@ -15,6 +15,7 @@ import java.util.Set;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
@@ -25,9 +26,10 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 public class WordCloudServiceImpl implements WordCloudService {
 
 	@Override
-	public String parsePDF() {
-		String filePath = "C:/parsingtest.pdf";
-		File file = new File(filePath);
+	public String parsePDF() throws IOException {
+		ClassPathResource resource = new ClassPathResource("report.pdf");
+		String filePath = "./resources/report.pdf";
+		File file = resource.getFile();
 
 		try (PDDocument document = PDDocument.load(file);) {
 
