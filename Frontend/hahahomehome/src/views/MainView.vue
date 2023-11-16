@@ -10,9 +10,6 @@ import TheHeading from '../components/common/TheHeading.vue'
   <div>
     <div class="img-box">
       <div class="main-img"></div>
-      <div class="search">
-        <TheSearch />
-      </div>
     </div>
     <div class="contents">
       <BoardNotice />
@@ -36,16 +33,6 @@ import TheHeading from '../components/common/TheHeading.vue'
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-  }
-  .search {
-    position: absolute; /* 절대 위치 설정 */
-    top: 50%; /* 이미지 상단에서 중앙으로 이동 */
-    left: 50%; /* 이미지 가운데로 이동 */
-    transform: translate(-50%, 50%); /* 수평으로는 가운데, 수직으로는 아래로 이동 */
-    display: flex; /* 가로 정렬을 위해 추가 */
-    justify-content: space-between; /* 가로로 나란히 정렬 */
-    align-items: center; /* 세로 가운데 정렬을 위해 추가 */
-    width: 80%;
   }
 }
 </style>

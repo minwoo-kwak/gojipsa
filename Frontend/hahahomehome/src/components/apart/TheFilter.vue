@@ -1,28 +1,27 @@
 <script setup>
 import MultiRangeSlider from 'multi-range-slider-vue'
 import { ref } from 'vue'
-const barMin = ref(0.5)
-const barMax = ref(100)
-const barMinValue = ref(10)
-const barMaxValue = ref(90)
+import { storeToRefs } from 'pinia'
+import { useFilterStore } from '../../stores/filter'
 
-function updateValue(e) {
-  console.log(e)
-  barMinValue.value = e.minValue
-  barMaxValue.value = e.maxValue
-}
+const filterStore = useFilterStore()
+const { market, convenience, school, subway, bank, hospital } = storeToRefs(filterStore)
 </script>
 
 <template>
-  <div class="apart-filter">
-    <div class="filter-btn-group">
-      <v-btn color="light-green-lighten-4">편의점</v-btn>
-      <v-btn color="light-green-lighten-4">경찰서</v-btn>
+  <v-container fluid class="filter">
+    <div class="category">
+      <v-checkbox label="대형마트" color="success" v-model="market"></v-checkbox>
+      <v-checkbox label="편의점" color="secondary" v-model="convenience"></v-checkbox>
+      <v-checkbox label="학교" color="orange" v-model="school"></v-checkbox>
+      <v-checkbox label="지하철역" color="info" v-model="subway"></v-checkbox>
+      <v-checkbox label="은행" color="primary" v-model="bank"></v-checkbox>
+      <v-checkbox label="병원" color="red" v-model="hospital"></v-checkbox>
     </div>
-  </div>
+  </v-container>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 #price-unit {
   font-size: 0.7rem;
 }
@@ -34,17 +33,20 @@ function updateValue(e) {
   align-items: center;
   margin-left: 5px;
 }
-.apart-filter {
+.filter {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   position: fixed;
-  padding: 2px;
+  padding: 3px;
   z-index: 2;
   margin: 1rem;
-  width: 15rem;
-  height: 6rem;
+  width: 35rem;
+  height: 4rem;
   background-color: white;
   border-radius: 10px;
   border: solid 1px black;
+  .category {
+    display: flex;
+  }
 }
 </style>

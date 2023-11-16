@@ -122,7 +122,6 @@ watch(selectedDongName, onDongNameChange)
     variant="solo"
     v-model="selectedDongName"
   ></v-select>
-  <button style="background-color: white">검색 버튼</button>
 </template>
 
 <style scoped>
