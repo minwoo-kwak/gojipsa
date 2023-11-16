@@ -1,4 +1,4 @@
-package com.ssafy.house.board.model.service;
+package com.ssafy.house.info.model.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.house.board.model.dto.NewsDto;
+import com.ssafy.house.info.model.dto.NewsDto;
 
 @Service
 public class NewsServiceImpl implements NewsService {

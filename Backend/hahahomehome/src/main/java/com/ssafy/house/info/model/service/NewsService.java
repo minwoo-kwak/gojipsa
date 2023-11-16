@@ -1,11 +1,11 @@
-package com.ssafy.house.board.model.service;
+package com.ssafy.house.info.model.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.json.simple.parser.ParseException;
 
-import com.ssafy.house.board.model.dto.NewsDto;
+import com.ssafy.house.info.model.dto.NewsDto;
 
 public interface NewsService {
 	public List<NewsDto>  getNews(String currentPage) throws ParseException, UnsupportedEncodingException;
