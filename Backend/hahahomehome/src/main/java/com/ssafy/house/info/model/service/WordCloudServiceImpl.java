@@ -1,7 +1,13 @@
 package com.ssafy.house.info.model.service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -26,10 +34,9 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 public class WordCloudServiceImpl implements WordCloudService {
 
 	@Override
-	public String parsePDF() throws IOException {
-		ClassPathResource resource = new ClassPathResource("report.pdf");
-		String filePath = "./resources/report.pdf";
-		File file = resource.getFile();
+	public String parsePDF() {
+		String filePath = "C:/report.pdf";
+		File file = new File(filePath);
 
 		try (PDDocument document = PDDocument.load(file);) {
 
@@ -45,8 +52,13 @@ public class WordCloudServiceImpl implements WordCloudService {
 //			System.out.println(text);
 
 			// 정규식을 사용하여 한글, 영문, 숫자 이외의 문자를 공백으로 대체하고, 앞뒤 공백을 제거합니다.
-			String replace_text = text.replace("[^가-힣a-zA-Z0-9]", " ");
+			String replace_text = text.replaceAll("[^가-힣a-zA-Z0-9]", " ");
 			String trim_text = replace_text.trim();
+
+			FileWriter fileWriter = new FileWriter("C:/parserdtext.txt");
+			fileWriter.write(trim_text);
+
+			fileWriter.close();
 
 			return trim_text;
 		} catch (IOException e) {
@@ -83,33 +95,59 @@ public class WordCloudServiceImpl implements WordCloudService {
 		while (it.hasNext()) {
 			Map<String, Object> rMap = new HashMap<>();
 			String word = it.next();
-			if(isKeyword(word)) {
+			if (isKeyword(word)) {
 				continue;
 			}
-			
+
 			int frequency = Collections.frequency(pList, word);
-			if(frequency > 12) {
+			if (frequency > 12) {
 				rMap.put("text", word);
-				rMap.put("size", frequency);				
+				rMap.put("size", frequency);
 				rList.add(rMap);
 			}
 		}
 
 		return rList;
 	}
-	
-    public static boolean isKeyword(String word) {
-        // 특정 키워드들
-        Set<String> keywords = new HashSet<>(Arrays.asList("시장", "지수", "분기", "주택", "부동산", "국면", "전", "국", "주", "기", "소"));
 
-        // 대소문자 구분 없이 비교
-        return keywords.contains(word);
-    }
+	public static boolean isKeyword(String word) {
+		// 특정 키워드들
+		Set<String> keywords = new HashSet<>(
+				Arrays.asList("시장", "지수", "분기", "주택", "부동산", "국면", "전", "국", "주", "기", "소"));
+
+		// 대소문자 구분 없이 비교
+		return keywords.contains(word);
+	}
 
 	@Override
 	public List<Map<String, Object>> doWordAnalysis() throws Exception {
+		BufferedReader br = new BufferedReader(new FileReader("data.txt"));
+		String line = br.readLine();
+		StringBuilder sb = new StringBuilder();
 
-		List<String> pList = this.getNounList(parsePDF());
+		while (line != null) {
+			sb.append(line).append("\n");
+			line = br.readLine();
+		}
+
+		String fileAsString = sb.toString();
+		System.out.println(fileAsString);
+
+//		List<String> pList = this.getNounList(parsePDF());
+//		ClassPathResource resource = new ClassPathResource("data.txt");
+//
+//		Path path = Paths.get(resource.getPath());
+//		
+//		System.out.println("paht ==" +  path);
+//		Stream<String> lines = Files.lines(path);
+//
+//		String content = lines.collect(Collectors.joining(System.lineSeparator()));
+//		System.out.println(content);
+//		lines.close();
+
+//		List<String> pList = this.getNounList(parsePDF());
+//		List<String> pList = this.getNounList(content);
+		List<String> pList = this.getNounList(fileAsString);
 
 		if (pList == null) {
 			pList = new ArrayList<String>();
