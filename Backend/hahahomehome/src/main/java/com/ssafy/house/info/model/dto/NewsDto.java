@@ -1,4 +1,4 @@
-package com.ssafy.house.board.model.dto;
+package com.ssafy.house.info.model.dto;
 
 import java.util.Date;
 

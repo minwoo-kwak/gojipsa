@@ -18,11 +18,12 @@ let map
 let rv
 let rvClient
 
-let container = document.getElementById('container')
-
+let container
 var marker
 
 onMounted(() => {
+  container = document.getElementById('container')
+
   if (window.kakao && window.kakao.maps) {
     initMap()
   } else {
@@ -222,6 +223,7 @@ const closeRoadview = () => {
   width: 100%;
   padding-top: 1%;
 }
+
 #mapWrapper {
   width: 50%;
   padding: 0;

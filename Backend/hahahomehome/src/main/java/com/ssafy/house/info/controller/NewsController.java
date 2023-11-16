@@ -1,4 +1,4 @@
-package com.ssafy.house.board.controller;
+package com.ssafy.house.info.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.house.board.model.dto.NewsDto;
-import com.ssafy.house.board.model.service.NewsService;
+import com.ssafy.house.info.model.dto.NewsDto;
+import com.ssafy.house.info.model.service.NewsService;
 
 @RestController
 @RequestMapping("/api/v1/news")

@@ -1,8 +1,8 @@
 <script setup>
 import BoardNotice from '../components/board/BoardNotice.vue'
 import BoardNews from '../components/board/BoardNews.vue'
-import TheSearch from '../components/common/TheSearch.vue'
 import TheHeading from '../components/common/TheHeading.vue'
+import TheWordCloud from '../components/info/TheWordCloud.vue'
 </script>
 
 <template>
@@ -15,6 +15,7 @@ import TheHeading from '../components/common/TheHeading.vue'
       <BoardNotice />
       <BoardNews />
     </div>
+    <TheWordCloud />
   </div>
 </template>
 
