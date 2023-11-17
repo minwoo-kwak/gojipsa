@@ -25,7 +25,7 @@ import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("api/v1/apartment")
-@Api("아파트 정보 컨트롤로 API V1")
+@Api("아파트 정보 컨트롤러 API V1")
 public class ApartmentController {
 
 	private final ApartmentService apartmentService;
