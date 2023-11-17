@@ -52,27 +52,11 @@ const items = [
       </v-container>
     </v-form>
   </div>
-  <div>
-    <h2>찜목록</h2>
-    <div class="wishlist" v-for="item in items" :key="item.id">
-      {{ item.name }} <br />
-      {{ item.address }} <br />
-      거래일: {{ item.date }}<br />
-      <div class="price">{{ item.price }}억</div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
 .user-form {
   min-height: 300px;
   min-width: 960px;
-}
-.price {
-  font-size: 5rem;
-  color: red;
-}
-.wishlist {
-  border: 0.1rem solid black;
 }
 </style>

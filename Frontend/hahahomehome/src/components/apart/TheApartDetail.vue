@@ -2,18 +2,24 @@
 import ToggleFavorite from '../common/ToggleFavorite.vue'
 import TheCalculator from './TheCalculator.vue'
 import TheCheckList from './TheCheckList.vue'
+import { ref } from 'vue'
+
+const props = defineProps({
+  apartDetail: Object
+})
 </script>
 
 <template>
   <div class="container">
-    <h1 class="name">하하 아파트</h1>
+    <h1 class="name">{{ apartDetail.apartmentName }}</h1>
     <TheCheckList />
   </div>
   <div class="detail">
-    <div>서울특별시 강남구 역삼로 5층</div>
-    <div>거래일: 2023년 10월</div>
-    <div>가격: 20억</div>
-    <div>건축년도: 2023</div>
+    <div>
+      주소 : {{ apartDetail.dong }} {{ apartDetail.roadName }} {{ apartDetail.apartmentName }}
+    </div>
+    <div>건축년도 : {{ apartDetail.buildYear }}년</div>
+    <div>가격추이 :</div>
   </div>
   <TheCalculator />
 </template>
