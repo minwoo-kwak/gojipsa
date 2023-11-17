@@ -2,11 +2,13 @@
 import TheHeading from '../components/common/TheHeading.vue'
 import KakaoDetailMap from '../components/apart/KakaoDetailMap.vue'
 import TheApartDetail from '../components/apart/TheApartDetail.vue'
+import TheApartChart from '../components/apart/TheApartChart.vue'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const props = defineProps({
-  apartcode: String
-})
-console.log(props)
+const route = useRoute()
+
+const apartcode = ref(route.params.apartcode)
 </script>
 
 <template>
@@ -14,7 +16,10 @@ console.log(props)
   <div class="apart-detail-view">
     <!-- <KakaoDetailMap /> -->
     <KakaoDetailMap />
-    <TheApartDetail />
+    <div>
+      <TheApartDetail />
+      <TheApartChart :aptCode="apartcode" />
+    </div>
   </div>
 </template>
 

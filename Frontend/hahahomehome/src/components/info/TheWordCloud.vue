@@ -18,7 +18,7 @@ onMounted(() => {
     const container = d3.select(document.getElementById('wordcloud'))
 
     container
-      .append('svg')
+      .append('Line')
       .attr('width', width)
       .attr('height', height)
       .append('g')
