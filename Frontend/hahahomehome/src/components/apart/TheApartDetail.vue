@@ -12,7 +12,7 @@ const props = defineProps({
 <template>
   <div class="container">
     <h1 class="name">{{ apartDetail.apartmentName }}</h1>
-    <TheCheckList />
+    <TheCheckList :aptcode="props.apartDetail.aptCode" />
   </div>
   <div class="detail">
     <div>

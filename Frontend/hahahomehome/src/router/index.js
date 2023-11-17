@@ -48,7 +48,7 @@ const router = createRouter({
       component: () => import('../views/ApartDetailView.vue'),
     },
     {
-        path: '/apart/detail/checklist',
+        path: '/apart/detail/checklist/:apartcode',
         name: 'checklist',
       component: () => import('../views/CheckListPopUpView.vue'),
         beforeEnter: (to, from, next) => {

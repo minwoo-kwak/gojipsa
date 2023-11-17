@@ -3,5 +3,35 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.ssafy.house.checklist.model.mapper.ChecklistMapper">
-
+	
+	<!-- 사용자가 작성한 체크리스트 전부 보여주기 -->
+	<!-- parameter type은 사용자 id -->
+	<select id="showSummaryChecklist" parameterType="string" resultType="checklistSummaryDto">
+		select chlistId, aptCode, apartmentName, buildYear, dong, roadName,jibun
+		from houseinfo join (
+			select aptCode, chlist_id as chlistId
+			from checklist
+			where user_id=#{userId}
+		) as list
+		on houseinfo.aptCode=list.aptCode
+	</select>
+	
+	<!-- 사용자가 작성한 특정 체크리스트(checklist id로 구분) 내용 보여주기 -->
+	<select id="showDetailChecklist" parameterType="map" resultType="checklistDetailDto">
+		select chlistId,aptCode, apartmentName, buildYear, dong, roadName,jibun,score,description
+		from houseinfo join (
+			select chlist_id as chlistId, aptCode,score,description
+			from checklist
+			where chlist_id=#{chlistId}
+		) as list
+		on houseinfo.aptCode=list.aptCode
+	</select>
+	
+	<!-- 해당 아파트에 대한 체크리스트 작성 -->
+	<insert id="writeChecklist" parameterType="checklistWriteDto">
+		insert into checklist(aptCode,user_id,score,description)
+		values (#{aptCode},#{userId},#{score},#{description})
+	</insert>
+	
+	
 </mapper>
