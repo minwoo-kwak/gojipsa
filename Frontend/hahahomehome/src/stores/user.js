@@ -8,10 +8,11 @@ export const useUserStore = defineStore('userStore', () => {
 
     // Authorization 및 menuList를 ref로 생성합니다.
     const Authorization = ref(null);
+    const userName = ref();
     const menuList = ref([
         { name: '로그인', loginStatus: true, routeName: 'login' },
         { name: '회원가입', loginStatus: true, routeName: 'signup' },
-        { name: '게시판', loginStatus: false, routeName: 'login' },
+        { name: '', loginStatus: false, routeName: "hi"},
         { name: '마이페이지', loginStatus: false, routeName: 'mypage' },
         { name: '로그아웃', loginStatus: false, routeName: 'login' },
     ]);
@@ -22,6 +23,8 @@ export const useUserStore = defineStore('userStore', () => {
         await axios.post('/user/login', { userId, password })
             .then((response) => {
                 Authorization.value = response.data.Authorization;
+                userName.value = response.data.username;
+                menuList.value[2].name = `${userName.value}님 안녕하세요`
                 console.log(Authorization.value);
             });
         
@@ -39,6 +42,7 @@ export const useUserStore = defineStore('userStore', () => {
 
     async function logout() {
         Authorization.value = null
+        userName.value = null;
 
         if (Authorization.value === null) {
             menuList.value.forEach(element => {

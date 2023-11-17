@@ -36,6 +36,9 @@ async function logout() {
             <template v-if="menu.name == '로그아웃'">
               <router-link to="/" @click="logout()">{{ menu.name }}</router-link>
             </template>
+            <template v-else-if="menu.routeName === 'hi'">
+              {{ menu.name }}
+            </template>
             <!-- 그 외 메뉴 항목은 해당 routeName으로 라우팅 링크를 생성합니다. -->
             <template v-else>
               <router-link :to="{ name: menu.routeName }">{{ menu.name }}</router-link>
