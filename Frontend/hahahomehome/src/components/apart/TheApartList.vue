@@ -4,9 +4,11 @@ import TheApartCard from './TheApartCard.vue'
 import { useApartStore } from '../../stores/apart'
 import { storeToRefs } from 'pinia'
 import { getApartListAPI } from '@/api/apartment'
+import { useRouter } from 'vue-router'
 import { onMounted, ref, onUpdated, watch, toRaw, reactive } from 'vue'
 import PageNavigation from '../common/PageNavigation.vue'
 
+const router = useRouter()
 const props = defineProps({
   dongcode: String
 })
@@ -55,6 +57,13 @@ const onPageChange = (page) => {
   currentPage.value = page
   getApartInfos()
 }
+
+// ApartCard 클릭 시 aprtcode를 넘긴다.
+const onApartCardClick = (code) => {
+  console.log(code)
+  // detail page로 이동
+  router.push({ name: 'apartdetail', params: { apartcode: code } })
+}
 </script>
 
 <!--아파트 정보를 표시하는 사이드 바-->
@@ -77,6 +86,7 @@ const onPageChange = (page) => {
           :jibun="apart.jibun"
           :lat="apart.lat"
           :lng="apart.lng"
+          @click="onApartCardClick(apart.aptCode)"
         />
       </div>
     </div>
