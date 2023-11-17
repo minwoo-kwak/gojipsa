@@ -21,6 +21,11 @@ let rvClient
 let container
 var marker
 
+const props = defineProps({
+  lat: String,
+  lng: String,
+  apartmentName: String
+})
 onMounted(() => {
   container = document.getElementById('container')
 
@@ -38,7 +43,7 @@ onMounted(() => {
 })
 
 const initMap = () => {
-  var mapCenter = new kakao.maps.LatLng(33.450701, 126.570667)
+  var mapCenter = new kakao.maps.LatLng(props.lat, props.lng)
 
   const mapContainer = document.getElementById('map')
   const options = {
@@ -58,6 +63,20 @@ const initMap = () => {
   // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
   rvClient.getNearestPanoId(mapCenter, 130, function (panoId) {
     rv.setPanoId(panoId, mapCenter) //panoId와 중심좌표를 통해 로드뷰 실행
+  })
+
+  // 마커를 생성한다.
+  const imgSrc = '/src/assets/marker/buildingMarker.png'
+  const imgSize = new kakao.maps.Size(40, 50)
+  const buildingMarkerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
+
+  const buildingMarker = new kakao.maps.Marker({
+    map: map,
+    position: mapCenter,
+    title: props.apartmentName,
+    clickable: true,
+    removable: true,
+    image: buildingMarkerImage
   })
 
   // 로드뷰에 좌표가 바뀌었을 때 발생하는 이벤트를 등록합니다
