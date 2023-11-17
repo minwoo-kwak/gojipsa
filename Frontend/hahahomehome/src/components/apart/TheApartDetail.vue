@@ -1,12 +1,13 @@
 <script setup>
 import ToggleFavorite from '../common/ToggleFavorite.vue'
 import TheCalculator from './TheCalculator.vue'
+import TheCheckList from './TheCheckList.vue'
 </script>
 
 <template>
   <div class="container">
     <h1 class="name">하하 아파트</h1>
-    <v-btn prepend-icon="mdi-pencil-remove-outline" stacked>체크리스트</v-btn>
+    <TheCheckList />
   </div>
   <div class="detail">
     <div>서울특별시 강남구 역삼로 5층</div>
