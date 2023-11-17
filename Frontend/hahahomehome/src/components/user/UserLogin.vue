@@ -22,7 +22,7 @@ async function login() {
   if (redirect) {
     console.log('리다이렉트 있을 경우 !!')
     console.log('Redirecting to:', redirect)
-    router.push(redirect.toString).catch((err) => console.error(err))
+    router.push(`${redirect}`).catch((err) => console.error(err))
   } else {
     router.push('/')
   }
