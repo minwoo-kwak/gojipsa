@@ -7,6 +7,7 @@ const props = defineProps({
   apartcode: String
 })
 console.log(props)
+const aptcode = '111111'
 </script>
 
 <template>
