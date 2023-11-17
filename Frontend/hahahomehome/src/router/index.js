@@ -45,7 +45,25 @@ const router = createRouter({
     {
       path: '/apart/detail',
       name: 'apartdetail',
-      component: () => import('../views/ApartDetailView.vue')
+      component: () => import('../views/ApartDetailView.vue'),
+    },
+    {
+        path: '/apart/detail/checklist',
+        name: 'checklist',
+      component: () => import('../views/CheckListPopUpView.vue'),
+        beforeEnter: (to, from, next) => {
+        
+        console.log('이곳은 네비게이션 가드!! Authorization == ', sessionStorage.getItem('userStore')['Authorization'])
+        if (sessionStorage.getItem('userStore')['Authorization'] === null) {
+          next({
+            path: '/user/login',
+            // 다시 넘어올 수 있도록 경로를 넘겨준다.
+            query: { redirect: to.fullPath }, 
+          });
+        } else {
+          next();
+        }
+        }
     },
     {
       path:'/calculate',

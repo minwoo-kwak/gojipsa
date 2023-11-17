@@ -14,7 +14,18 @@ const password = ref('')
 async function login() {
   await userStore.login(userId.value, password.value)
 
-  router.push('/')
+  // 로그인 이전에 있었던 경로
+  const redirect = router.currentRoute.value.query.redirect
+  console.log('redirect ==', redirect)
+  console.log('redirect type ==', typeof redirect)
+  // 로그인 이전에 경로가 있었으면 그 경로로 가고 없으면 해당 페이지로 이동
+  if (redirect) {
+    console.log('리다이렉트 있을 경우 !!')
+    console.log('Redirecting to:', redirect)
+    router.push(redirect.toString).catch((err) => console.error(err))
+  } else {
+    router.push('/')
+  }
 }
 </script>
 

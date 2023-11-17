@@ -5,7 +5,7 @@ const local = localAxios();
 const url = "/wordcloud"
 
 async function getCloudData(success, fail) {
-    await local.get(`${url}/words`).then(success).catch(fail);
+     local.get(`${url}/words`).then(success).catch(fail);
 }
 
 
