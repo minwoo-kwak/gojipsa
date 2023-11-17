@@ -26,10 +26,20 @@ function getApartListAPI(param,success,fail){
     let page=param.page;
     local.get(`${url}/${dongcode}`,{params:{page:page}}).then(success).catch(fail);
 }
+
+function getApartDetailFromLocalAPI(aptCode, success, fail) {
+    local.get(`${url}/detail/${aptCode}`).then(success).catch(fail)
+}
+function getApartDealFromLocalAPI(aptCode, success, fail) {
+    local.get(`${url}/deal/${aptCode}`).then(success).catch(fail)
+}
+
 export {
     getSido,
     getGugun,
     getDongNameListFromLocalAPI,
     getDongCodeFromLocalAPI,
-    getApartListAPI
+    getApartListAPI,
+    getApartDetailFromLocalAPI,
+    getApartDealFromLocalAPI
 }
