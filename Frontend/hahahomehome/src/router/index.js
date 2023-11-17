@@ -43,7 +43,7 @@ const router = createRouter({
       component: ApartView,
     },
     {
-      path: '/apart/detail',
+      path: '/apart/detail/:apartcode',
       name: 'apartdetail',
       component: () => import('../views/ApartDetailView.vue'),
     },
