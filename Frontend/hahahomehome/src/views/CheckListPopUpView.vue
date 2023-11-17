@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-
+import { useRoute } from 'vue-router'
 const tickLabels = {
   0: '나쁨',
   1: '약간 나쁨',

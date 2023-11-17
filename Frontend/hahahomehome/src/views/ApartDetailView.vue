@@ -17,7 +17,7 @@ const apartcode = ref(route.params.apartcode)
     <!-- <KakaoDetailMap /> -->
     <KakaoDetailMap />
     <div>
-      <TheApartDetail />
+      <TheApartDetail :aptCode="apartcode" />
       <TheApartChart :aptCode="apartcode" />
     </div>
   </div>
