@@ -65,6 +65,7 @@ public class UserController {
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.UNAUTHORIZED);
 		}
 
+		resultMap.put("username", validUser.getName());
 		resultMap.put("Authorization", jwtUtil.createToken(validUser.getUserId(), validUser.getGrad()));
 
 		// 사용자가 일치하면 그 사용자를 반환
