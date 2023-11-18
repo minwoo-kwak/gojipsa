@@ -47,6 +47,13 @@
 		where user_id=#{userId} and chlist_id=#{chlistId} and aptCode=#{aptCode}
 	</update>
 	
+	<!-- 체크리스트 Primary Key 가져오기 -->
+	<select id="getChlistId" parameterType="map" resultType="integer">
+		select chlist_id as chlistId
+		from checklist
+		where user_id = #{userId} and aptCode = #{aptCode}
+	</select>
+	
 	<!-- 체크리스트 삭제 -->
 	<delete id="deleteChecklist" parameterType="map">
 		delete from checklist

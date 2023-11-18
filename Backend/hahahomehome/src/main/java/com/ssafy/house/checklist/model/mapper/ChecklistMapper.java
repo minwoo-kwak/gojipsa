@@ -18,6 +18,7 @@ public interface ChecklistMapper {
 	ChecklistDetailDto showDetailChecklist(Map<String,Object> map);
 	int updateChecklist(ChecklistUpdateDto dto);
 	int writeChecklist(ChecklistWriteDto dto);
+	Integer getChlistId(Map<String, Object> map);
 	int deleteChecklist(Map<String,Object> map);
 	Map<String,Object> loadChecklistContent(Map<String,Object> map);
 }
