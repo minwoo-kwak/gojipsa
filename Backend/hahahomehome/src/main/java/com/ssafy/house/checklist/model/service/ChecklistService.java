@@ -10,7 +10,10 @@ import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 
 public interface ChecklistService {
 	// 사용자가 작성한 checklist 가져오기(R)
-	List<ChecklistSummaryDto> getAllChecklistById(String userId);
+	List<ChecklistSummaryDto> getAllChecklistById(Map<String,Object> map);
+	
+	// 사용자가 작성한 checklist 전체 개수
+	long countChecklist(String userId);
 	
 	// 사용자가 작성한 checklist 세부 내용 가져오기(R)
 	ChecklistDetailDto getDetailChecklist(Map<String,Object> map);

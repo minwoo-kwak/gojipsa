@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,8 @@ import com.ssafy.house.checklist.model.dto.ChecklistSummaryDto;
 import com.ssafy.house.checklist.model.dto.ChecklistUpdateDto;
 import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 import com.ssafy.house.checklist.model.service.ChecklistService;
+import com.ssafy.house.util.ApartPageConstant;
+import com.ssafy.house.util.CheckListPageConstant;
 
 @RestController
 @RequestMapping("api/v1/checklist")
@@ -41,7 +44,8 @@ public class CheckListController {
 	
 
 	/***
-	 * 
+	 * 사용자가 작성한 체크리스트 가져오기 + pagination
+	 * @param page: 페이지 번호
 	 * @param request : 헤더에서 사용자의 id를 받아옴
 	 * @return : 사용자가 작성한 체크리스트의 아파트 정보와 체크리스트 id / 상태코드
 	 * @throws ParseException
@@ -49,7 +53,7 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@GetMapping("/")
-	public ResponseEntity<List<ChecklistSummaryDto>> showAllChecklist(HttpServletRequest request) throws ParseException{
+	public ResponseEntity<?> showAllChecklist(@RequestParam(value="page",required=false) String pageNo,HttpServletRequest request) throws ParseException{
 		
 		// 요청한 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
@@ -62,9 +66,43 @@ public class CheckListController {
 		JSONObject jsonObject=(JSONObject) parser.parse(payload);
 		String userId=(String)jsonObject.get("userId");
 		
-		List<ChecklistSummaryDto> result=checklistService.getAllChecklistById(userId);
+		// 응답으로 보낼 Map
+		Map<String,Object> resultMap=new HashMap<>();
 		
-		return new ResponseEntity<List<ChecklistSummaryDto>>(result,HttpStatus.OK);
+		// 체크리스트 목록을 가져올 때 필요한 정보를 map에 넣는다.
+		Map<String,Object> map=new HashMap<>();
+		map.put("userId", userId);
+		int pgno=pageNo==null?1:Integer.parseInt(pageNo);
+		int start=pgno*CheckListPageConstant.LIST_SIZE-CheckListPageConstant.LIST_SIZE;
+		map.put("start", start);
+		map.put("listSize",CheckListPageConstant.LIST_SIZE);
+		
+		// 페이지네이션을 적용하여 체크리스트 목록을 가져온다.
+		List<ChecklistSummaryDto> data=checklistService.getAllChecklistById(map);
+		resultMap.put("data", data);
+		
+		// 페이지 정보를 담을 HashMap
+		HashMap<String,Object> pageInfo=new HashMap<>();
+		long totalChecklistCnt=checklistService.countChecklist(userId);
+		long totalPageCnt=(long)Math.ceil((totalChecklistCnt*1.0)/CheckListPageConstant.NAVIGATION_SIZE);
+		pageInfo.put("totalPageCnt",totalPageCnt);
+		
+		// 페이지 그룹
+		int pageGroup=(int)Math.ceil(pgno*1.0/CheckListPageConstant.NAVIGATION_SIZE);
+		
+		// 첫 페이지 번호
+		long startPage=((pageGroup-1)*CheckListPageConstant.LIST_SIZE)+1;
+		pageInfo.put("startPage",startPage);
+		
+		// 화면에 보여질 마지막 페이지 번호
+		long lastPage=(pageGroup)*CheckListPageConstant.LIST_SIZE;
+		if(lastPage>totalPageCnt) lastPage=totalPageCnt;
+		pageInfo.put("lastPage",lastPage);
+		
+		resultMap.put("pageInfo",pageInfo);
+		
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+		
 	}
 	
 	/**
@@ -113,7 +151,7 @@ public class CheckListController {
 	@PostMapping("/")
 	public ResponseEntity<?> writeChecklist(@RequestBody ChecklistWriteDto writeDto, HttpServletRequest request) throws ParseException{
 		
-		// 사용자의 id를 얻는다.
+		 //사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
 		
 		String[] chunks=authorization.split("\\.");

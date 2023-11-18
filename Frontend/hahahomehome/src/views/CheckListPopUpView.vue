@@ -1,6 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 import { useRoute } from 'vue-router'
+import {writeChecklist} from '@/api/checklist'
+const route=useRoute()
+const apartcode=route.params.apartcode;
+
 const tickLabels = {
   0: '나쁨',
   1: '약간 나쁨',
@@ -8,33 +12,34 @@ const tickLabels = {
   3: '약간 좋음',
   4: '좋음'
 }
-const scores = {
-  0: ref(2),
-  1: ref(1),
-  2: ref(2),
-  3: ref(3),
-  4: ref(2),
-  5: ref(1),
-  6: ref(0),
-  7: ref(1),
-  8: ref(2),
-  9: ref(3),
-  10: ref(2)
-}
+const scores =[ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2)]
+const description=ref('')
 
-const saveScore = () => {
-  let result = ''
+const postChecklist = () => {
+  let score = ''
   for (var scoreIdx = 0; scoreIdx <= 10; scoreIdx++) {
-    result += scores[scoreIdx].value + ','
+    score += scores[scoreIdx].value + ','
   }
-
+  const newChecklist={
+    aptCode:apartcode,
+    userId:'',
+    score:score,
+    description:description.value
+  }
+  console.log('write checklist')
   // 저장된 값을 DB에 저장한다.
-
-  // 만약 사용자가 이미 작성한 글이 있는 경우(put)
-
-  // 사용자가 새로 작성한 경우(post)
+  // axios post
+  writeChecklist(
+    newChecklist,
+    (response)=>{
+      console.log(response)
+    },
+    (error)=>{
+      console.log(error)
+    }
+  )
 }
-console.log(window.opener)
+
 </script>
 
 <template>
@@ -51,7 +56,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['0'].value"
+            v-model="scores[0].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -63,7 +68,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['1'].value"
+            v-model="scores[1].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -75,7 +80,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['2'].value"
+            v-model="scores[2].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -87,7 +92,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['3'].value"
+            v-model="scores[3].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -102,7 +107,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['4'].value"
+            v-model="scores[4].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -114,7 +119,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['5'].value"
+            v-model="scores[5].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -126,7 +131,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['6'].value"
+            v-model="scores[6].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -138,7 +143,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['7'].value"
+            v-model="scores[7].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -150,7 +155,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['8'].value"
+            v-model="scores[8].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -162,7 +167,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['9'].value"
+            v-model="scores[9].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -174,7 +179,7 @@ console.log(window.opener)
             class="score-slider"
             :ticks="tickLabels"
             :max="4"
-            :model-value="scores['10'].value"
+            v-model="scores[10].value"
             show-ticks="always"
             step="1"
             tick-size="3"
@@ -188,6 +193,7 @@ console.log(window.opener)
             class="text-area"
             variant="filled"
             label="파손된 가구 등 특이사항을 작성해주세요"
+            v-model="description"
             rows="4"
             row-height="30"
             shaped
@@ -196,7 +202,7 @@ console.log(window.opener)
       </div>
     </div>
     <div class="d-flex justify-center">
-      <v-btn @click="saveScore">저장</v-btn>
+      <v-btn @click="postChecklist">저장</v-btn>
     </div>
   </div>
 </template>
