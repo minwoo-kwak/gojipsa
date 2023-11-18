@@ -26,8 +26,8 @@ public class ChecklistServiceImpl implements ChecklistService{
 	}
 
 	@Override
-	public List<ChecklistSummaryDto> getAllChecklistById(String userId) {
-		return checklistMapper.showSummaryChecklist(userId);
+	public List<ChecklistSummaryDto> getAllChecklistById(Map<String,Object> map) {
+		return checklistMapper.showSummaryChecklist(map);
 	}
 
 	@Override
@@ -43,6 +43,11 @@ public class ChecklistServiceImpl implements ChecklistService{
 	@Override
 	public int deleteChecklist(Map<String, Object> map) {
 		return checklistMapper.deleteChecklist(map);
+	}
+
+	@Override
+	public long countChecklist(String userId) {
+		return checklistMapper.countChecklist(userId);
 	}
 
 }

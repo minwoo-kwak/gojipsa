@@ -13,7 +13,8 @@ import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 @Mapper
 public interface ChecklistMapper {
 	
-	List<ChecklistSummaryDto> showSummaryChecklist(String string);
+	List<ChecklistSummaryDto> showSummaryChecklist(Map<String,Object> map);
+	long countChecklist(String userId);
 	ChecklistDetailDto showDetailChecklist(Map<String,Object> map);
 	int updateChecklist(ChecklistUpdateDto dto);
 	int writeChecklist(ChecklistWriteDto dto);

@@ -6,7 +6,7 @@
 	
 	<!-- 사용자가 작성한 체크리스트 전부 보여주기 -->
 	<!-- parameter type은 사용자 id -->
-	<select id="showSummaryChecklist" parameterType="string" resultType="checklistSummaryDto">
+	<select id="showSummaryChecklist" parameterType="map" resultType="checklistSummaryDto">
 		select chlistId, houseinfo.aptCode, apartmentName, buildYear, dong, roadName,jibun
 		from houseinfo join (
 			select aptCode, chlist_id as chlistId
@@ -14,6 +14,13 @@
 			where user_id=#{userId}
 		) as list
 		on houseinfo.aptCode=list.aptCode
+		LIMIT #{start},#{listSize}
+	</select>
+	
+	<select id="countChecklist" parameterType="string" resultType="long">
+		select count(*)
+		from checklist
+		where user_id=#{userId}
 	</select>
 	
 	<!-- 사용자가 작성한 특정 체크리스트(checklist id로 구분) 내용 보여주기 -->
