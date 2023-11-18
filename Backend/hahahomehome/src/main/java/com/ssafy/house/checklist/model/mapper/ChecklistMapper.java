@@ -7,13 +7,15 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.house.checklist.model.dto.ChecklistDetailDto;
 import com.ssafy.house.checklist.model.dto.ChecklistSummaryDto;
+import com.ssafy.house.checklist.model.dto.ChecklistUpdateDto;
 import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 
 @Mapper
 public interface ChecklistMapper {
 	
 	List<ChecklistSummaryDto> showSummaryChecklist(String string);
-	List<ChecklistDetailDto> showDetailChecklist(Map<String,String> map);
-	// int updateChecklist(ChecklistWriteDto dto);
+	ChecklistDetailDto showDetailChecklist(Map<String,Object> map);
+	int updateChecklist(ChecklistUpdateDto dto);
 	int writeChecklist(ChecklistWriteDto dto);
+	int deleteChecklist(Map<String,Object> map);
 }
