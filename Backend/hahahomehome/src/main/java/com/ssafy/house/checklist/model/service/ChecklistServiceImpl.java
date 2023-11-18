@@ -50,4 +50,9 @@ public class ChecklistServiceImpl implements ChecklistService{
 		return checklistMapper.countChecklist(userId);
 	}
 
+	@Override
+	public Map<String, Object> loadChecklistContent(Map<String, Object> map) {
+		return checklistMapper.loadChecklistContent(map);
+	}
+
 }
