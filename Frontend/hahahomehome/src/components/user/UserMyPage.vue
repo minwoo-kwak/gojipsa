@@ -2,7 +2,7 @@
 import { ref, inject, onMounted, onBeforeMount } from "vue";
 import TheApartCard from "@/components/apart/TheApartCard.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
-import { showAllChecklist, showDetailChecklist } from "@/api/checklist";
+import { showAllChecklist, showDetailChecklist, deleteChecklist } from "@/api/checklist";
 const axios = inject("axios");
 const userInfo = ref({
   userId: ref(""),
@@ -56,6 +56,31 @@ const onPageChange = (page) => {
   currentPage.value = page;
   getChecklistArray();
 };
+
+const selectedChecklistIds = ref([]);  // 선택된 체크리스트 아이디를 저장할 배열
+
+
+
+// 삭제 버튼 클릭 시 호출되는 함수
+const onDeleteButtonClick = async() => {
+  // 선택된 체크리스트 아이디들을 서버로 전달하여 삭제
+  await selectedChecklistIds.value.forEach((chlistId) => {
+    deleteChecklist(chlistId,
+    () => {
+      console.log(chlistId,"삭제 성공")
+    },
+    (error) => {
+      console.error("체크리스트 삭제 중 에러 발생", error);
+    });
+  })
+  
+  // 삭제 성공 시, 다시 체크리스트 목록을 갱신
+  getChecklistArray();
+  // 선택된 아이디들 초기화
+  selectedChecklistIds.value = [];
+  
+};
+
 </script>
 
 <template>
@@ -74,10 +99,17 @@ const onPageChange = (page) => {
     </v-form>
     <div id="checklist-container">
       <h1>체크리스트</h1>
+      <v-btn @click="onDeleteButtonClick" prepend-icon="mdi-check-circle" > <template v-slot:prepend>
+        <v-icon color="danger"></v-icon>
+      </template>삭제하기</v-btn>
       <div class="apart-card-list">
         <div v-if="checklistArray.length === 0">저장해놓은 찜이 없습니다.</div>
 
-        <div v-for="checklist in checklistArray.value" :key="checklist.aptCode">
+        <div class="checklist" v-for="checklist in checklistArray.value" :key="checklist.aptCode">
+        <v-checkbox
+          v-model="selectedChecklistIds"
+            :value="checklist.chlistId"
+            color="indigo"></v-checkbox>
           <TheApartCard
             :aptCode="checklist.aptCode"
             :apartName="checklist.apartmentName"
@@ -117,6 +149,14 @@ const onPageChange = (page) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.checklist{
+  display: flex;
+  border: 1px solid gray
+}
+.v-checkbox-btn {
+  display: inline;
 }
 
 .apart-card-list {
