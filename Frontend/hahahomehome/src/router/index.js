@@ -53,7 +53,7 @@ const router = createRouter({
       component: () => import('../views/CheckListPopUpView.vue'),
         beforeEnter: (to, from, next) => {
           console.log("sessionStorage.getItem('userStore') == ", sessionStorage.getItem('userStore'))
-          if (sessionStorage.getItem('userStore') === null || sessionStorage.getItem('userStore')['Authorization'] === null) {
+          if (sessionStorage.getItem('userStore') === null || JSON.parse(sessionStorage.getItem('userStore'))['Authorization'] === null) {
           next({
             path: '/user/login',
             // 다시 넘어올 수 있도록 경로를 넘겨준다.
