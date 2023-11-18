@@ -1,20 +1,26 @@
 package com.ssafy.house.checklist.model.service;
 
+import java.util.List;
+import java.util.Map;
+
+import com.ssafy.house.checklist.model.dto.ChecklistDetailDto;
+import com.ssafy.house.checklist.model.dto.ChecklistSummaryDto;
+import com.ssafy.house.checklist.model.dto.ChecklistUpdateDto;
 import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 
 public interface ChecklistService {
 	// 사용자가 작성한 checklist 가져오기(R)
-	// 필요한 정보(아파트 코드, 아파트 이름, 아파트 위치)
-		
+	List<ChecklistSummaryDto> getAllChecklistById(String userId);
+	
 	// 사용자가 작성한 checklist 세부 내용 가져오기(R)
-	// 필요한 정보 (아파트 코드, 아파트 이름, 아파트 위치, 사용자가 입력한 값 정보)
-		
+	ChecklistDetailDto getDetailChecklist(Map<String,Object> map);
+	
 	// 사용자 checklist 작성하기(C)
-	// 필요한 값: 아파트 코드, 사용자 id, 사용자가 입력한 값(score, description)
 	int writeChecklist(ChecklistWriteDto dto);
 	
 	// 사용자 checklist 수정하기(U)
-	//int updateChecklist(ChecklistWriteDto dto);
+	int updateChecklist(ChecklistUpdateDto dto);
 	
 	// 사용자 checklist 삭제하기(D)
+	int deleteChecklist(Map<String,Object> map);
 }

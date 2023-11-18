@@ -1,7 +1,7 @@
 package com.ssafy.house.checklist.model.dto;
 
 public class ChecklistSummaryDto {
-	String chlistId;
+	int chlistId;
 	String aptCode;
 	String apartmentName;
 	int buildYear;

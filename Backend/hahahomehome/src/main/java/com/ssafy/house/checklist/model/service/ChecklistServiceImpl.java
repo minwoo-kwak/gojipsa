@@ -1,7 +1,13 @@
 package com.ssafy.house.checklist.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
+import com.ssafy.house.checklist.model.dto.ChecklistDetailDto;
+import com.ssafy.house.checklist.model.dto.ChecklistSummaryDto;
+import com.ssafy.house.checklist.model.dto.ChecklistUpdateDto;
 import com.ssafy.house.checklist.model.dto.ChecklistWriteDto;
 import com.ssafy.house.checklist.model.mapper.ChecklistMapper;
 
@@ -17,6 +23,26 @@ public class ChecklistServiceImpl implements ChecklistService{
 	@Override
 	public int writeChecklist(ChecklistWriteDto dto) {
 		return checklistMapper.writeChecklist(dto);
+	}
+
+	@Override
+	public List<ChecklistSummaryDto> getAllChecklistById(String userId) {
+		return checklistMapper.showSummaryChecklist(userId);
+	}
+
+	@Override
+	public ChecklistDetailDto getDetailChecklist(Map<String, Object> map) {
+		return checklistMapper.showDetailChecklist(map);
+	}
+
+	@Override
+	public int updateChecklist(ChecklistUpdateDto dto) {
+		return checklistMapper.updateChecklist(dto);
+	}
+
+	@Override
+	public int deleteChecklist(Map<String, Object> map) {
+		return checklistMapper.deleteChecklist(map);
 	}
 
 }
