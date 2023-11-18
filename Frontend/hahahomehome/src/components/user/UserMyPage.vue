@@ -46,16 +46,9 @@ const getChecklistArray = () => {
   );
 };
 
-function onApartCardClick(chlistId) {
-  console.log("클릭 chlistId == ", chlistId);
-  showDetailChecklist(
-    chlistId,
-    ({data}) => {
-      console.log("체크리스트 data == ", data)
-    }, (error) => {
-      console.log("체크리스트 상세보기 에러 발생", error)
-    }
-  )
+function onApartCardClick(aptCode) {
+  console.log("클릭 aptCode == ", aptCode);
+  window.open(`/apart/detail/checklist/${aptCode}`, '_blank', 'width=700, height=720')
 
 }
 
@@ -94,7 +87,7 @@ const onPageChange = (page) => {
             :jibun="checklist.jibun"
             :lat="''"
             :lng="''"
-            @click="onApartCardClick(checklist.chlistId)"
+            @click="onApartCardClick(checklist.aptCode)"
           />
         </div>
       </div>
