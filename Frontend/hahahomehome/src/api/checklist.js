@@ -19,9 +19,14 @@ function loadSavedChecklist(aptCode,success,fail){
     local.get(`${url}/load/${aptCode}`).then(success).catch(fail)
 }
 
+function deleteChecklist(chlistId, success, fail) {
+    local.delete(`${url}/${chlistId}`).then(success).catch(fail)
+}
+
 export{
     writeChecklist,
     showAllChecklist,
     showDetailChecklist,
     loadSavedChecklist,
+    deleteChecklist
 }

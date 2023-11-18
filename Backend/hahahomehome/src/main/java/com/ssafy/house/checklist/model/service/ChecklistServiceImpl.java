@@ -1,5 +1,6 @@
 package com.ssafy.house.checklist.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,25 @@ public class ChecklistServiceImpl implements ChecklistService{
 
 	@Override
 	public int writeChecklist(ChecklistWriteDto dto) {
-		return checklistMapper.writeChecklist(dto);
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", dto.getUserId());
+		map.put("aptCode", dto.getAptCode());
+		
+		Integer chlistId = checklistMapper.getChlistId(map);
+		// 신규 등록일 경우
+		if(chlistId == null) {
+			return checklistMapper.writeChecklist(dto);
+		} // 신규 등록이 아닐 경우
+		else {
+			ChecklistUpdateDto updateDto = new ChecklistUpdateDto();
+			updateDto.setChlistId(chlistId);
+			updateDto.setAptCode(dto.getAptCode());
+			updateDto.setDescription(dto.getDescription());
+			updateDto.setScore(dto.getScore());
+			updateDto.setUserId(dto.getUserId());
+			return checklistMapper.updateChecklist(updateDto);
+		}
+		
 	}
 
 	@Override
