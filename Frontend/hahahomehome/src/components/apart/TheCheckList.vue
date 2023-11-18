@@ -9,8 +9,7 @@ const props = defineProps({
 })
 const showCheckList = () => {
   // 로그인 정보가 없으면
-  console.log("sessionStorage.getItem('userStore')['Authorization']", sessionStorage.getItem('userStore')['Authorization'])
-  if(sessionStorage.getItem('userStore') === null || sessionStorage.getItem('userStore')['Authorization'] === null || sessionStorage.getItem('userStore')['Authorization'] === undefined) {
+  if(sessionStorage.getItem('userStore') === null || JSON.parse(sessionStorage.getItem('userStore'))['Authorization'] === null) {
     // 현재 페이지의 경로
     const currentPath = router.currentRoute.value.path;
     alert("체크리스트를 이용하려면 로그인을 해야합니다.")
