@@ -33,9 +33,12 @@ const postChecklist = () => {
     newChecklist,
     (response)=>{
       console.log(response)
+      alert('체크리스트 등록 성공!')
+      window.close()
     },
     (error)=>{
       console.log(error)
+      alert('체크리스트 등록 실패!')
     }
   )
 }
