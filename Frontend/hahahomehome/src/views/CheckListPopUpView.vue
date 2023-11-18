@@ -1,10 +1,17 @@
 <script setup>
-import { ref,reactive } from 'vue'
+import { ref,reactive,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import {writeChecklist} from '@/api/checklist'
+import {writeChecklist,loadSavedChecklist} from '@/api/checklist'
 const route=useRoute()
 const apartcode=route.params.apartcode;
-
+const houseInfo=ref({
+  apartmentName:'',
+  aptCode:'',
+  buildYear:'',
+  dong:'',
+  roadName:'',
+  jibun:''
+})
 const tickLabels = {
   0: '나쁨',
   1: '약간 나쁨',
@@ -15,6 +22,32 @@ const tickLabels = {
 const scores =[ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2)]
 const description=ref('')
 
+onMounted(()=>{
+  console.log('mounted')
+  loadSavedChecklist(apartcode,
+  ({data})=>{
+    houseInfo.value.apartmentName=data.houseInfo.apartmentName;
+    houseInfo.value.aptCode=data.houseInfo.aptCode;
+    houseInfo.value.buildYear=data.houseInfo.buildYear;
+    houseInfo.value.dong=data.houseInfo.dong;
+    houseInfo.value.roadName=data.houseInfo.roadName;
+    houseInfo.value.jibun=data.houseInfo.jibun;
+    console.log(data)
+    if (data.content!=null){
+      // 기존 값으로 넣어야 함
+      let savedScores=data.content.score.split(",");
+      // 마지막은 의미가 없으므로 지움
+      savedScores.pop()
+      for (var idx=0;idx<savedScores.length;idx++){
+        scores[idx].value=Number(savedScores[idx])
+      }
+      description.value=data.content.description
+    }
+  },
+  (err)=>{
+    console.log(err)
+  })
+})
 const postChecklist = () => {
   let score = ''
   for (var scoreIdx = 0; scoreIdx <= 10; scoreIdx++) {
@@ -50,6 +83,9 @@ const postChecklist = () => {
     <div class="title mb-15">
       <h1>매물 체크리스트</h1>
     </div>
+    <p>아파트 명 : {{ houseInfo.apartmentName }}</p>
+    <p>건축연도 : {{ houseInfo.buildYear }}</p>
+    <p>위치 : {{ houseInfo.roadName }} {{ houseInfo.dong }} {{ houseInfo.jibun }}</p>
     <div class="content">
       <div class="about-outdoor mb-15">
         <h3 class="mb-5">건물 내/외부</h3>

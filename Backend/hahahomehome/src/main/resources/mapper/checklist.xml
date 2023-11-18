@@ -52,4 +52,10 @@
 		delete from checklist
 		where chlist_id=#{chlistId} and user_id=#{userId}
 	</delete>
+	
+	<select id="loadChecklistContent" parameterType="map" resultType="map">
+		select chlist_id as chlistId,score,description
+		from checklist
+		where user_id=#{userId} and aptCode=#{aptCode}
+	</select>
 </mapper>

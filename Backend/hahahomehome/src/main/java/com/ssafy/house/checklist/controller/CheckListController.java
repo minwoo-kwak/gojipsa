@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.house.annotation.AuthRequired;
+import com.ssafy.house.apartment.model.dto.HouseDetailInfo;
+import com.ssafy.house.apartment.model.service.ApartmentService;
 import com.ssafy.house.checklist.model.dto.ChecklistDetailDto;
 import com.ssafy.house.checklist.model.dto.ChecklistSummaryDto;
 import com.ssafy.house.checklist.model.dto.ChecklistUpdateDto;
@@ -37,9 +39,11 @@ import com.ssafy.house.util.CheckListPageConstant;
 public class CheckListController {
 	
 	private final ChecklistService checklistService;
-
-	public CheckListController(ChecklistService checklistService) {
+	private final ApartmentService apartmentService;
+	
+	public CheckListController(ChecklistService checklistService,ApartmentService apartmentService) {
 		this.checklistService = checklistService;
+		this.apartmentService=apartmentService;
 	}
 	
 
@@ -240,5 +244,39 @@ public class CheckListController {
 			return new ResponseEntity(HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+	}
+	
+	@ResponseBody
+	@AuthRequired
+	@GetMapping("/load/{aptCode}")
+	public ResponseEntity<Map<String,Object>> loadSavedChecklist(@PathVariable("aptCode") String aptCode, HttpServletRequest request) throws ParseException{
+		// 결과를 담을 map
+		Map<String,Object> resultMap=new HashMap<>();
+		
+		HouseDetailInfo houseInfo=apartmentService.getApartDetail(Long.parseLong(aptCode));
+		resultMap.put("houseInfo", houseInfo);
+		
+		// 사용자의 id를 얻는다.
+		String authorization=request.getHeader("Authorization");
+		
+
+		String[] chunks=authorization.split("\\.");
+		Base64.Decoder decoder=Base64.getUrlDecoder();
+		String payload=new String(decoder.decode(chunks[1]));
+		
+		JSONParser parser=new JSONParser();
+		JSONObject jsonObject=(JSONObject) parser.parse(payload);
+		String userId=(String)jsonObject.get("userId");
+		
+		// 사용자 id로 해당 aptcode의 checklist를 가져온다.
+		Map<String,Object> param=new HashMap<>();
+		param.put("userId", userId);
+		param.put("aptCode", aptCode);
+		Map<String,Object> content=checklistService.loadChecklistContent(param);
+		
+		resultMap.put("content", content);
+		System.out.println(resultMap);
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+		
 	}
 }
