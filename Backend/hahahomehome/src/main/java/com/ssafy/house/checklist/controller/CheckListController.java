@@ -54,7 +54,7 @@ public class CheckListController {
 	@AuthRequired
 	@GetMapping("/")
 	public ResponseEntity<?> showAllChecklist(@RequestParam(value="page",required=false) String pageNo,HttpServletRequest request) throws ParseException{
-		
+		System.out.println("pageNo == " + pageNo);
 		// 요청한 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
 		

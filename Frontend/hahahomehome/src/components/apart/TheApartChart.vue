@@ -33,7 +33,6 @@ const dataList = ref([])
 
 <template>
   <div>
-    {{ dataList.value }}
     <Chart
       class="mb-5"
       :size="{ width: 1000, height: 500 }"
