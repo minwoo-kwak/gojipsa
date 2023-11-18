@@ -1,50 +1,68 @@
 <script setup>
-import { ref, inject } from 'vue'
-import TheCheckList from '../apart/TheCheckList.vue'
-import TheApartCard from '@/components/apart/TheApartCard.vue'
-import PageNavigation from '@/components/common/PageNavigation.vue'
-const axios = inject('axios')
+import { ref, inject, onMounted, onBeforeMount } from "vue";
+import TheApartCard from "@/components/apart/TheApartCard.vue";
+import PageNavigation from "@/components/common/PageNavigation.vue";
+import { showAllChecklist, showDetailChecklist } from "@/api/checklist";
+const axios = inject("axios");
 const userInfo = ref({
-  userId: ref(''),
-  name: ref(''),
-  currentPassword: ref(''),
-  newPassword: ref('')
-})
+  userId: ref(""),
+  name: ref(""),
+  currentPassword: ref(""),
+  newPassword: ref(""),
+});
 
+// 현재 페이지 수
+const currentPage = ref(1);
+// 총 페이지 수
+const totalPage = ref(0);
+
+const checklistArray = ref([]);
 {
-  axios.get('/user/mypage').then((response) => {
-    userInfo.value = response.data
+  axios.get("/user/mypage").then((response) => {
+    userInfo.value = response.data;
 
-    console.log(sessionStorage.getItem('userStore'))
-  })
+    console.log(sessionStorage.getItem("userStore"));
+  });
 }
 
-const items = ref([
-  {
-    aptCode: 1111111,
-    apartName: '안녕디지몬아파트',
-    year: 2018,
-    dong: '친구들 모두안녕동',
-    roadName: '부릉로',
-    jibun: '1313',
-    lat: '232323',
-    lng: '23232323'
-  },
-  {
-    aptCode: 1111111,
-    apartName: '안녕디지몬아파트',
-    year: 2018,
-    dong: '친구들 모두안녕동',
-    roadName: '부릉로',
-    jibun: '1313',
-    lat: '232323',
-    lng: '23232323'
-  }
-])
+onMounted(async () => {
+  await getChecklistArray();
+});
 
-function onApartCardClick(aptCode) {
-  console.log('클릭 aptCode == ', aptCode)
+const getChecklistArray = () => {
+  showAllChecklist(
+    currentPage.value,
+    ({ data }) => {
+      console.log("getChecklist data : ", data);
+
+      checklistArray.value = ref(data.data);
+      console.log("checklistArray.value", checklistArray.value);
+
+      totalPage.value = data.pageInfo.totalPageCnt;
+    },
+    (error) => {
+      console.log("체크리스트 가져오는 데 에러발생", error);
+    }
+  );
+};
+
+function onApartCardClick(chlistId) {
+  console.log("클릭 chlistId == ", chlistId);
+  showDetailChecklist(
+    chlistId,
+    ({data}) => {
+      console.log("체크리스트 data == ", data)
+    }, (error) => {
+      console.log("체크리스트 상세보기 에러 발생", error)
+    }
+  )
+
 }
+
+const onPageChange = (page) => {
+  currentPage.value = page;
+  getChecklistArray();
+};
 </script>
 
 <template>
@@ -53,27 +71,30 @@ function onApartCardClick(aptCode) {
       <v-container grid-list-xs>
         <v-row><v-text-field label="아이디" v-model="userInfo.userId" /></v-row>
         <v-row><v-text-field label="이름" v-model="userInfo.name" /></v-row>
-        <v-row><v-text-field label="현재 패스워드" v-model="userInfo.currentPassword" /></v-row>
-        <v-row><v-text-field label="새로운 패스워드" v-model="userInfo.newPassword" /></v-row>
+        <v-row
+          ><v-text-field label="현재 패스워드" v-model="userInfo.currentPassword"
+        /></v-row>
+        <v-row
+          ><v-text-field label="새로운 패스워드" v-model="userInfo.newPassword"
+        /></v-row>
       </v-container>
     </v-form>
     <div id="checklist-container">
       <h1>체크리스트</h1>
       <div class="apart-card-list">
-        <div v-if="items.length == 0">저장해놓은 찜이 없습니다.</div>
+        <div v-if="checklistArray.length === 0">저장해놓은 찜이 없습니다.</div>
 
-        <div v-for="item in items.value" :key="item.aptCode">
+        <div v-for="checklist in checklistArray.value" :key="checklist.aptCode">
           <TheApartCard
-            v-if="items.value !== null"
-            :aptCode="item.aptCode"
-            :apartName="item.apartmentName"
-            :year="item.buildYear"
-            :dong="item.dong"
-            :roadName="item.roadName"
-            :jibun="item.jibun"
-            :lat="item.lat"
-            :lng="item.lng"
-            @click="onApartCardClick(item.aptCode)"
+            :aptCode="checklist.aptCode"
+            :apartName="checklist.apartmentName"
+            :year="checklist.buildYear"
+            :dong="checklist.dong"
+            :roadName="checklist.roadName"
+            :jibun="checklist.jibun"
+            :lat="''"
+            :lng="''"
+            @click="onApartCardClick(checklist.chlistId)"
           />
         </div>
       </div>
@@ -99,6 +120,17 @@ function onApartCardClick(aptCode) {
 }
 
 #checklist-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.apart-card-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width:80%;
 }
 </style>
