@@ -2,7 +2,7 @@
 import { ref, inject, onMounted, onBeforeMount } from "vue";
 import TheApartCard from "@/components/apart/TheApartCard.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
-import { showAllChecklist } from "@/api/checklist";
+import { showAllChecklist, showDetailChecklist } from "@/api/checklist";
 const axios = inject("axios");
 const userInfo = ref({
   userId: ref(""),
@@ -46,8 +46,17 @@ const getChecklistArray = () => {
   );
 };
 
-function onApartCardClick(aptCode) {
-  console.log("클릭 aptCode == ", aptCode);
+function onApartCardClick(chlistId) {
+  console.log("클릭 chlistId == ", chlistId);
+  showDetailChecklist(
+    chlistId,
+    ({data}) => {
+      console.log("체크리스트 data == ", data)
+    }, (error) => {
+      console.log("체크리스트 상세보기 에러 발생", error)
+    }
+  )
+
 }
 
 const onPageChange = (page) => {
@@ -85,7 +94,7 @@ const onPageChange = (page) => {
             :jibun="checklist.jibun"
             :lat="''"
             :lng="''"
-            @click="onApartCardClick(checklist.aptCode)"
+            @click="onApartCardClick(checklist.chlistId)"
           />
         </div>
       </div>

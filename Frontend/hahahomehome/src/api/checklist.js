@@ -12,6 +12,9 @@ function showAllChecklist(pageNo, success, fail) {
     local.get(`${url}/`,{params: {page: pageNo}}).then(success).catch(fail)
 }
 
+function showDetailChecklist(chlistId, success, fail) {
+    local.get(`${url}/${chlistId}`).then(success).catch(fail)
+} 
 
 export{
     writeChecklist,
