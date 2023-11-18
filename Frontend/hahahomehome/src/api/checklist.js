@@ -15,8 +15,13 @@ function showAllChecklist(pageNo, success, fail) {
 function showDetailChecklist(chlistId, success, fail) {
     local.get(`${url}/${chlistId}`).then(success).catch(fail)
 } 
+function loadSavedChecklist(aptCode,success,fail){
+    local.get(`${url}/load/${aptCode}`).then(success).catch(fail)
+}
 
 export{
     writeChecklist,
-    showAllChecklist
+    showAllChecklist,
+    showDetailChecklist,
+    loadSavedChecklist,
 }

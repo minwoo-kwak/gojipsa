@@ -26,4 +26,7 @@ public interface ChecklistService {
 	
 	// 사용자 checklist 삭제하기(D)
 	int deleteChecklist(Map<String,Object> map);
+	
+	// 사용자가 작성한 checklist 내용 가져오기
+	Map<String,Object> loadChecklistContent(Map<String,Object> map);
 }
