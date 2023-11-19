@@ -34,6 +34,10 @@ import com.ssafy.house.checklist.model.service.ChecklistService;
 import com.ssafy.house.util.ApartPageConstant;
 import com.ssafy.house.util.CheckListPageConstant;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("api/v1/checklist")
 public class CheckListController {
@@ -57,8 +61,9 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@GetMapping("/")
-	public ResponseEntity<?> showAllChecklist(@RequestParam(value="page",required=false) String pageNo,HttpServletRequest request) throws ParseException{
-		System.out.println("pageNo == " + pageNo);
+	@ApiOperation(value="체크리스트 리스트 가져오기",notes="페이지 번호에 해당하는 체크리스트들을 가져오는 API")
+	public ResponseEntity<?> showAllChecklist(@RequestParam(value="page",required=false) @ApiParam(value = "페이지 번호", required = false) String pageNo,HttpServletRequest request) throws ParseException{
+	
 		// 요청한 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
 		
@@ -119,7 +124,8 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@GetMapping("/{chlistId}")
-	public ResponseEntity<ChecklistDetailDto> showDetailChecklist(@PathVariable("chlistId") int chlistId,HttpServletRequest request) throws ParseException{
+	@ApiOperation(value="체크리스트 세부 내용 가져오기",notes="체크리스트 id로 세부 내용을 가져오는 API")
+	public ResponseEntity<ChecklistDetailDto> showDetailChecklist(@PathVariable("chlistId") @ApiParam(value = "체크리스트 아이디", required = true) int chlistId,HttpServletRequest request) throws ParseException{
 		
 		// 요청한 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
@@ -153,6 +159,7 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@PostMapping("/")
+	@ApiOperation(value="체크리스트 작성하기",notes="체크리스트를 작성하는 API")
 	public ResponseEntity<?> writeChecklist(@RequestBody ChecklistWriteDto writeDto, HttpServletRequest request) throws ParseException{
 		
 		 //사용자의 id를 얻는다.
@@ -187,7 +194,8 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@PutMapping("/")
-	public ResponseEntity<?> updateChecklist(@RequestBody ChecklistUpdateDto updateDto, HttpServletRequest request) throws ParseException{
+	@ApiOperation(value="체크리스트 수정하기",notes="체크리스트를 수정하는 API")
+	public ResponseEntity<?> updateChecklist(@RequestBody @ApiParam(value = "수정할 체크리스트 정보", required = true) ChecklistUpdateDto updateDto, HttpServletRequest request) throws ParseException{
 		
 		// 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
@@ -222,7 +230,8 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@DeleteMapping("/{chlistId}")
-	public ResponseEntity<?> deleteChecklist(@PathVariable("chlistId") int chlistId,HttpServletRequest request) throws ParseException{
+	@ApiOperation(value="체크리스트 삭제하기",notes="체크리스트를 삭제하는 API")
+	public ResponseEntity<?> deleteChecklist(@PathVariable("chlistId") @ApiParam(value = "삭제할 체크리스트 아이디", required = true) int chlistId,HttpServletRequest request) throws ParseException{
 		// 사용자의 id를 얻는다.
 		String authorization=request.getHeader("Authorization");
 		
@@ -249,7 +258,8 @@ public class CheckListController {
 	@ResponseBody
 	@AuthRequired
 	@GetMapping("/load/{aptCode}")
-	public ResponseEntity<Map<String,Object>> loadSavedChecklist(@PathVariable("aptCode") String aptCode, HttpServletRequest request) throws ParseException{
+	@ApiOperation(value="저장한 체크리스트를 불러오기",notes="기존 저장된 체크리스트 정보를 불러오는 API")
+	public ResponseEntity<Map<String,Object>> loadSavedChecklist(@PathVariable("aptCode") @ApiParam(value = "아파트 코드", required = true) String aptCode, HttpServletRequest request) throws ParseException{
 		// 결과를 담을 map
 		Map<String,Object> resultMap=new HashMap<>();
 		

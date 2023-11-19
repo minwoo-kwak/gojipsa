@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.house.info.model.dto.NewsDto;
 import com.ssafy.house.info.model.service.NewsService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/v1/news")
 public class NewsController {
@@ -25,6 +27,7 @@ public class NewsController {
 	}
 
 	@GetMapping("/{start}")
+	@ApiOperation(value="뉴스 정보를 가져오기",notes="뉴스 정보를 보여주는 API")
 	public ResponseEntity<List<NewsDto>> getNews(@PathVariable("start") String start) {
 		List<NewsDto> newsList = null;
 		try {
