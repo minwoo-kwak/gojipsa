@@ -3,6 +3,7 @@ import BoardNotice from '../components/board/BoardNotice.vue'
 import BoardNews from '../components/board/BoardNews.vue'
 import TheHeading from '../components/common/TheHeading.vue'
 import TheWordCloud from '../components/info/TheWordCloud.vue'
+import TheNationalMap from '../components/apart/TheNationalMap.vue'
 </script>
 
 <template>
@@ -16,6 +17,7 @@ import TheWordCloud from '../components/info/TheWordCloud.vue'
       <BoardNews />
     </div>
     <TheWordCloud />
+    <TheNationalMap />
   </div>
 </template>
 
