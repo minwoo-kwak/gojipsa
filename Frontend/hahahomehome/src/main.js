@@ -2,12 +2,15 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+
+
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import App from './App.vue'
 import router from './router'
+
 
 // Vuetify 기본 세팅
 // https://vuetifyjs.com/en/getting-started/installation/#existing-projects
@@ -49,5 +52,6 @@ app.provide('axios', instance)
 app.use(createPinia().use(piniaPluginPersistedstate))
 app.use(router)
 app.use(vuetify)
+
 
 app.mount('#app')

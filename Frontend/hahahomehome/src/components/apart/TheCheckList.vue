@@ -20,7 +20,7 @@ const showCheckList = () => {
 
   } else {
     // 새 창으로 이동
-    window.open(`/apart/detail/checklist/${props.aptcode}`, '_blank', 'width=700, height=720')
+    window.open(`/apart/detail/checklist/${props.aptcode}`, '_blank', 'width=750, height=720')
 
   }
 

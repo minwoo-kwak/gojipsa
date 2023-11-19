@@ -2,6 +2,7 @@
 import { ref,reactive,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {writeChecklist,loadSavedChecklist} from '@/api/checklist'
+import html2pdf from 'html2pdf.js'
 const route=useRoute()
 const apartcode=route.params.apartcode;
 const houseInfo=ref({
@@ -22,8 +23,22 @@ const tickLabels = {
 const scores =[ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2),ref(2)]
 const description=ref('')
 
+const contentToConvert=ref(null);
+
+const convertToPdf=()=>{
+  const content=contentToConvert.value;
+  const opt={
+      margin:10,
+      filename:`[${houseInfo.value.apartmentName}]체크리스트`,
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:1},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+      pagebreak:{mode:['css','legacy','avoid-all']}
+    };
+    html2pdf().from(content).set(opt).save();
+}
 onMounted(()=>{
-  console.log('mounted')
+  
   loadSavedChecklist(apartcode,
   ({data})=>{
     houseInfo.value.apartmentName=data.houseInfo.apartmentName;
@@ -79,9 +94,10 @@ const postChecklist = () => {
 </script>
 
 <template>
-  <div class="check-list p-2">
-    <div class="title mb-15">
+  <div class="check-list p-2" ref="contentToConvert">
+    <div class="title mb-15 d-flex justify-content-between">
       <h1>매물 체크리스트</h1>
+      <v-btn @click="convertToPdf">pdf로 다운</v-btn>
     </div>
     <p>아파트 명 : {{ houseInfo.apartmentName }}</p>
     <p>건축연도 : {{ houseInfo.buildYear }}</p>
