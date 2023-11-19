@@ -65,4 +65,32 @@ function onPageChange(pg) {
 a {
   cursor: pointer;
 }
+.pagination > li > a
+{
+    background-color: white;
+    color: #5A4181;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #606c8c !Important;
+    border: solid 1px #606c8c !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #606c8c !Important;
+    border: solid 1px #606c8c;
+}
 </style>

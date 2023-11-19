@@ -29,6 +29,7 @@ import com.ssafy.house.board.model.dto.BoardDto;
 import com.ssafy.house.board.model.service.BoardService;
 import com.ssafy.house.util.BoardPageConstant;
 
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
@@ -44,11 +45,10 @@ public class BoardController {
 	}
 
 	// 전체 게시글 가져오기
-
 	@ApiOperation(value = "공지사항 정보 목록 가져오기", notes = "pagination을 적용한 공지사항 글 목록을 가져옵니다. page 번호를 Query String 형식으로 받는다. data: 글 목록 데이터, pageInfo: pagination 정보")
 	@ResponseBody
 	@GetMapping(path = "/list")
-	public ResponseEntity<?> listBoard(@RequestParam(value = "page", required = false) String pageNo) {
+	public ResponseEntity<?> listBoard(@RequestParam(value = "page", required = false) @ApiParam(value = "페이지 번호", required = false) String pageNo) {
 
 		HashMap<String, Object> hMap = new HashMap<>();
 
@@ -91,7 +91,8 @@ public class BoardController {
 	// 상세 게시글 가져오기
 	@ResponseBody
 	@GetMapping("/{id}")
-	public ResponseEntity<Map<String, Object>> detailBoard(@PathVariable("id") int id) {
+	@ApiOperation(value="공지사항 상세 정보 받기",notes="아이디로 공지사항 상세 정보 확인하는 API")
+	public ResponseEntity<Map<String, Object>> detailBoard(@PathVariable("id") @ApiParam(value = "게시글 아이디", required = true) int id) {
 
 		BoardDto boardInfo = (BoardDto) boardService.getDetailBoard(id);
 
@@ -109,7 +110,9 @@ public class BoardController {
 	@ResponseBody
 	@AuthRequired
 	@PostMapping("/write")
-	public ResponseEntity<Map<String, Object>> writeBoard(@RequestBody BoardDto boardDto, HttpServletRequest request) {
+	@ApiOperation(value="게시글 등록하기",notes="게시글을 등록하는 API")
+	public ResponseEntity<Map<String, Object>> writeBoard(
+			@ApiParam(value = "등록할 글 정보", required = true) @RequestBody BoardDto boardDto, HttpServletRequest request) {
 		String authorization = request.getHeader("Authorization");
 		String userId;
 		try {
@@ -135,12 +138,12 @@ public class BoardController {
 	}
 
 	// 게시글 수정하기
-	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@ApiOperation(value = "게시판 글수정하기", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@ResponseBody
 	@AuthRequired
 	@PutMapping("/modify")
 	public ResponseEntity<Map<String, Object>> modifyBoard(
-			@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) {
+			@RequestBody @ApiParam(value = "수정할 글정보", required = true) BoardDto boardDto) {
 		System.out.println(boardDto);
 
 		int resultCode = boardService.modifyBoard(boardDto);
@@ -156,7 +159,8 @@ public class BoardController {
 	@ResponseBody
 	@AuthRequired
 	@DeleteMapping("delete/{boardNo}")
-	public ResponseEntity<Map<String, Object>> deleteBoard(@PathVariable("boardNo") int boardNo) {
+	@ApiOperation(value="게시글 삭제하기",notes="게시글 번호로 게시글을 삭제하는 API")
+	public ResponseEntity<Map<String, Object>> deleteBoard(@PathVariable("boardNo") @ApiParam(value = "삭제할 글 아이디", required = true) int boardNo) {
 
 		int resultCode = boardService.deleteBoard(boardNo);
 

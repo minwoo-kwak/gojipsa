@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.vue'
 import router from './router'
 
-
 // Vuetify 기본 세팅
 // https://vuetifyjs.com/en/getting-started/installation/#existing-projects
 

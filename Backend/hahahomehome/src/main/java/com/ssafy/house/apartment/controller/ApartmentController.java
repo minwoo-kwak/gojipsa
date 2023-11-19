@@ -22,6 +22,10 @@ import com.ssafy.house.util.ApartPageConstant;
 import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("api/v1/apartment")
@@ -35,6 +39,7 @@ public class ApartmentController {
 	}
 	
 	@GetMapping("/sido")
+	@ApiOperation(value="시/도 이름 받기", notes="시/도 이름을 받는 API")
 	public ResponseEntity<List<String>> getSidoName() {
 		List<String> sidoNameList = new ArrayList<String>();
 		
@@ -44,6 +49,8 @@ public class ApartmentController {
 	}
 	
 	@GetMapping("/gugun/{sidoName}")
+	@ApiOperation(value="구/군 이름 받기",notes="시/도 이름으로 구/군 이름을 받는 API")
+	@ApiImplicitParam(name="sidoName",value="시/도 이름")
 	public ResponseEntity<List<String>> getGugunName(@PathVariable("sidoName") String sidoName) {
 		List<String> gugunNameList = new ArrayList<String>();
 		
@@ -53,6 +60,8 @@ public class ApartmentController {
 	}
 	
 	@GetMapping("/dongname/{gugunName}")
+	@ApiOperation(value="동 이름 받기", notes="구/군 이름으로 동 이름을 받는 API")
+	@ApiImplicitParam(name="gugunName",value="구/군 이름")
 	public ResponseEntity<List<String>> getDongName(@PathVariable("gugunName") String gugunName) {
 		List<String> dongNameList = new ArrayList<String>();
 		
@@ -63,6 +72,7 @@ public class ApartmentController {
 	
 	// 406ERROR ==> produces = "application/json"
 	@GetMapping(value = "/dongcode", produces = "application/json")
+	@ApiOperation(value="동 코드 받기", notes="시/도, 구/군, 동 이름으로 동 코드를 받는 API")
 	public ResponseEntity<DongCode> getDongCode(@RequestParam Map<String, String> params) {
 		DongCode dongCode = new DongCode();
 		
@@ -73,7 +83,9 @@ public class ApartmentController {
 	
 	// dongCode로 아파트 전체 정보 얻기
 	@GetMapping("/{dongcode}")
-	public ResponseEntity<?> getApartList(@PathVariable("dongcode") String dongcode,@RequestParam(value="page",required=false) String pageNo){
+	@ApiOperation(value="동 코드에 해당하는 아파트 리스트 받기", notes="특정 동코드 아파트 리스트를 받는 API")
+	public ResponseEntity<?> getApartList(@PathVariable("dongcode") @ApiParam(value = "동코드", required = true) String dongcode,
+			@RequestParam(value="page",required=false) @ApiParam(value = "페이지 번호", required = false) String pageNo){
 		
 		Map<String,Object> response=new HashMap<>();
 		
@@ -117,7 +129,8 @@ public class ApartmentController {
 	
 	// 아파트 상세 정보 얻기
 	@GetMapping("/detail/{aptCode}")
-	public ResponseEntity<HouseDetailInfo> getApartDetail(@PathVariable("aptCode") long aptCode){
+	@ApiOperation(value="아파트 상세 정보 받기", notes="특정 아파트 코드로 아파트의 상세 정보를 받는 API")
+	public ResponseEntity<HouseDetailInfo> getApartDetail(@PathVariable("aptCode") @ApiParam(value = "아파트 코드", required = true) long aptCode){
 		
 		HouseDetailInfo info = apartmentService.getApartDetail(aptCode);
 		
@@ -126,7 +139,8 @@ public class ApartmentController {
 	
 	// 특정 아파트 거래 내역 얻기(오래된 순서대로)
 	@GetMapping("/deal/{aptCode}")
-	public ResponseEntity<List<HouseDeal>> getApartDeal(@PathVariable("aptCode") long aptCode){
+	@ApiOperation(value="아파트 거래 금액 받기",notes="특정 아파트 코드로 아파트 거래액을 시간 순대로 받는 API")
+	public ResponseEntity<List<HouseDeal>> getApartDeal(@PathVariable("aptCode") @ApiParam(value = "아파트 코드", required = true) long aptCode){
 		List<HouseDeal> deal=apartmentService.getDeal(aptCode);
 		
 		return new ResponseEntity<>(deal,HttpStatus.OK);
