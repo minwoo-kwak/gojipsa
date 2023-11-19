@@ -20,12 +20,13 @@ async function logout() {
 <template>
   <v-app-bar>
     <v-app-bar-title
-      text="HaHaHomeHome"
-      class="v-col-2"
+      text="Go!집사"
+      class="v-col-1"
       @click="$router.push('/')"
     ></v-app-bar-title>
-    <v-list class="v-col-2">
+    <v-list class="v-col-3">
       <router-link :to="{ name: 'apart', params: { code: dongcode } }">실거래가 확인</router-link>
+      <router-link :to="{ name: 'analysis'}">고집사의 경제분석실</router-link>
     </v-list>
     <v-list class="v-col-7">
       <v-row class="justify-end">

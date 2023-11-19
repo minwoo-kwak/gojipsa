@@ -4,6 +4,7 @@ import BoardNews from '../components/board/BoardNews.vue'
 import TheHeading from '../components/common/TheHeading.vue'
 import TheWordCloud from '../components/info/TheWordCloud.vue'
 
+
 </script>
 
 <template>
@@ -24,6 +25,7 @@ import TheWordCloud from '../components/info/TheWordCloud.vue'
       <BoardNews />
     </div>
     <TheWordCloud />
+
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref,reactive,onMounted } from 'vue'
+import { ref,onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import {writeChecklist,loadSavedChecklist} from '@/api/checklist'
 import html2pdf from 'html2pdf.js'

@@ -16,7 +16,7 @@
     "chart.js": "^4.4.0",
     "d3": "^7.8.5",
     "d3-cloud": "^1.2.7",
-    "html2pdf.js": "^0.9.3",
+    "html2pdf.js": "^0.10.1",
     "material-design-icons-iconfont": "^6.7.0",
     "multi-range-slider-vue": "^1.1.4",
     "pinia": "^2.1.7",
