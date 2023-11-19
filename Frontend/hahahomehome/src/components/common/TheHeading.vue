@@ -62,5 +62,6 @@ async function logout() {
 a {
   text-decoration: none;
   margin: 0.5rem;
+  color:#606c8c
 }
 </style>

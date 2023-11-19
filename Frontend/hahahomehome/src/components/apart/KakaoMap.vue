@@ -236,7 +236,6 @@ watch(
         })
       })
 
-      map.setLevel(3)
       map.panTo(moveLatLon)
     }
   },
