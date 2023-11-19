@@ -47,7 +47,7 @@ public class UserController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@ApiOperation(value = "로그인", notes = "userId와 password로 로그인을 합니다.")
+	@ApiOperation(value = "로그인하기", notes = "userId와 password로 로그인하는 API")
 	@ResponseBody
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser)
@@ -72,7 +72,7 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value = "마이페이지", notes = "현재 JWT이 유효한지 판별하고, 유저정보를 넘겨줍니다.")
+	@ApiOperation(value = "마이페이지 정보 가져오기", notes = "현재 JWT이 유효한지 판별하고, 유저정보를 넘겨줍니다.")
 	@AuthRequired
 	@GetMapping("/mypage")
 	public ResponseEntity<User> myPage(HttpServletRequest request) throws ParseException {
@@ -99,9 +99,10 @@ public class UserController {
 	 * @throws ParseException
 	 */
 	@GetMapping("/valid")
+	@ApiOperation(value="관리자 여부를 확인하기",notes="관리자 여부를 파악하는 API")
 	public ResponseEntity valid(HttpServletRequest request) throws ParseException {
 		String authorization = request.getHeader("Authorization");
-		System.out.println("valid authorization == "+ authorization);
+		//System.out.println("valid authorization == "+ authorization);
 		
 		if(authorization == null || authorization.equals("")) {
 			return new ResponseEntity(HttpStatus.OK);
