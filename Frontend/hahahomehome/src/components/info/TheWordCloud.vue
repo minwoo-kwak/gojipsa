@@ -10,7 +10,7 @@ let layout
 let nouns
 
 onMounted(() => {
-  const width = 500
+  const width = 1000
   const height = 500
 
   // Function to generate a random color
