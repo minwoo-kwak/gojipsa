@@ -92,17 +92,25 @@ watch(selectedDate, onSelectedDateChange)
 <template>
   <TheHeading />
   <div class="analysis">
-    <v-card class="map-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
-      <div class="selectBox">
-        <label for="selectDate">날짜 :</label>
-        <select id="selectDate" v-model="selectedDate" class="form-select">
-          <option v-for="psyIndex in psyIndexList" :key="psyIndex.date" :value="psyIndex.date">
-            {{ psyIndex.date }}
-          </option>
-        </select>
-      </div>
-      <TheNationalMap :psyIndex="filteredPsyIndex" />
-    </v-card>
+    <div class="map-container">
+      <img
+        src="@/assets/img/logo.png"
+        class="head"
+        style="width: 15rem; height: 15rem"
+        alt="logo"
+      />
+      <v-card class="map-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
+        <div class="selectBox">
+          <label for="selectDate">날짜 :</label>
+          <select id="selectDate" v-model="selectedDate" class="form-select">
+            <option v-for="psyIndex in psyIndexList" :key="psyIndex.date" :value="psyIndex.date">
+              {{ psyIndex.date }}
+            </option>
+          </select>
+        </div>
+        <TheNationalMap :psyIndex="filteredPsyIndex" />
+      </v-card>
+    </div>
     <div class="right">
       <v-card class="chart-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
         <select v-model="selectedCity" class="form-select">
@@ -124,6 +132,36 @@ watch(selectedDate, onSelectedDateChange)
 </template>
 
 <style scoped>
+@keyframes headShake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.head {
+  /* width: 100px; */
+  /* height: 100px; */
+  /* margin: 50px auto; */
+  animation: headShake 2s ease-in-out infinite;
+  transform-origin: bottom center; /* 머리의 회전 중심을 설정 */
+}
+
+.map-container {
+  display: flex;
+}
+
 .analysis {
   display: flex;
   flex-direction: column;
