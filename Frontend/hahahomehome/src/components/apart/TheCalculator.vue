@@ -1,11 +1,11 @@
 <script setup>
 function showCalculator() {
-  window.open('/calculate', '_blank', 'width=500, height=720')
+  window.open('/calculate', '_blank', 'width=510, height=720')
 }
 </script>
 
 <template>
-  <button class="calculator-btn" @click="showCalculator">
+  <button class="calculator-btn" title="대출 이자 계산기" @click="showCalculator">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="50"

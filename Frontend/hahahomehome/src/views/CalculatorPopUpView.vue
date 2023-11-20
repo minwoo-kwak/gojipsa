@@ -95,13 +95,13 @@ const straightInterest = (totalLoanPrice, repaymentsPeriodMonth) => {
 
 <template>
   <div class="calculator-wrap">
-    <v-layout class="d-flex flex-column align-center">
-      <h2>대출 이자 계산기</h2>
-      <p>
+    <v-layout class="d-flex flex-column align-items-center">
+      <h2 class="m-5">대출 이자 계산기</h2>
+      <p class="ps-5 pe-5">
         본 계산기의 원리금상환액은 실제 금융기관에 납부하셔야 하는 원리금과 다소 차이가 날 수
         있습니다. <b>원</b>단위로 표시됩니다.
       </p>
-      <v-container fluid>
+      <v-container fluid class="ps-5 pe-5">
         <v-row>
           <v-col>
             <v-list-subheader>대출금</v-list-subheader>
@@ -145,7 +145,7 @@ const straightInterest = (totalLoanPrice, repaymentsPeriodMonth) => {
       :direction="'horizontal'"
     >
       <template #layers>
-        <Bar :data-keys="['name', 'interest']" :bar-style="{ fill: '#FFCD4B' }" :maxWidth="50" />
+        <Bar :data-keys="['name', 'interest']" :bar-style="{ fill: '#606c8c' }" :maxWidth="50" />
       </template>
       <template #widgets>
         <Tooltip
@@ -154,7 +154,7 @@ const straightInterest = (totalLoanPrice, repaymentsPeriodMonth) => {
             name: { color: '#1F1717' },
             interest: { color: '#1F1717' }
           }"
-          :style="{ fontSize: '10px' }"
+          :style="{ fontSize: '12px' }"
           :hide-line="true"
         />
       </template>
