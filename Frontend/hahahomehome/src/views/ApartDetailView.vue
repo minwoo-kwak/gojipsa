@@ -35,16 +35,17 @@ onMounted(() => {
 <template>
   <TheHeading />
   <div class="apart-detail-view">
-    <!-- <KakaoDetailMap /> -->
-    <KakaoDetailMap
-      v-if="apartDetail !== null"
-      :lat="lat"
-      :lng="lng"
-      :apartmentName="apartmentName"
-    />
-    <div>
+    <div class="detail">
       <TheApartDetail v-if="apartDetail !== null" :apartDetail="apartDetail" />
       <TheApartChart :aptCode="apartcode" />
+    </div>
+    <div class="map">
+      <KakaoDetailMap
+        v-if="apartDetail !== null"
+        :lat="lat"
+        :lng="lng"
+        :apartmentName="apartmentName"
+      />
     </div>
   </div>
 </template>
@@ -52,6 +53,16 @@ onMounted(() => {
 <style scoped>
 .apart-detail-view {
   padding-top: 65px;
+  display: inline-flex;
   width: 100%;
+}
+.detail {
+  display: inline-flex;
+  flex-direction: column;
+  width: 70%;
+}
+.map {
+  display: inline-flex;
+  width: 30%;
 }
 </style>
