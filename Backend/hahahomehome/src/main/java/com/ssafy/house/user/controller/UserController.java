@@ -12,22 +12,23 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.house.annotation.AuthRequired;
-import com.ssafy.house.board.model.dto.BoardDto;
 import com.ssafy.house.user.model.dto.User;
 import com.ssafy.house.user.model.service.UserService;
 import com.ssafy.house.util.JWTUtil;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -126,6 +127,137 @@ public class UserController {
 	}
 	
 	
+	
+    /**
+     * 회원 가입 API
+     *
+     * @param newUser 새로 가입할 사용자 정보
+     * @return ResponseEntity<Map<String, Object>> 회원 가입 결과 및 메시지
+     * @throws UnsupportedEncodingException 인코딩 예외가 발생할 경우
+     */
+	@ApiOperation(value = "회원 가입", notes = "새로운 사용자를 등록하는 API")
+	@ResponseBody
+	@PostMapping("/signup")
+	public ResponseEntity<Map<String, Object>> signup(@RequestBody User newUser)
+	        throws UnsupportedEncodingException {
+	    Map<String, Object> resultMap = new HashMap<>();
+
+
+	    // 회원 가입 서비스 호출
+	    userService.signup(newUser);
+
+	    resultMap.put("message", "회원 가입이 완료되었습니다.");
+	    return new ResponseEntity<>(resultMap, HttpStatus.CREATED);
+	}
+	
+	  /**
+     * 아이디 중복 체크
+     *
+     * @param userId 아이디
+     * @return ResponseEntity<Map<String, Object>> 중복 여부 및 메시지
+     */
+    @ApiOperation(value = "아이디 중복 체크", notes = "아이디 중복을 체크하는 API")
+    @GetMapping("/checkId/{userId}")
+    public ResponseEntity<Map<String, Object>> checkId(@PathVariable String userId) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        // 중복 체크 서비스 호출
+        boolean isDuplicated = userService.checkIdDuplication(userId);
+
+        if (isDuplicated) {
+            resultMap.put("message", "이미 사용 중인 아이디입니다.");
+            return new ResponseEntity<>(resultMap, HttpStatus.CONFLICT);
+        } else {
+            resultMap.put("message", "사용 가능한 아이디입니다.");
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        }
+    }
+	
+	
+    /**
+     * 회원 정보 수정 API
+     *
+     * @param updatedUser 수정할 사용자 정보
+     * @param request     HTTP 요청 객체
+     * @return ResponseEntity<Map<String, Object>> 회원 정보 수정 결과 및 메시지
+     * @throws Exception 예외가 발생할 경우
+     */
+	@ApiOperation(value = "회원 정보 수정", notes = "현재 로그인한 사용자의 정보를 수정하는 API")
+	@AuthRequired
+	@PutMapping("/update")
+	public ResponseEntity<Map<String, Object>> updateUserInfo(@RequestBody User updatedUser,
+	        HttpServletRequest request) throws Exception {
+		
+		System.out.println("updatedUser in controller == " + updatedUser);
+	    Map<String, Object> resultMap = new HashMap<>();
+
+	    // 여기서 필요한 유효성 검사 등을 수행하십시오.
+
+	    // 현재 로그인한 사용자의 ID를 얻어옴
+	    String userId = getUserIdFromToken(request);
+
+	    // 회원 정보 수정 서비스 호출
+	    userService.updateUserInfo(userId, updatedUser);
+
+	    resultMap.put("message", "회원 정보가 수정되었습니다.");
+	    return new ResponseEntity<>(resultMap, HttpStatus.OK);
+	}
+	
+    /**
+     * 회원 탈퇴 API
+     *
+     * @param request HTTP 요청 객체
+     * @return ResponseEntity<Map<String, Object>> 회원 탈퇴 결과 및 메시지
+     * @throws Exception 예외가 발생할 경우
+     */
+	@ApiOperation(value = "회원 탈퇴", notes = "현재 로그인한 사용자를 탈퇴하는 API")
+	@AuthRequired
+	@DeleteMapping("/delete")
+	public ResponseEntity<Map<String, Object>> deleteUser(HttpServletRequest request) throws Exception {
+	    Map<String, Object> resultMap = new HashMap<>();
+
+	    // 현재 로그인한 사용자의 ID를 얻어옴
+	    String userId = getUserIdFromToken(request);
+
+	    // 회원 탈퇴 서비스 호출
+	    userService.deleteUser(userId);
+
+	    resultMap.put("message", "회원 탈퇴가 완료되었습니다.");
+	    return new ResponseEntity<>(resultMap, HttpStatus.OK);
+	}
+
+	 /**
+     * JWT 토큰에서 사용자 ID를 추출합니다.
+     *
+     * @param request Authorization 헤더를 포함한 HttpServletRequest
+     * @return JWT 토큰에서 추출한 사용자 ID
+	 * @throws Exception 
+     */
+    private String getUserIdFromToken(HttpServletRequest request) throws Exception {
+        String authorization = request.getHeader("Authorization");
+
+        if (authorization == null || authorization.isEmpty()) {
+            throw new IllegalArgumentException("유효하지 않거나 누락된 Authorization 헤더입니다.");
+        }
+
+        return jwtUtil.extractUserId(authorization);
+    }
+
+    /**
+     * 현재 비밀번호의 유효성을 확인하는 API
+     *
+     * @param userId           사용자 ID
+     * @param currentPassword  현재 비밀번호
+     * @return 유효 여부
+     */
+    @PostMapping("/checkPassword")
+    public ResponseEntity<Map<String, Boolean>> checkCurrentPassword(@RequestBody Map<String, Object> map) {
+        Map<String, Boolean> resultMap = new HashMap<>();
+        boolean isValid = userService.checkCurrentPassword((String) map.get("userId"),(String) map.get("currentPassword"));
+        resultMap.put("isValid", isValid);
+        return ResponseEntity.ok(resultMap);
+    }
+
 	
 
 }
