@@ -9,4 +9,12 @@ public interface UserMapper {
 	User selectByUser(User requestUser);
 	
 	User selectById(String userId);
+
+	void insertUser(User newUser);
+
+	void updateUser(User updatedUser);
+
+	void deleteUser(String userId);
+	
+	User getPassword(String userId);
 }

@@ -5,20 +5,42 @@ const axios = inject('axios')
 
 const passwordVisible = ref(false)
 const passwordCheckVisible = ref(false)
+const passwordCheck = ref('')
 
 const userInfo = ref({
   userId: '',
   password: '',
-  userName: ''
+  name: ''
 })
 
 const signUp = async () => {
+  if (userInfo.value.password !== passwordCheck.value) {
+    alert('비밀번호가 일치하지 않습니다.')
+    return
+  }
+
+  // 아이디 중복 체크
+  const isIdDuplicated = await checkId()
+
   await axios.post('/user/signup', userInfo.value).then((response) => {
     alert(response.data.message)
   })
 }
-function checkId() {
-  // TODO:아이디 중복 체크
+
+const checkId = async () => {
+  try {
+    const response = await axios.get(`/user/checkId/${userInfo.value.userId}`)
+    if (response.status === 200) {
+      return true
+    }
+  } catch (error) {
+    if (error.response.status === 409) {
+      alert('이미 사용 중인 아이디입니다.')
+      return false
+    }
+  }
+
+  // return response.data.message === '이미 사용 중인 아이디입니다.'
 }
 </script>
 
@@ -29,11 +51,12 @@ function checkId() {
 
     <v-text-field
       density="compact"
-      placeholder="이메일"
+      placeholder="아이디"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
-      v-model="userInfo.userId"
-    ></v-text-field>
+      readonly
+      >{{ userInfo.value.userId }}</v-text-field
+    >
 
     <div class="text-subtitle-1 text-medium-emphasis">이름</div>
 
@@ -42,7 +65,7 @@ function checkId() {
       placeholder="이름"
       prepend-inner-icon="mdi-account-tag"
       variant="outlined"
-      v-model="userInfo.userName"
+      v-model="userInfo.name"
     ></v-text-field>
 
     <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -72,6 +95,7 @@ function checkId() {
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="passwordCheckVisible = !passwordCheckVisible"
+      v-model="passwordCheck"
     ></v-text-field>
 
     <v-btn block class="mb-8" color="green" size="large" variant="tonal" @click="signUp">

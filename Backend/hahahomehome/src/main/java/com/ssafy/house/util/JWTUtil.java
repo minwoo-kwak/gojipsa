@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -80,4 +81,16 @@ public class JWTUtil {
 		
 		return claims.getBody();
 	}
+	
+    /**
+     * JWT 토큰에서 사용자 ID를 추출합니다.
+     *
+     * @param token 추출할 사용자 ID를 포함한 JWT 토큰
+     * @return 추출한 사용자 ID
+     * @throws Exception 
+     */
+    public String extractUserId(String token) throws Exception {
+        Claims claims = (Claims) getInfo(token);
+        return (String) claims.get("userId");
+    }
 }
