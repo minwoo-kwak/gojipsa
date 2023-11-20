@@ -19,12 +19,14 @@
 		#{sidoName} AND gugunName IS NOT NULL;
 	</select>
 
-	<select id="getDongNameList" parameterType="string"
+	<select id="getDongNameList" parameterType="map"
 		resultType="string">
 		SELECT DISTINCT dongName
 		FROM dongcode
 		WHERE gugunName =
-		#{gugunName} AND dongName IS NOT NULL;
+		#{gugunName}
+		AND sidoName = #{sidoName} 
+		AND dongName IS NOT NULL;
 	</select>
 
 	<select id="getDongCode" parameterType="map"

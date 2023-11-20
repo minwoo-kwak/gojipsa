@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +20,9 @@ import com.ssafy.house.apartment.model.dto.HouseDetailInfo;
 import com.ssafy.house.apartment.model.dto.HouseInfo;
 import com.ssafy.house.apartment.model.service.ApartmentService;
 import com.ssafy.house.util.ApartPageConstant;
-import com.ssafy.house.util.BoardPageConstant;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
@@ -59,13 +58,14 @@ public class ApartmentController {
 		return new ResponseEntity<List<String>>(gugunNameList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/dongname/{gugunName}")
+	@GetMapping("/dongname")
 	@ApiOperation(value="동 이름 받기", notes="구/군 이름으로 동 이름을 받는 API")
-	@ApiImplicitParam(name="gugunName",value="구/군 이름")
-	public ResponseEntity<List<String>> getDongName(@PathVariable("gugunName") String gugunName) {
+	public ResponseEntity<List<String>> getDongName(@RequestParam Map<String, String> map) {
+		System.out.println("동 이름 받기 map" + map);
+		
 		List<String> dongNameList = new ArrayList<String>();
 		
-		dongNameList = apartmentService.getDongNameList(gugunName);
+		dongNameList = apartmentService.getDongNameList(map);
 		
 		return new ResponseEntity<List<String>>(dongNameList, HttpStatus.OK);
 	}
