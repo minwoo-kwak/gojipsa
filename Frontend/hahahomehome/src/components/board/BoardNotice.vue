@@ -235,8 +235,10 @@ const onPageChange = (page) => {
                         {{ notice.board_no }}. <input v-model.lazy="notice.title" /><br />
                         <textarea v-model="notice.content" rows="10" cols="100"></textarea>
                         <hr />
-                        <div>작성일: {{ notice.register_time }}</div>
-                        <v-btn color="primary" type="submit">수정하기</v-btn>
+                        <div class="d-flex justify-content-end align-items-center">
+                          <div class="pe-4">작성일: {{ notice.register_time }}</div>
+                          <v-btn color="indigo-lighten-2" type="submit">수정하기</v-btn>
+                        </div>
                       </form>
                     </v-card-text>
 
@@ -253,7 +255,7 @@ const onPageChange = (page) => {
               </div>
               <!-- 평상시 -->
               <div v-else>
-                <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
+                <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="720px">
                   <v-card>
                     <v-card-text>
                       <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
@@ -264,11 +266,20 @@ const onPageChange = (page) => {
                       <hr />
                       <div>작성일: {{ notice.register_time }}</div>
                     </v-card-text>
-                    <div v-if="isAdmin">
-                      <v-btn color="success" v-model="editNow" @click="editNow = !editNow"
+                    <div v-if="isAdmin" class="d-flex justify-content-start ps-5">
+                      <v-btn
+                        color="indigo-lighten-2"
+                        class="me-1"
+                        v-model="editNow"
+                        @click="editNow = !editNow"
                         >수정</v-btn
                       >
-                      <v-btn color="danger" @click="onDeleteSubmit(notice.board_no)">삭제</v-btn>
+                      <v-btn
+                        color="deep-purple-lighten-2"
+                        outlined
+                        @click="onDeleteSubmit(notice.board_no)"
+                        >삭제</v-btn
+                      >
                     </div>
                     <v-card-actions>
                       <v-btn

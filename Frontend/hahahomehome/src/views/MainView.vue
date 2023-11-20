@@ -2,6 +2,7 @@
 import BoardNotice from '../components/board/BoardNotice.vue'
 import BoardNews from '../components/board/BoardNews.vue'
 import TheHeading from '../components/common/TheHeading.vue'
+import TheFooter from '../components/common/TheFooter.vue'
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import TheHeading from '../components/common/TheHeading.vue'
     <div class="contents d-flex flex-column">
       <BoardNotice />
       <BoardNews />
+      <TheFooter />
     </div>
   </div>
 </template>
