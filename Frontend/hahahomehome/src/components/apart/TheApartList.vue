@@ -74,7 +74,14 @@ const onApartCardClick = (code) => {
     </div>
 
     <div class="apart-card-list">
-      <div v-if="apartMarker.length == 0">아파트 거래 정보가 없습니다</div>
+      <div
+        v-if="apartMarker.length == 0"
+        style="height: 100%"
+        class="d-flex flex-column justify-content-center align-items-center"
+      >
+        <img src="../../assets/img/not-found-icon.png" style="width: 250px" class="m-3" />
+        <p>해당 위치 아파트 거래 정보가 없습니다.</p>
+      </div>
 
       <div v-for="apart in apartList.value" :key="apart.aptCode">
         <TheApartCard
