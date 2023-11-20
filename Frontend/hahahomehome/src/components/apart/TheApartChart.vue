@@ -32,10 +32,11 @@ const dataList = ref([])
 </script>
 
 <template>
-  <div>
+  <div class="deal-amount-chart-container">
+    <p>거래 내역 그래프 (단위:천만원)</p>
     <Chart
       class="mb-5"
-      :size="{ width: 750, height: 500 }"
+      :size="{ width: 900, height: 400 }"
       :data="dataList"
       :margin="margin"
       :direction="'horizontal'"
@@ -58,4 +59,13 @@ const dataList = ref([])
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.deal-amount-chart-container {
+  margin: 1rem;
+  border: 3px solid #979caa;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  font-size: 20px;
+}
+</style>

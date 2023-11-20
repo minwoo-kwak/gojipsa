@@ -5,7 +5,7 @@ function showCalculator() {
 </script>
 
 <template>
-  <button class="calculator-btn" @click="showCalculator">
+  <button class="calculator-btn" title="대출 이자 계산기" @click="showCalculator">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="50"

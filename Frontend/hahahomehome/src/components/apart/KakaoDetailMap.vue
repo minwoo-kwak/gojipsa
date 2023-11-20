@@ -236,19 +236,23 @@ const closeRoadview = () => {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 #container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 100%;
   height: 90%;
-  padding-top: 1%;
+  padding: 1rem;
+  margin: 1rem;
+  border: 3px solid #979caa;
+  border-radius: 1rem;
+  font-size: 20px;
 }
 
 #mapWrapper {
   width: 100%;
-  height: 45%;
+  height: 50%;
   padding: 0;
   margin-bottom: 1rem;
 }
@@ -261,12 +265,12 @@ const closeRoadview = () => {
 
 #map {
   width: 100%;
-  height: 25rem;
+  height: 20rem;
   margin-bottom: 10rem;
 }
 #roadview {
   width: 100%;
-  height: 25rem;
+  height: 20rem;
 }
 
 #roadviewControl {
