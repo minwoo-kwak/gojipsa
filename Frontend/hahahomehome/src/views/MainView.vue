@@ -2,30 +2,22 @@
 import BoardNotice from '../components/board/BoardNotice.vue'
 import BoardNews from '../components/board/BoardNews.vue'
 import TheHeading from '../components/common/TheHeading.vue'
-import TheWordCloud from '../components/info/TheWordCloud.vue'
-
-
 </script>
 
 <template>
   <TheHeading />
   <div>
-    
     <div class="img-box">
       <div class="main-img">
         <div class="container">
-        <div class="typewriter">Welcome to Go!집사</div>
+          <div class="typewriter">Welcome to Go!집사</div>
+        </div>
       </div>
-      </div>
-      
     </div>
     <div class="contents">
-      
       <BoardNotice />
       <BoardNews />
     </div>
-    <TheWordCloud />
-
   </div>
 </template>
 
@@ -55,30 +47,32 @@ import TheWordCloud from '../components/info/TheWordCloud.vue'
   font-size: clamp(8rem, 2.8vw, 5rem);
   font-family: Raleway;
   font-weight: bold;
-  color:white
+  color: white;
 }
 
 .typewriter {
-	width: 21.5ch;
-	white-space: nowrap;
-	overflow: hidden;
-	border-right: 4px solid white;
-	animation: cursor 1s step-start infinite, 
+  width: 21.5ch;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 4px solid white;
+  animation:
+    cursor 1s step-start infinite,
     text 5s steps(18) alternate infinite;
 }
 
 @keyframes cursor {
-	0%, 100% { 
-    border-color:white; 
+  0%,
+  100% {
+    border-color: white;
   }
 }
 
 @keyframes text {
-	0% { 
-    width: 0; 
+  0% {
+    width: 0;
   }
-	100% { 
-    width: 21.5ch; 
+  100% {
+    width: 21.5ch;
   }
 }
 </style>
