@@ -16,4 +16,5 @@ public interface BoardMapper {
 	int deleteBoard(int boardNo);
 	// 전체 게시글 개수
 	long countBoard();
+	int increaseHit(int id);
 }

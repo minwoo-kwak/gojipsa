@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeMount, inject } from 'vue'
-import { listNotice, modifyNotice, deleteNotice, writeNotice } from '@/api/board'
+import { listNotice, modifyNotice, deleteNotice, writeNotice, updateHit } from '@/api/board'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 
 // 공지사항 글 리스트
@@ -145,6 +145,12 @@ const onDeleteSubmit = (board_no) => {
   }
 }
 
+async function onClickNotice(board_no) {
+  await updateHit(board_no)
+
+  dialogStates.value[`dialog${board_no}`] = true
+}
+
 /**
  * 페이지 네이션 : 해당 페이지로 이동
  * @param {*} page : 해당 페이지
@@ -210,7 +216,7 @@ const onPageChange = (page) => {
             <tr
               v-for="notice in notices"
               :key="notice.board_no"
-              @click="dialogStates[`dialog${notice.board_no}`] = true"
+              @click="onClickNotice(notice.board_no)"
             >
               <th scope="row">{{ notice.board_no }}</th>
               <td>{{ notice.title }}</td>

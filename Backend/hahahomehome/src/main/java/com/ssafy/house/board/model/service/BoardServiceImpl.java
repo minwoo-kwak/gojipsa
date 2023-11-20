@@ -35,6 +35,11 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDto getDetailBoard(int id) {
 		return boardMapper.selectById(id);
 	}
+	
+	@Override
+	public int increaseHit(int id) {
+		return boardMapper.increaseHit(id);
+	}
 
 	@Override
 	public int writeBoard(BoardDto boardDto) {

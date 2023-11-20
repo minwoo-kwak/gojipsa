@@ -100,12 +100,24 @@ public class BoardController {
 		if (boardInfo == null) {
 			return ResponseEntity.notFound().build();
 		}
+		
+		
+		
 		// 해당 게시글이 있는 경우
 		Map<String, Object> result = new HashMap<>();
 		result.put("data", boardInfo);
 		return ResponseEntity.ok().body(result);
 	}
-
+	
+	@ResponseBody
+	@PutMapping("/hit/{id}")
+	@ApiOperation(value="조회수 증가",notes="아이디로 조회수가 증가하는 API")
+	 public ResponseEntity<Map<String, Object>> increaseHit(@PathVariable("id") @ApiParam(value = "게시글 아이디", required = true) int id) {
+		boardService.increaseHit(id);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	// 게시글 등록하기
 	@ResponseBody
 	@AuthRequired
