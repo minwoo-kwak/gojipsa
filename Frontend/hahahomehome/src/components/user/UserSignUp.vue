@@ -54,9 +54,7 @@ const checkId = async () => {
       placeholder="아이디"
       prepend-inner-icon="mdi-email-outline"
       variant="outlined"
-      readonly
-      >{{ userInfo.value.userId }}</v-text-field
-    >
+    ></v-text-field>
 
     <div class="text-subtitle-1 text-medium-emphasis">이름</div>
 
