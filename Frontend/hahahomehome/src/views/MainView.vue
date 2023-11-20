@@ -14,7 +14,7 @@ import TheHeading from '../components/common/TheHeading.vue'
         </div>
       </div>
     </div>
-    <div class="contents">
+    <div class="contents d-flex flex-column">
       <BoardNotice />
       <BoardNews />
     </div>
@@ -49,7 +49,6 @@ import TheHeading from '../components/common/TheHeading.vue'
   font-weight: bold;
   color: white;
 }
-
 .typewriter {
   width: 21.5ch;
   white-space: nowrap;
