@@ -10,8 +10,8 @@ let layout
 let nouns
 
 onMounted(() => {
-  const width = 1000
-  const height = 1000
+  const width = 500
+  const height = 500
 
   // Function to generate a random color
   function getRandomColor() {
@@ -73,8 +73,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Word Cloud</h1>
   <div id="wordcloud"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#wordcloud {
+  padding: 2rem;
+}
+</style>

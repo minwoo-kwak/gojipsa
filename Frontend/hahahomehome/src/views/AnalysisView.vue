@@ -92,28 +92,84 @@ watch(selectedDate, onSelectedDateChange)
 <template>
   <TheHeading />
   <div class="analysis">
-    <select v-model="selectedDate">
-      <option v-for="psyIndex in psyIndexList" :key="psyIndex.date" :value="psyIndex.date">
-        {{ psyIndex.date }}
-      </option>
-    </select>
-    <TheNationalMap :psyIndex="filteredPsyIndex" />
-    <select v-model="selectedCity">
-      <option v-for="country in countryValues" :key="country.label" :value="country.value">
-        {{ country.label }}
-      </option>
-    </select>
-    <ThePsyIndexChart
-      :psyIndexList="psyIndexList"
-      :selectedCity="selectedCity"
-      :key="selectedCity"
-    />
-    <TheWordCloud />
+    <v-card class="map-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
+      <div class="selectBox">
+        <label for="selectDate">날짜 :</label>
+        <select id="selectDate" v-model="selectedDate" class="form-select">
+          <option v-for="psyIndex in psyIndexList" :key="psyIndex.date" :value="psyIndex.date">
+            {{ psyIndex.date }}
+          </option>
+        </select>
+      </div>
+      <TheNationalMap :psyIndex="filteredPsyIndex" />
+    </v-card>
+    <div class="right">
+      <v-card class="chart-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
+        <select v-model="selectedCity" class="form-select">
+          <option v-for="country in countryValues" :key="country.label" :value="country.value">
+            {{ country.label }}
+          </option>
+        </select>
+        <ThePsyIndexChart
+          :psyIndexList="psyIndexList"
+          :selectedCity="selectedCity"
+          :key="selectedCity"
+        />
+      </v-card>
+      <v-card class="cloud-card rounded-xl" title="워드클라우드" elevation="16" hover>
+        <TheWordCloud />
+      </v-card>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .analysis {
+  display: flex;
+  flex-wrap: wrap;
   padding-top: 65px;
+  width: 100%;
+  background-color: #fafbfd;
+  justify-content: space-around;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-card {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  min-width: 40rem;
+  width: 60rem;
+  height: 80rem;
+}
+
+.chart-card {
+  min-width: 60rem;
+  margin: 1rem;
+  padding: 1rem;
+  width: 40rem;
+  height: 40rem;
+}
+
+.cloud-card {
+  width: 60%;
+  margin: 1rem;
+  width: 40rem;
+  height: 40rem;
+}
+
+.form-select {
+  display: inline;
+  width: 30%;
+}
+
+.selectBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>
