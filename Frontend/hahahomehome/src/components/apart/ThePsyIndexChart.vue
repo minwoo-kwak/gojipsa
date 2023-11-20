@@ -7,9 +7,18 @@ const props = defineProps({
   selectedCity: String
 })
 
+let max = 0
+let min = 200
+
 const dataList = computed(() => {
   console.log('computed 실행 !!')
   return props.psyIndexList.map((element) => {
+    if (max < element[props.selectedCity]) {
+      max = element[props.selectedCity]
+    }
+    if (min > element[props.selectedCity]) {
+      min = element[props.selectedCity]
+    }
     let preProcessing = {
       date: element.date,
       psyIndex: element[props.selectedCity]
@@ -24,10 +33,20 @@ const dataList = computed(() => {
   <div>
     <Chart
       class="mb-5"
-      :size="{ width: 1000, height: 500 }"
+      :size="{ width: 800, height: 400 }"
       :data="dataList"
       :margin="margin"
       :direction="'horizontal'"
+      :axis="{
+        primary: {
+          type: 'band'
+        },
+        secondary: {
+          domain: [min - 10, max + 10],
+          type: 'linear',
+          ticks: 2
+        }
+      }"
     >
       <template #layers>
         <Line :data-keys="['date', 'psyIndex']" :line-style="{ fill: '#FFCD4B' }" :maxWidth="50" />

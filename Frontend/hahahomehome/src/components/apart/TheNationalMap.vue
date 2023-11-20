@@ -34,7 +34,7 @@ const getClass = (region) => {
 
 <template>
   <svg
-    style="background: #eaeaea; overflow: visible"
+    style="background: #ffffff; overflow: visible"
     height="1107"
     width="800"
     xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@ const getClass = (region) => {
         </feMerge>
       </filter>
     </defs>
-    <g filter="url(#dropshadow)">
+    <g filter="url(#dropshadow)" class="test">
       <path
         id="CD11"
         v-if="props.psyIndex.length !== 0"
@@ -197,6 +197,10 @@ const getClass = (region) => {
   stroke-linejoin: round;
   stroke: #ffffff;
   stroke-width: 2;
+}
+
+.test {
+  width: 3rem;
 }
 
 .low-low {
