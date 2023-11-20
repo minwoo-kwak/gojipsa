@@ -61,7 +61,6 @@ public class ApartmentController {
 	@GetMapping("/dongname")
 	@ApiOperation(value="동 이름 받기", notes="구/군 이름으로 동 이름을 받는 API")
 	public ResponseEntity<List<String>> getDongName(@RequestParam Map<String, String> map) {
-		System.out.println("동 이름 받기 map" + map);
 		
 		List<String> dongNameList = new ArrayList<String>();
 		

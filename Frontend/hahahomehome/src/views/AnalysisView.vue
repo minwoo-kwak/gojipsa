@@ -54,6 +54,68 @@ onMounted(() => {
       console.log('psy index error', error)
     }
   )
+
+  // 이미지에 표시될 텍스트 배열
+  const texts = [
+    `부동산 심리지수 지도 설명 부동산 심리지수 (Real Estate Consumer Confidence Index)는  부동산 시장에 대한 소비자의 신뢰와 기대를 측정하는 지표입니다.
+     이 지표는 소비자들이 현재 부동산 시장에 대해 어떻게 생각하고 있는지, 미래에 대한 전망은 어떠한지 등을 파악하기 위해 사용됩니다.
+     주로 정부, 금융기관, 부동산 전문가, 투자자 등이 부동산 시장의 흐름을 예측하고 판단하는 데에 활용됩니다.
+     부동산 심리지수는 다양한 경제적 지표 중 하나로, 주택가격의 상승 또는 하락, 투자 여건, 시장의 안정성 등을 반영합니다.
+    이를 통해 부동산 시장의 건강 상태와 소비자들의 행동에 대한 통찰력을 얻을 수 있습니다.`,
+    '부동산 심리지수 그래프 설명',
+    '부동산 관련 워드클라우드 설명'
+  ]
+
+  // 텍스트를 자동 타이핑하는 함수
+  // const typeText = (element, text, speed) => {
+  //   let i = 0
+  //   const interval = setInterval(() => {
+  //     element.innerHTML += text[i]
+  //     i++
+  //     if (i % 20 == 0) {
+  //       element.innerHTML += `<br>`
+  //     }
+  //     if (i === text.length) {
+  //       clearInterval(interval)
+  //     }
+  //   }, speed)
+  // }
+  // 텍스트를 자동 타이핑하는 함수
+  const typeText = (element, text, speed) => {
+    let i = 0
+    const container = document.createElement('div')
+    element.appendChild(container)
+
+    const interval = setInterval(() => {
+      const char = document.createTextNode(text[i])
+      container.appendChild(char)
+
+      i++
+
+      if (i % 20 === 0) {
+        container.appendChild(document.createElement('br'))
+      }
+
+      if (i === text.length) {
+        clearInterval(interval)
+      }
+    }, speed)
+  }
+
+  // 각 이미지에 대해 텍스트 적용
+  const image1 = document.getElementById('bubble1')
+  typeText(image1.querySelector('.typing-text'), texts[0], 25)
+
+  // 페이지 스크롤 이벤트 감지
+  window.addEventListener('scroll', () => {
+    // 이미지가 화면에 나타나면 설명을 나타냄
+    const rect = image1.getBoundingClientRect()
+    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      image1.style.opacity = 1
+    } else {
+      image1.style.opacity = 0
+    }
+  })
 })
 
 // Year-Month 형식으로 날짜를 포맷하는 함수
@@ -93,12 +155,17 @@ watch(selectedDate, onSelectedDateChange)
   <TheHeading />
   <div class="analysis">
     <div class="map-container">
-      <img
-        src="@/assets/img/logo.png"
-        class="head"
-        style="width: 15rem; height: 15rem"
-        alt="logo"
-      />
+      <div class="image-container">
+        <img
+          src="@/assets/img/logo.png"
+          class="head"
+          style="width: 15rem; height: 15rem"
+          alt="logo"
+        />
+        <div class="description-bubble1" id="bubble1">
+          <p class="typing-text"></p>
+        </div>
+      </div>
       <v-card class="map-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
         <div class="selectBox">
           <label for="selectDate">날짜 :</label>
@@ -111,7 +178,7 @@ watch(selectedDate, onSelectedDateChange)
         <TheNationalMap :psyIndex="filteredPsyIndex" />
       </v-card>
     </div>
-    <div class="right">
+    <div class="chart-container">
       <v-card class="chart-card rounded-xl" title="부동산 소비자 심리지수" elevation="16" hover>
         <select v-model="selectedCity" class="form-select">
           <option v-for="country in countryValues" :key="country.label" :value="country.value">
@@ -124,6 +191,20 @@ watch(selectedDate, onSelectedDateChange)
           :key="selectedCity"
         />
       </v-card>
+      <img
+        src="@/assets/img/logo.png"
+        class="head"
+        style="width: 15rem; height: 15rem"
+        alt="logo"
+      />
+    </div>
+    <div class="cloud-container">
+      <img
+        src="@/assets/img/logo.png"
+        class="head"
+        style="width: 15rem; height: 15rem"
+        alt="logo"
+      />
       <v-card class="cloud-card rounded-xl" title="워드클라우드" elevation="16" hover>
         <TheWordCloud />
       </v-card>
@@ -158,22 +239,54 @@ watch(selectedDate, onSelectedDateChange)
   transform-origin: bottom center; /* 머리의 회전 중심을 설정 */
 }
 
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 4px solid white; /* 커서 효과를 나타내기 위한 선 */
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 20px;
+}
+
+.description-bubble1 {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰색 배경 */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  opacity: 1; /* 초기에 투명하게 설정 */
+  transition: opacity 0.5s ease-in-out; /* 부드러운 투명도 전환을 위한 트랜지션 */
+  text-align: center;
+}
+.description-bubble {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰색 배경 */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  opacity: 0; /* 초기에 투명하게 설정 */
+  transition: opacity 0.5s ease-in-out; /* 부드러운 투명도 전환을 위한 트랜지션 */
+  text-align: center;
+}
+
 .map-container {
   display: flex;
+  justify-content: space-between;
+}
+
+.chart-container {
+  display: flex;
+}
+
+.cloud-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .analysis {
-  display: flex;
-  flex-direction: column;
   padding-top: 65px;
   width: 100%;
   background-color: #fafbfd;
-  align-items: flex-end;
-}
-
-.right {
-  display: flex;
-  flex-direction: column;
 }
 
 .map-card {
