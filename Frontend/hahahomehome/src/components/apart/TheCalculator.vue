@@ -1,6 +1,6 @@
 <script setup>
 function showCalculator() {
-  window.open('/calculate', '_blank', 'width=500, height=720')
+  window.open('/calculate', '_blank', 'width=510, height=720')
 }
 </script>
 
