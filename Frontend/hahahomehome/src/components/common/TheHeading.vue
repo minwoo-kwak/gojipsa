@@ -68,30 +68,4 @@ a {
   margin: 0.5rem;
   color: #606c8c;
 }
-
-@keyframes headShake {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-15deg);
-  }
-  50% {
-    transform: rotate(15deg);
-  }
-  75% {
-    transform: rotate(-15deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.head {
-  /* width: 100px; */
-  /* height: 100px; */
-  /* margin: 50px auto; */
-  animation: headShake 2s ease-in-out infinite;
-  transform-origin: bottom center; /* 머리의 회전 중심을 설정 */
-}
 </style>
