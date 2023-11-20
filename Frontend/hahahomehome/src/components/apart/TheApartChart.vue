@@ -35,7 +35,7 @@ const dataList = ref([])
   <div>
     <Chart
       class="mb-5"
-      :size="{ width: 1000, height: 500 }"
+      :size="{ width: 750, height: 500 }"
       :data="dataList"
       :margin="margin"
       :direction="'horizontal'"

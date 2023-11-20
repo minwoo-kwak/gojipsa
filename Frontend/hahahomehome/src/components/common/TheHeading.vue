@@ -19,14 +19,10 @@ async function logout() {
 
 <template>
   <v-app-bar>
-    <v-app-bar-title
-      text="Go!집사"
-      class="v-col-1"
-      @click="$router.push('/')"
-    ></v-app-bar-title>
+    <v-app-bar-title text="Go!집사" class="v-col-1" @click="$router.push('/')"></v-app-bar-title>
     <v-list class="v-col-3">
       <router-link :to="{ name: 'apart', params: { code: dongcode } }">실거래가 확인</router-link>
-      <router-link :to="{ name: 'analysis'}">고집사의 경제분석실</router-link>
+      <router-link :to="{ name: 'analysis' }">고집사의 경제분석실</router-link>
     </v-list>
     <v-list class="v-col-7">
       <v-row class="justify-end">
@@ -57,12 +53,12 @@ async function logout() {
 .v-toolbar {
   display: fixed;
   width: 100%; /* 전체 너비 차지 */
-  margin-bottom: 15rem;
+  /* margin-bottom: 15rem; */
 }
 
 a {
   text-decoration: none;
   margin: 0.5rem;
-  color:#606c8c
+  color: #606c8c;
 }
 </style>

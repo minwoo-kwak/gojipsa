@@ -6,7 +6,7 @@
     </div>
     <div id="rvWrapper">
       <div id="roadview" class="col-md-6"></div>
-      <div id="close" title="로드뷰닫기" @click="closeRoadview"><span class="img"></span></div>
+      <!-- <div id="close" title="로드뷰닫기" @click="closeRoadview"><span class="img"></span></div> -->
     </div>
   </div>
 </template>
@@ -238,34 +238,41 @@ const closeRoadview = () => {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #container {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   width: 100%;
+  height: 90%;
   padding-top: 1%;
 }
 
 #mapWrapper {
-  width: 50%;
+  width: 100%;
+  height: 45%;
   padding: 0;
+  margin-bottom: 1rem;
 }
 
 #rvWrapper {
-  width: 50%;
+  height: 45%;
+  width: 100%;
   padding: 0;
 }
 
 #map {
   width: 100%;
-  height: 30rem;
+  height: 25rem;
+  margin-bottom: 10rem;
 }
 #roadview {
   width: 100%;
-  height: 30rem;
+  height: 25rem;
 }
 
 #roadviewControl {
   position: absolute;
   top: 5rem;
-  left: 5px;
+  right: 2rem;
   width: 42px;
   height: 42px;
   z-index: 1;
