@@ -14,11 +14,11 @@ const props = defineProps({
 <template>
   <div>
     <v-card class="mx-auto apart-card m-4" width="90%" prepend-icon="mdi-home" variant="elevated">
-      <div></div>
       <template v-slot:title> {{ apartName }} </template>
-      <v-card-subtitle>건물 위치 : {{ dong }} {{ roadName }} {{ jibun }}</v-card-subtitle>
-      <v-card-subtitle>건축 연도 : {{ year }}</v-card-subtitle>
-      <ToggleFavorite class="like-btn" />
+      <v-card-subtitle class="m-1"
+        >건물 위치 : {{ dong }} {{ roadName }} {{ jibun }}</v-card-subtitle
+      >
+      <v-card-subtitle class="ms-1 mb-5">건축 연도 : {{ year }}</v-card-subtitle>
     </v-card>
   </div>
 </template>
