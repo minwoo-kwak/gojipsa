@@ -66,40 +66,63 @@ const navigateToNews = (url) => {
 </script>
 
 <template>
-  <div class="news">
-    <h2>부동산 뉴스</h2>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">제목</th>
-          <th scope="col">날짜</th>
-          <th scope="col">조회수</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="news in newsList" :key="news.id" @click="navigateToNews(news.link)">
-          <!-- 5×(page−1) + news.id -->
-          <th scope="row">{{ news.id + 5 * (currentPage - 1) }}</th>
-          <td v-html="news.title"></td>
-          <td>{{ news.pubDate }}</td>
-          <td>0</td>
-        </tr>
-      </tbody>
-    </table>
-    <PageNavigation
-      :current-page="currentPage"
-      :total-page="totalPage"
-      @pageChange="onPageChange"
-    />
+  <div class="d-flex algin-items-center justify-content-between news-container">
+    <div class="news d-flex flex-column justify-content-between">
+      <div class="news-content">
+        <h2 class="mb-10">부동산 뉴스</h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">제목</th>
+              <th scope="col">날짜</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="news in newsList" :key="news.id" @click="navigateToNews(news.link)">
+              <!-- 5×(page−1) + news.id -->
+              <th scope="row">{{ news.id + 5 * (currentPage - 1) }}</th>
+              <td v-html="news.title"></td>
+              <td>{{ news.pubDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <PageNavigation
+        :current-page="currentPage"
+        :total-page="totalPage"
+        @pageChange="onPageChange"
+      />
+    </div>
+    <div class="d-flex news-img me-15">
+      <p>
+        최근<br />
+        부동산 뉴스를<br />
+        확인해보세요
+      </p>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.news {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 40%;
+.news-container {
+  height: 100vh;
+  width: 100%;
+  .news {
+    height: 70%;
+    padding: 6rem;
+  }
+  .news-img {
+    width: 50%;
+    height: 70%;
+    background-color: #7685ad;
+    border-radius: 10%;
+    margin: 1rem;
+    font-size: 6rem;
+    font-weight: bold;
+    color: white;
+    padding: 5rem;
+  }
 }
 </style>

@@ -157,126 +157,181 @@ const onPageChange = (page) => {
 </script>
 
 <template>
-  <div class="notice">
-    <h2>
-      공지사항
-      <span v-if="isAdmin" class="mdi mdi-plus-box-outline" @click="writeNow = !writeNow">
-        <v-dialog v-model="writeNow" width="auto">
-          <v-card>
-            <v-card-text>
-              <form @submit="onWriteSubmit()">
-                <label for="title">제목 : </label>
-                <input id="title" v-model="article.title" /><br />
-                <label for="content">내용 : </label><br />
-                <textarea id="content" v-model="article.content" rows="10" cols="100"></textarea>
-                <hr />
-                <v-btn color="primary" type="submit">작성하기</v-btn>
-              </form>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-btn color="primary" block @click="writeNow = false">닫기</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog></span
-      >
-    </h2>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">제목</th>
-          <th scope="col">작성자</th>
-          <th scope="col">작성일</th>
-          <th scope="col">조회수</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Start : NoticeItem -->
-        <tr
-          v-for="notice in notices"
-          :key="notice.board_no"
-          @click="dialogStates[`dialog${notice.board_no}`] = true"
-        >
-          <th scope="row">{{ notice.board_no }}</th>
-          <td>{{ notice.title }}</td>
-          <td>{{ notice.user_id }}</td>
-          <td>{{ notice.register_time }}</td>
-          <td>{{ notice.hit }}</td>
-          <!-- 수정할 경우 -->
-          <div v-if="editNow">
-            <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
+  <div class="d-flex align-items-center notice-container">
+    <div class="d-flex align-items-center notice-img me-15">
+      <p>
+        고집사의<br />
+        공지사항을<br />
+        확인해보세요
+      </p>
+    </div>
+    <div class="notice d-flex flex-column justify-content-between">
+      <div class="notice-content">
+        <h2 class="mb-10">
+          공지사항
+          <span v-if="isAdmin" class="mdi mdi-plus-box-outline" @click="writeNow = !writeNow">
+            <v-dialog v-model="writeNow" width="auto">
               <v-card>
                 <v-card-text>
-                  <form
-                    @submit="
-                      onModifySubmit(notice.user_id, notice.board_no, notice.title, notice.content)
-                    "
-                  >
-                    {{ notice.board_no }}. <input v-model.lazy="notice.title" /><br />
-                    <textarea v-model="notice.content" rows="10" cols="100"></textarea>
+                  <form @submit="onWriteSubmit()">
+                    <label for="title">제목 : </label>
+                    <input id="title" v-model="article.title" /><br />
+                    <label for="content">내용 : </label><br />
+                    <textarea
+                      id="content"
+                      v-model="article.content"
+                      rows="10"
+                      cols="100"
+                    ></textarea>
                     <hr />
-                    <div>작성일: {{ notice.register_time }}</div>
-                    <v-btn color="primary" type="submit">수정하기</v-btn>
+                    <v-btn color="primary" type="submit">작성하기</v-btn>
                   </form>
                 </v-card-text>
 
                 <v-card-actions>
-                  <v-btn
-                    color="primary"
-                    block
-                    @click="dialogStates[`dialog${notice.board_no}`] = false"
-                    >닫기</v-btn
-                  >
+                  <v-btn color="primary" block @click="writeNow = false">닫기</v-btn>
                 </v-card-actions>
               </v-card>
-            </v-dialog>
-          </div>
-          <!-- 평상시 -->
-          <div v-else>
-            <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
-              <v-card>
-                <v-card-text>
-                  <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
-                  <hr />
-                  <div>
-                    {{ notice.content }}
-                  </div>
-                  <hr />
-                  <div>작성일: {{ notice.register_time }}</div>
-                </v-card-text>
-                <div v-if="isAdmin">
-                  <v-btn color="success" v-model="editNow" @click="editNow = !editNow">수정</v-btn>
-                  <v-btn color="danger" @click="onDeleteSubmit(notice.board_no)">삭제</v-btn>
-                </div>
-                <v-card-actions>
-                  <v-btn
-                    color="primary"
-                    block
-                    @click="dialogStates[`dialog${notice.board_no}`] = false"
-                    >닫기</v-btn
-                  >
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </tr>
-        <!-- End : NoticeItem -->
-      </tbody>
-    </table>
-    <PageNavigation
-      :current-page="currentPage"
-      :total-page="totalPage"
-      @pageChange="onPageChange"
-    />
+            </v-dialog></span
+          >
+        </h2>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
+              <th scope="col">조회수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Start : NoticeItem -->
+            <tr
+              v-for="notice in notices"
+              :key="notice.board_no"
+              @click="dialogStates[`dialog${notice.board_no}`] = true"
+            >
+              <th scope="row">{{ notice.board_no }}</th>
+              <td>{{ notice.title }}</td>
+              <td>{{ notice.user_id }}</td>
+              <td>{{ notice.register_time }}</td>
+              <td>{{ notice.hit }}</td>
+              <!-- 수정할 경우 -->
+              <div v-if="editNow">
+                <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="auto">
+                  <v-card>
+                    <v-card-text>
+                      <form
+                        @submit="
+                          onModifySubmit(
+                            notice.user_id,
+                            notice.board_no,
+                            notice.title,
+                            notice.content
+                          )
+                        "
+                      >
+                        {{ notice.board_no }}. <input v-model.lazy="notice.title" /><br />
+                        <textarea v-model="notice.content" rows="10" cols="100"></textarea>
+                        <hr />
+                        <div class="d-flex justify-content-end align-items-center">
+                          <div class="pe-4">작성일: {{ notice.register_time }}</div>
+                          <v-btn color="indigo-lighten-2" type="submit">수정하기</v-btn>
+                        </div>
+                      </form>
+                    </v-card-text>
+
+                    <v-card-actions>
+                      <v-btn
+                        color="primary"
+                        block
+                        @click="dialogStates[`dialog${notice.board_no}`] = false"
+                        >닫기</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </div>
+              <!-- 평상시 -->
+              <div v-else>
+                <v-dialog v-model="dialogStates[`dialog${notice.board_no}`]" width="720px">
+                  <v-card>
+                    <v-card-text>
+                      <h2>{{ notice.board_no }}. {{ notice.title }}</h2>
+                      <hr />
+                      <div>
+                        {{ notice.content }}
+                      </div>
+                      <hr />
+                      <div>작성일: {{ notice.register_time }}</div>
+                    </v-card-text>
+                    <div v-if="isAdmin" class="d-flex justify-content-start ps-5">
+                      <v-btn
+                        color="indigo-lighten-2"
+                        class="me-1"
+                        v-model="editNow"
+                        @click="editNow = !editNow"
+                        >수정</v-btn
+                      >
+                      <v-btn
+                        color="deep-purple-lighten-2"
+                        outlined
+                        @click="onDeleteSubmit(notice.board_no)"
+                        >삭제</v-btn
+                      >
+                    </div>
+                    <v-card-actions>
+                      <v-btn
+                        color="primary"
+                        block
+                        @click="dialogStates[`dialog${notice.board_no}`] = false"
+                        >닫기</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </tr>
+            <!-- End : NoticeItem -->
+          </tbody>
+        </table>
+      </div>
+
+      <PageNavigation
+        :current-page="currentPage"
+        :total-page="totalPage"
+        @pageChange="onPageChange"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.notice {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 40%;
+.notice-container {
+  height: 100vh;
+  width: 100%;
+  .notice-img {
+    width: 50%;
+    height: 70%;
+    background-color: #606c8c;
+    border-radius: 10%;
+    margin: 1rem;
+    font-size: 6rem;
+    font-weight: bold;
+    color: white;
+    padding: 5rem;
+  }
+  .notice {
+    height: 50%;
+    width: 50%;
+
+    .notice-content {
+      padding: 0 3rem;
+      td {
+        font-size: 17px;
+      }
+    }
+  }
 }
 </style>

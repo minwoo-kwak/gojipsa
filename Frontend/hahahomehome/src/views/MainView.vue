@@ -2,6 +2,7 @@
 import BoardNotice from '../components/board/BoardNotice.vue'
 import BoardNews from '../components/board/BoardNews.vue'
 import TheHeading from '../components/common/TheHeading.vue'
+import TheFooter from '../components/common/TheFooter.vue'
 </script>
 
 <template>
@@ -14,9 +15,10 @@ import TheHeading from '../components/common/TheHeading.vue'
         </div>
       </div>
     </div>
-    <div class="contents">
+    <div class="contents d-flex flex-column">
       <BoardNotice />
       <BoardNews />
+      <TheFooter />
     </div>
   </div>
 </template>
@@ -49,7 +51,6 @@ import TheHeading from '../components/common/TheHeading.vue'
   font-weight: bold;
   color: white;
 }
-
 .typewriter {
   width: 21.5ch;
   white-space: nowrap;
