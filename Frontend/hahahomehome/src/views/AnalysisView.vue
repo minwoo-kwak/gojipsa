@@ -126,11 +126,11 @@ watch(selectedDate, onSelectedDateChange)
 <style scoped>
 .analysis {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding-top: 65px;
   width: 100%;
   background-color: #fafbfd;
-  justify-content: space-around;
+  align-items: flex-end;
 }
 
 .right {
@@ -141,30 +141,36 @@ watch(selectedDate, onSelectedDateChange)
 .map-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 1rem;
   min-width: 40rem;
-  width: 60rem;
+  width: 80rem;
   height: 80rem;
 }
 
 .chart-card {
-  min-width: 60rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40rem;
   margin: 1rem;
   padding: 1rem;
-  width: 40rem;
+  width: 80rem;
   height: 40rem;
 }
 
 .cloud-card {
-  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80rem;
   margin: 1rem;
-  width: 40rem;
   height: 40rem;
 }
 
 .form-select {
   display: inline;
-  width: 30%;
+  width: 8rem;
 }
 
 .selectBox {

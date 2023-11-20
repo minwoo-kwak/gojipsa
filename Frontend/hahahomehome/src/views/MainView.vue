@@ -58,7 +58,7 @@ import TheFooter from '../components/common/TheFooter.vue'
   border-right: 4px solid white;
   animation:
     cursor 1s step-start infinite,
-    text 5s steps(18) alternate infinite;
+    text 2.5s steps(25) alternate infinite;
 }
 
 @keyframes cursor {

@@ -33,7 +33,7 @@ const dataList = computed(() => {
   <div>
     <Chart
       class="mb-5"
-      :size="{ width: 800, height: 400 }"
+      :size="{ width: 1000, height: 500 }"
       :data="dataList"
       :margin="margin"
       :direction="'horizontal'"
