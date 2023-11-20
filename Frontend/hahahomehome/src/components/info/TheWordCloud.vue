@@ -13,6 +13,16 @@ onMounted(() => {
   const width = 1000
   const height = 1000
 
+  // Function to generate a random color
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF'
+    let color = '#'
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)]
+    }
+    return color
+  }
+
   const draw = () => {
     console.log('그리기!')
     const container = d3.select(document.getElementById('wordcloud'))
@@ -28,7 +38,7 @@ onMounted(() => {
       .enter()
       .append('text')
       .style('font-size', (d) => `${d.size}px`)
-      .style('fill', (d) => (d.sentiment === 'positive' ? 'green' : 'red'))
+      .style('fill', () => getRandomColor())
       //   .style('fill', 'steelblue')
       .attr('text-anchor', 'middle')
       .attr('transform', function (d) {
