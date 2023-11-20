@@ -19,7 +19,14 @@ async function logout() {
 
 <template>
   <v-app-bar>
-    <v-app-bar-title text="Go!집사" class="v-col-1" @click="$router.push('/')"> </v-app-bar-title>
+    <img src="@/assets/img/logo.png" style="width: 4rem; height: 4rem" alt="logo" />
+    <v-app-bar-title
+      text="Go!집사"
+      style="margin: 0; padding-left: 0"
+      class="title v-col-1"
+      @click="$router.push('/')"
+    >
+    </v-app-bar-title>
     <v-list class="v-col-3">
       <router-link :to="{ name: 'apart', params: { code: dongcode } }">실거래가 확인</router-link>
       <router-link :to="{ name: 'analysis' }">고집사의 경제분석실</router-link>
@@ -60,5 +67,31 @@ a {
   text-decoration: none;
   margin: 0.5rem;
   color: #606c8c;
+}
+
+@keyframes headShake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.head {
+  /* width: 100px; */
+  /* height: 100px; */
+  /* margin: 50px auto; */
+  animation: headShake 2s ease-in-out infinite;
+  transform-origin: bottom center; /* 머리의 회전 중심을 설정 */
 }
 </style>
