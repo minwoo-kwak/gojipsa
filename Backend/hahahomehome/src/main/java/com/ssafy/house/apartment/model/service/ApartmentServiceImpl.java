@@ -38,8 +38,9 @@ public class ApartmentServiceImpl implements ApartmentService {
 	}
 
 	@Override
-	public List<String> getDongNameList(String gugunName) {
-		return apartmentMapper.getDongNameList(gugunName);
+	public List<String> getDongNameList(Map<String, String> map) {
+		System.out.println("가져온 동네임" + apartmentMapper.getDongNameList(map));
+		return apartmentMapper.getDongNameList(map);
 	}
 
 	@Override

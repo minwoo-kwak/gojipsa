@@ -75,7 +75,10 @@ const onGugunChange = () => {
 
 const getDongNameList = () => {
   getDongNameListFromLocalAPI(
-    selectedGugun.value,
+    {
+      gugunName: selectedGugun.value,
+      sidoName: selectedSido.value
+    },
     ({ data }) => {
       dongNameList.value = data
     },

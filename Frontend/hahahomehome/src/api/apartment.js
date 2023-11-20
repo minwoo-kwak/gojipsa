@@ -11,8 +11,8 @@ function getGugun(sidoName ,success, fail) {
     local.get(`${url}/gugun/${sidoName}`).then(success).catch(fail);
 }
 
-function getDongNameListFromLocalAPI(gugunName ,success, fail) {
-    local.get(`${url}/dongname/${gugunName}`).then(success).catch(fail);
+function getDongNameListFromLocalAPI(param ,success, fail) {
+    local.get(`${url}/dongname`, {params:param}).then(success).catch(fail);
 }
 
 function getDongCodeFromLocalAPI(param, success, fail) {

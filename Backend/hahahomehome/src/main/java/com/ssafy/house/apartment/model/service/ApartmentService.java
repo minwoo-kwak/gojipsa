@@ -19,7 +19,7 @@ public interface ApartmentService {
 
 	public List<String> getGugunName(String sidoName);
 
-	public List<String> getDongNameList(String gugunName);
+	public List<String> getDongNameList(Map<String,String> map);
 	
 	public List<HouseInfo> getApartList(Map<String,Object> map);
 
