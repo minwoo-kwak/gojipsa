@@ -8,6 +8,10 @@ function listNotice(page, success, fail) {
     local.get(`${url}/list?page=${page.value}`).then(success).catch(fail);
 }
 
+function updateHit(board_id) {
+    local.put(`${url}/hit/${board_id}`)
+}
+
 function writeNotice(article, success, fail) {
     local.post(`${url}/write`, article).then(success).catch(fail);
 }
@@ -24,5 +28,6 @@ export {
     listNotice,
     modifyNotice,
     deleteNotice,
-    writeNotice
+    writeNotice,
+    updateHit
 }

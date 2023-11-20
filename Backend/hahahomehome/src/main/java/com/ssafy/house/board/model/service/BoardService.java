@@ -8,6 +8,7 @@ import com.ssafy.house.board.model.dto.BoardDto;
 public interface BoardService {
 	List<BoardDto> getAllBoard(String pgNo);
 	BoardDto getDetailBoard(int id);
+	public int increaseHit(int id);
 	int writeBoard(BoardDto boardDto);
 	int modifyBoard(BoardDto boardDto);
 	int deleteBoard(int boardNo);
