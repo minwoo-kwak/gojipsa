@@ -32,6 +32,7 @@ export const useUserStore = defineStore('userStore', () => {
         if (Authorization.value !== null) {
             // axios의 기본 헤더에 Authorization 토큰을 설정합니다.
             axios.defaults.headers.common['Authorization'] = Authorization.value;
+            sessionStorage.setItem('userStore', {Authorization : Authorization.value})
 
             // 메뉴 항목의 로그인 상태를 토글합니다.
             menuList.value.forEach(element => {

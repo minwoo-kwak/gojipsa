@@ -37,6 +37,8 @@ public class JWTInterceptor implements HandlerInterceptor {
 			
 			// accessToken 확인
 			String jwt = request.getHeader(AUTHORIZATION_HEADER);
+			
+			System.out.println("jwt token == " + jwt);
 
 			// jwt를 가지고 있을 때
 			if (jwt != null) {
