@@ -78,7 +78,7 @@ async function login() {
       color="green"
       size="large"
       variant="tonal"
-      @click="$router.push({ name: 'signUp' })"
+      @click="$router.push({ name: 'signup' })"
     >
       회원가입
     </v-btn>
