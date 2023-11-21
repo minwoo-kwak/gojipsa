@@ -59,10 +59,11 @@ onMounted(() => {
 .detail {
   display: inline-flex;
   flex-direction: column;
-  width: 65%;
+  align-items: center;
+  width: 62%;
 }
 .map {
   display: inline-flex;
-  width: 30%;
+  width: 35%;
 }
 </style>
