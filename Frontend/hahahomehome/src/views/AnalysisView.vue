@@ -393,7 +393,7 @@ watch(selectedDate, onSelectedDateChange)
   align-items: center;
   margin: 1rem;
   min-width: 40rem;
-  width: 80rem;
+  width: 70rem;
   height: 80rem;
 }
 

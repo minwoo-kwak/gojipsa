@@ -77,6 +77,12 @@ const onDeleteButtonClick = async () => {
       chlistId,
       () => {
         console.log(chlistId, '삭제 성공')
+        const idx = checklistArray.value.findIndex(function (checklist) {
+          return checklist.chlistId === chlistId
+        })
+        if (idx > -1) {
+          checklistArray.value.splice(idx, 1)
+        }
       },
       (error) => {
         console.error('체크리스트 삭제 중 에러 발생', error)
@@ -86,6 +92,8 @@ const onDeleteButtonClick = async () => {
 
   // 삭제 성공 시, 다시 체크리스트 목록을 갱신
   getChecklistArray()
+
+  router.push('/user/mypage')
   // 선택된 아이디들 초기화
   selectedChecklistIds.value = []
 }
@@ -100,11 +108,16 @@ const onUpdateButtonClick = async () => {
   }
 
   // 유효성 검사가 통과한 경우 서버로 회원 정보 수정 요청 보내기
-  if (userInfo.value.newPassword == '') {
+
+  if (userInfo.value.newPassword == null) {
+    console.log('뉴 패스워드 없음!!!')
     userInfo.value.password = userInfo.value.currentPassword
   } else {
+    console.log('뉴 패스워드 있다..')
     userInfo.value.password = userInfo.value.newPassword
   }
+
+  console.log('userInfo.value.password', userInfo.value.password)
 
   const requestBody = ref({
     userId: userInfo.value.userId,
