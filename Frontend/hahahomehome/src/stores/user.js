@@ -26,6 +26,8 @@ export const useUserStore = defineStore('userStore', () => {
                 userName.value = response.data.username;
                 menuList.value[2].name = `${userName.value}님 안녕하세요`
                 console.log(Authorization.value);
+            }).catch((error)=>{
+                alert('로그인에 실패하였습니다')
             });
         
         // 로그인 성공시

@@ -243,10 +243,7 @@ const closeRoadview = () => {
   align-items: flex-end;
   width: 100%;
   height: 90%;
-  padding: 1rem;
-  margin: 1rem;
-  border: 3px solid #979caa;
-  border-radius: 1rem;
+  margin-top: 1rem;
   font-size: 20px;
 }
 
@@ -265,12 +262,11 @@ const closeRoadview = () => {
 
 #map {
   width: 100%;
-  height: 20rem;
-  margin-bottom: 10rem;
+  height: 23rem;
 }
 #roadview {
   width: 100%;
-  height: 20rem;
+  height: 23rem;
 }
 
 #roadviewControl {

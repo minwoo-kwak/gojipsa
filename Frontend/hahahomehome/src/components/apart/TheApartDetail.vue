@@ -28,15 +28,18 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.basic-container {
+  width: 83%;
+}
 .basic-info {
-  width: 90%;
-  border: 3px solid #aaafbe;
   border-radius: 1rem;
+  box-shadow: 3px 3px 3px 3px gray;
   padding: 1rem;
   margin: 1rem;
+
   .basic-info-title {
     .name {
-      font-size: 75px;
+      font-size: 70px;
       margin-right: 10px;
     }
   }

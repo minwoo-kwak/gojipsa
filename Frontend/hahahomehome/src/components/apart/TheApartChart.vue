@@ -62,10 +62,10 @@ const dataList = ref([])
 <style scoped>
 .deal-amount-chart-container {
   margin: 1rem;
-  border: 3px solid #979caa;
   border-radius: 1rem;
+  box-shadow: 3px 3px 3px 3px gray;
   padding: 2rem;
-  width: 90%;
+  width: 80%;
   font-size: 20px;
 }
 </style>
