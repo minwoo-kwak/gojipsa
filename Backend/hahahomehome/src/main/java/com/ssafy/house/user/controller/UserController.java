@@ -140,9 +140,10 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<Map<String, Object>> signup(@RequestBody User newUser)
 	        throws UnsupportedEncodingException {
+		
 	    Map<String, Object> resultMap = new HashMap<>();
 
-
+	    
 	    // 회원 가입 서비스 호출
 	    userService.signup(newUser);
 

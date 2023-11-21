@@ -3,6 +3,12 @@ import { ref, inject, onMounted, onBeforeMount } from 'vue'
 import TheApartCard from '@/components/apart/TheApartCard.vue'
 import PageNavigation from '@/components/common/PageNavigation.vue'
 import { showAllChecklist, showDetailChecklist, deleteChecklist } from '@/api/checklist'
+import { useUserStore } from '../../stores/user'
+import { useRouter } from 'vue-router'
+
+const userStore = useUserStore()
+const router = useRouter()
+
 const axios = inject('axios')
 const userInfo = ref({
   userId: '',
@@ -144,6 +150,8 @@ const onDeleteAccountClick = async () => {
   }
 
   try {
+    userStore.logout() //로그아웃
+    router.push('/')
     await axios.delete('/user/delete') // 서버의 탈퇴 API 엔드포인트로 요청
 
     // 탈퇴 성공 시, 추가로 필요한 로직 수행
