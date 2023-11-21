@@ -1,5 +1,8 @@
 <script setup>
 import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const axios = inject('axios')
 
@@ -24,6 +27,7 @@ const signUp = async () => {
 
   await axios.post('/user/signup', userInfo.value).then((response) => {
     alert(response.data.message)
+    router.push('/user/login')
   })
 }
 
