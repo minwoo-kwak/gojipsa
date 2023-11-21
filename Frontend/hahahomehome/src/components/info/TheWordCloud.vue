@@ -23,6 +23,31 @@ onMounted(() => {
     return color
   }
 
+  // Array of predefined light purple colors
+  const lightPurpleColors = [
+    '#B19CD9',
+    '#B39EB5',
+    '#C09DD9',
+    '#C8A2C8',
+    '#DBA9DB',
+    '#E6A9E6',
+    '#F0E6F5',
+    '#E1D5E7'
+  ]
+
+  // Function to generate a random color from the predefined array
+  function getRandomLightPurpleColor() {
+    return lightPurpleColors[Math.floor(Math.random() * lightPurpleColors.length)]
+  }
+
+  // Array of predefined dark purple colors
+  const darkPurpleColors = ['#b126bc', '#a139c7', '#7e03a3', '#805ad8', '#d485d4', '#5516c3']
+
+  // Function to generate a random color from the predefined array
+  function getRandomDarkPurpleColor() {
+    return darkPurpleColors[Math.floor(Math.random() * darkPurpleColors.length)]
+  }
+
   const draw = () => {
     console.log('그리기!')
     const container = d3.select(document.getElementById('wordcloud'))
@@ -38,7 +63,7 @@ onMounted(() => {
       .enter()
       .append('text')
       .style('font-size', (d) => `${d.size}px`)
-      .style('fill', () => getRandomColor())
+      .style('fill', () => getRandomDarkPurpleColor())
       //   .style('fill', 'steelblue')
       .attr('text-anchor', 'middle')
       .attr('transform', function (d) {
