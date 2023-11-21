@@ -17,6 +17,8 @@ const currentPage = ref(1)
 // 총 페이지 수
 const totalPage = ref(0)
 
+const isEmpty = ref(false)
+
 const checklistArray = ref([])
 {
   axios.get('/user/mypage').then((response) => {
@@ -37,8 +39,10 @@ const getChecklistArray = () => {
       console.log('getChecklist data : ', data)
 
       checklistArray.value = ref(data.data)
-      console.log('checklistArray.value', checklistArray.value)
 
+      if (checklistArray.value.value.length >= 1) {
+        isEmpty.value = true
+      }
       totalPage.value = data.pageInfo.totalPageCnt
     },
     (error) => {
@@ -156,75 +160,107 @@ const onDeleteAccountClick = async () => {
 </script>
 
 <template>
-  <div id="myinfo">
-    <v-form class="user-form">
-      <v-container grid-list-xs>
-        <v-row><v-text-field label="아이디" v-model="userInfo.userId" readonly /></v-row>
-        <v-row><v-text-field label="이름" v-model="userInfo.name" /></v-row>
-        <v-row><v-text-field label="현재 패스워드" v-model="userInfo.currentPassword" /></v-row>
-        <v-row><v-text-field label="새로운 패스워드" v-model="userInfo.newPassword" /></v-row>
-      </v-container>
-      <v-btn @click="onUpdateButtonClick">회원 정보 수정</v-btn>
-      <v-btn @click="onDeleteAccountClick">탈퇴하기</v-btn>
-    </v-form>
-    <div id="checklist-container">
-      <h1>체크리스트</h1>
-      <v-btn @click="onDeleteButtonClick" prepend-icon="mdi-check-circle">
-        <template v-slot:prepend> <v-icon color="danger"></v-icon> </template>삭제하기</v-btn
-      >
-      <div class="apart-card-list">
-        <div v-if="checklistArray.length === 0">저장해놓은 찜이 없습니다.</div>
-
-        <div class="checklist" v-for="checklist in checklistArray.value" :key="checklist.aptCode">
-          <v-checkbox
-            v-model="selectedChecklistIds"
-            :value="checklist.chlistId"
-            color="indigo"
-          ></v-checkbox>
-          <TheApartCard
-            :aptCode="checklist.aptCode"
-            :apartName="checklist.apartmentName"
-            :year="checklist.buildYear"
-            :dong="checklist.dong"
-            :roadName="checklist.roadName"
-            :jibun="checklist.jibun"
-            :lat="''"
-            :lng="''"
-            @click="onApartCardClick(checklist.aptCode)"
-          />
-        </div>
+  <div id="mypage-container" class="d-flex align-items-center">
+    <div
+      id="myinfo-container"
+      class="d-flex flex-column align-items-center justify-content-between"
+    >
+      <h1 class="mb-5 mt-5">내 정보 수정</h1>
+      <v-form class="user-form d-flex flex-column align-items-center">
+        <v-container grid-list-xs>
+          <v-row class="mb-3"
+            ><v-text-field label="아이디" v-model="userInfo.userId" readonly
+          /></v-row>
+          <v-row class="mb-3"><v-text-field label="이름" v-model="userInfo.name" /></v-row>
+          <v-row class="mb-3"
+            ><v-text-field label="현재 패스워드" v-model="userInfo.currentPassword"
+          /></v-row>
+          <v-row class="mb-3"
+            ><v-text-field label="새로운 패스워드" v-model="userInfo.newPassword"
+          /></v-row>
+        </v-container>
+      </v-form>
+      <div class="mt-1 mb-3">
+        <v-btn color="deep-purple-lighten-4" @click="onUpdateButtonClick" class="me-5"
+          >수정하기</v-btn
+        >
+        <v-btn color="indigo-lighten-4" @click="onDeleteAccountClick">탈퇴하기</v-btn>
       </div>
-      <PageNavigation
-        :current-page="currentPage"
-        :total-page="totalPage"
-        @pageChange="onPageChange"
-      />
+    </div>
+    <div id="checklist-container" class="d-flex flex-column align-items-center">
+      <div id="checklist-contents" class="d-flex flex-column align-items-center">
+        <div class="d-flex align-items-center">
+          <h1 class="me-5 mt-5">체크리스트</h1>
+          <v-btn color="red-lighten-4 mt-3" @click="onDeleteButtonClick"> 선택삭제</v-btn>
+        </div>
+        <div class="apart-card-list mb-3">
+          <div v-if="isEmpty == false" class="d-flex flex-column align-items-center">
+            <img
+              src="../../assets/img/not-found-icon.png"
+              style="width: 100px; height: 100px"
+              alt="빈 박스"
+            />
+            <p class="mt-5">등록된 체크리스트가 없습니다</p>
+          </div>
+          <div class="checklist" v-for="checklist in checklistArray.value" :key="checklist.aptCode">
+            <v-checkbox
+              v-model="selectedChecklistIds"
+              :value="checklist.chlistId"
+              color="indigo"
+            ></v-checkbox>
+            <TheApartCard
+              :aptCode="checklist.aptCode"
+              :apartName="checklist.apartmentName"
+              :year="checklist.buildYear"
+              :dong="checklist.dong"
+              :roadName="checklist.roadName"
+              :jibun="checklist.jibun"
+              :lat="''"
+              :lng="''"
+              @click="onApartCardClick(checklist.aptCode)"
+              class="apart-card"
+            />
+          </div>
+        </div>
+        <PageNavigation
+          :current-page="currentPage"
+          :total-page="totalPage"
+          @pageChange="onPageChange"
+        />
+      </div>
     </div>
   </div>
-  <br />
 </template>
 
 <style scoped>
-.user-form {
-  min-height: 300px;
-  min-width: 960px;
+#mypage-container {
+  width: 100%;
+  height: 100%;
 }
-#myinfo {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+#myinfo-container {
+  width: 50%;
+  height: 70%;
+  border-radius: 5%;
+  box-shadow: 5px 3px 5px 3px gray;
+  margin: 0px 30px;
+}
+.user-form {
+  width: 70%;
 }
 
 #checklist-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 50%;
+  border-radius: 5%;
+  margin: 0px 30px;
+  box-shadow: 5px 3px 5px 3px gray;
 }
 
 .checklist {
   display: flex;
-  border: 1px solid gray;
+  justify-content: center;
+}
+.apart-card {
+  width: 20rem;
 }
 .v-checkbox-btn {
   display: inline;
@@ -235,6 +271,6 @@ const onDeleteAccountClick = async () => {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  width: 80%;
+  height: 530px;
 }
 </style>

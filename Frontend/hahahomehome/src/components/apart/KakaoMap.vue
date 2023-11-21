@@ -39,7 +39,7 @@ watch(market, (newMarket, oldMarket) => {
     var ps = new kakao.maps.services.Places(map)
     ps.categorySearch('MT1', (data, status, pagination) => {
       const imgSrc = '/src/assets/marker/marketMarker.png'
-      const imgSize = new kakao.maps.Size(40, 45)
+      const imgSize = new kakao.maps.Size(35, 36)
       const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
       if (status === kakao.maps.services.Status.OK) {
         console.log('지도에 그리기')
@@ -70,7 +70,7 @@ watch(convenience, (newConvenience, oldConvenience) => {
     ps.categorySearch('CS2', (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const imgSrc = '/src/assets/marker/convenienceMarker.png'
-        const imgSize = new kakao.maps.Size(40, 45)
+        const imgSize = new kakao.maps.Size(35, 36)
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
         for (var i = 0; i < data.length; i++) {
           var marker = new kakao.maps.Marker({
@@ -95,7 +95,7 @@ watch(school, (newSchool, oldSchool) => {
     ps.categorySearch('SC4', (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const imgSrc = '/src/assets/marker/schoolMarker.png'
-        const imgSize = new kakao.maps.Size(40, 45)
+        const imgSize = new kakao.maps.Size(35, 36)
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
         for (var i = 0; i < data.length; i++) {
           var marker = new kakao.maps.Marker({
@@ -121,7 +121,7 @@ watch(subway, (newSubway, oldSubway) => {
     ps.categorySearch('SW8', (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const imgSrc = '/src/assets/marker/subwayMarker.png'
-        const imgSize = new kakao.maps.Size(40, 45)
+        const imgSize = new kakao.maps.Size(35, 36)
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
         for (var i = 0; i < data.length; i++) {
           var marker = new kakao.maps.Marker({
@@ -146,7 +146,7 @@ watch(bank, (newBank, oldBank) => {
     ps.categorySearch('BK9', (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const imgSrc = '/src/assets/marker/bankMarker.png'
-        const imgSize = new kakao.maps.Size(40, 45)
+        const imgSize = new kakao.maps.Size(35, 36)
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
         for (var i = 0; i < data.length; i++) {
           var marker = new kakao.maps.Marker({
@@ -171,7 +171,7 @@ watch(hospital, (newHospital, oldHospital) => {
     ps.categorySearch('HP8', (data, status, pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const imgSrc = '/src/assets/marker/hospitalMarker.png'
-        const imgSize = new kakao.maps.Size(40, 45)
+        const imgSize = new kakao.maps.Size(35, 36)
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
         for (var i = 0; i < data.length; i++) {
           var marker = new kakao.maps.Marker({
@@ -203,7 +203,7 @@ watch(
 
       // 마커를 생성한다.
       const imgSrc = '/src/assets/marker/buildingMarker.png'
-      const imgSize = new kakao.maps.Size(40, 50)
+      const imgSize = new kakao.maps.Size(35, 40)
       const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize)
       markers.value = []
       apartMarker.value.forEach((info) => {
