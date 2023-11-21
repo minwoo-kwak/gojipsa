@@ -319,11 +319,12 @@ const onPageChange = (page) => {
   width: 100%;
   .notice-img {
     width: 50%;
-    height: 70%;
-    background-color: #606c8c;
+    height: 65%;
+    background-image:url('../../assets/img/main-apartment-2.jpg');
+    background-size:cover;
     border-radius: 10%;
     margin: 1rem;
-    font-size: 6rem;
+    font-size: 5.5rem;
     font-weight: bold;
     color: white;
     padding: 5rem;
