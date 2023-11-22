@@ -1,4 +1,7 @@
 <script setup>
+/**
+ * 계산기 팝업창을 띄워주는 함수
+ */
 function showCalculator() {
   window.open('/calculate', '_blank', 'width=510, height=720')
 }

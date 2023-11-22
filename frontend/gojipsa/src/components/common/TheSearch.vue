@@ -73,6 +73,9 @@ const onGugunChange = () => {
   getDongNameList()
 }
 
+/**
+ * 선택된 시도와 구군에 해당하는 동이름 리스트를 가져옵니다.
+ */
 const getDongNameList = () => {
   getDongNameListFromLocalAPI(
     {
@@ -88,6 +91,9 @@ const getDongNameList = () => {
   )
 }
 
+/**
+ * 동이름이 변경될 경우 API에 보낼 parameter을 설정하고getDongCode()함수를 불러옵니다.
+ */
 const onDongNameChange = () => {
   param.value = {
     sidoName: selectedSido.value,
@@ -97,6 +103,9 @@ const onDongNameChange = () => {
   getDongCode()
 }
 
+/**
+ * 선택된 시도, 구군, 동이름으로 동코드를 가져옵니다.
+ */
 const getDongCode = () => {
   getDongCodeFromLocalAPI(
     param.value,
@@ -112,7 +121,9 @@ const getDongCode = () => {
 
 // selectedSido가 변경될 시
 watch(selectedSido, onSidoChange)
+// selectedGugun 변경될 시
 watch(selectedGugun, onGugunChange)
+// selectedDongName 변경될 시
 watch(selectedDongName, onDongNameChange)
 </script>
 

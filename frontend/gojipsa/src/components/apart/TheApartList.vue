@@ -29,7 +29,9 @@ watch(
   },
   { deep: true }
 )
-// api로부터 apartment 정보를 가져온다.
+/**
+ * api로부터 apartment 정보를 가져온다.
+ */
 const getApartInfos = () => {
   getApartListAPI(
     {
@@ -53,12 +55,20 @@ const getApartInfos = () => {
       console.log(err)
     }
 }
+
+/**
+ * 페이지 변경
+ * @param {number} page
+ */
 const onPageChange = (page) => {
   currentPage.value = page
   getApartInfos()
 }
 
-// ApartCard 클릭 시 aprtcode를 넘긴다.
+/**
+ *  ApartCard 클릭 시 aprtcode를 넘긴다.
+ * @param {String} code
+ */
 const onApartCardClick = (code) => {
   console.log(code)
   // detail page로 이동

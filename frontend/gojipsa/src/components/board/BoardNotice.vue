@@ -21,18 +21,15 @@ const editNow = ref(false)
 
 const writeNow = ref(false)
 
+// 공지사항 제목과 내용을 담은 객체
 const article = ref({
   title: '',
   content: ''
 })
 
 /**
- * MainPage 들어올 때 list를 가지고 시작
+ * Mount 되기 전 관리자인지 아닌지 권한 인증부터 합니다.
  */
-onMounted(() => {
-  getNoticeList()
-})
-
 onBeforeMount(() => {
   // 권한 인증
   axios.get('/user/valid').then((response) => {
@@ -46,6 +43,13 @@ onBeforeMount(() => {
       isAdmin.value = false
     }
   })
+})
+
+/**
+ * MainPage 들어올 때 list를 가지고 시작
+ */
+onMounted(() => {
+  getNoticeList()
 })
 
 /**
@@ -79,6 +83,9 @@ const getNoticeList = () => {
   )
 }
 
+/**
+ * 공지사항 작성하기
+ */
 const onWriteSubmit = () => {
   console.log('공지사항 작성')
   console.log('article = ', article.value)
@@ -122,7 +129,7 @@ const onModifySubmit = (user_id, board_no, title, content) => {
 
 /**
  * 공지사항 삭제하는 메서드
- * @param {*} board_no
+ * @param {number} board_no
  */
 const onDeleteSubmit = (board_no) => {
   // 확인 메시지를 띄우고 사용자가 확인하면 삭제를 진행
@@ -145,6 +152,10 @@ const onDeleteSubmit = (board_no) => {
   }
 }
 
+/**
+ * 공지사항 클릭했을 시에 조회수 증가
+ * @param {number} board_no
+ */
 async function onClickNotice(board_no) {
   await updateHit(board_no)
 
@@ -320,8 +331,8 @@ const onPageChange = (page) => {
   .notice-img {
     width: 50%;
     height: 65%;
-    background-image:url('../../assets/img/main-apartment-2.jpg');
-    background-size:cover;
+    background-image: url('../../assets/img/main-apartment-2.jpg');
+    background-size: cover;
     border-radius: 10%;
     margin: 1rem;
     font-size: 5.5rem;

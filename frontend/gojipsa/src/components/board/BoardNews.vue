@@ -25,6 +25,9 @@ onMounted(() => {
   getNewsList()
 })
 
+/**
+ * API에서 뉴스 리스트를 가져옵니다.
+ */
 const getNewsList = () => {
   getNews(
     start.value,
@@ -116,16 +119,14 @@ const navigateToNews = (url) => {
   .news-img {
     width: 50%;
     height: 65%;
-    background-image:url('../../assets/img/main-apartment.jpg');
-    background-size:cover;
+    background-image: url('../../assets/img/main-apartment.jpg');
+    background-size: cover;
     border-radius: 10%;
     margin: 1rem;
     font-size: 5.5rem;
     font-weight: bold;
     color: white;
     padding: 5rem;
-
   }
-
 }
 </style>
