@@ -6,6 +6,10 @@ const router = useRouter()
 const props = defineProps({
   aptcode: String
 })
+
+/**
+ * 체크리스트를 보여주는 함수
+ */
 const showCheckList = () => {
   // 로그인 정보가 없으면
   if (

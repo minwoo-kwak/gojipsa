@@ -22,10 +22,14 @@ let container
 var marker
 
 const props = defineProps({
+  // 위도
   lat: String,
+  // 경도
   lng: String,
+  // 아파트 이름
   apartmentName: String
 })
+
 onMounted(() => {
   container = document.getElementById('container')
 

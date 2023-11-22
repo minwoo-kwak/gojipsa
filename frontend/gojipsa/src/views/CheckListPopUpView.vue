@@ -37,6 +37,9 @@ const description = ref('')
 
 const contentToConvert = ref(null)
 
+/**
+ * 현재 체크리스트를 PDF로 변경합니다.
+ */
 const convertToPdf = () => {
   const content = contentToConvert.value
   const opt = {

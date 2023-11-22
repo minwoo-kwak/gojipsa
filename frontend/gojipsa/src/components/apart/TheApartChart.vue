@@ -7,6 +7,12 @@ const props = defineProps({
   aptCode: String
 })
 
+// 아파트 거래정보 리스트
+const dataList = ref([])
+
+/**
+ * Mount 될 때 API에서 아파트 거래정보를 가져옵니다.
+ */
 onMounted(() => {
   getApartDealFromLocalAPI(
     props.aptCode,
@@ -27,8 +33,6 @@ onMounted(() => {
     }
   )
 })
-
-const dataList = ref([])
 </script>
 
 <template>
