@@ -34,12 +34,14 @@ import com.ssafy.house.checklist.model.service.ChecklistService;
 import com.ssafy.house.util.ApartPageConstant;
 import com.ssafy.house.util.CheckListPageConstant;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("api/v1/checklist")
+@Api(tags= {"아파트 체크리스트 컨트롤러 API V1"})
 public class CheckListController {
 	
 	private final ChecklistService checklistService;
@@ -255,6 +257,13 @@ public class CheckListController {
 		return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 	}
 	
+	/**
+	 * 저장한 체크리스트를 불러옵니다.
+	 * @param aptCode 해당 아파트코드
+	 * @param request 
+	 * @return 저장된 체크리스트의 목록들을 반환합니다.
+	 * @throws ParseException
+	 */
 	@ResponseBody
 	@AuthRequired
 	@GetMapping("/load/{aptCode}")

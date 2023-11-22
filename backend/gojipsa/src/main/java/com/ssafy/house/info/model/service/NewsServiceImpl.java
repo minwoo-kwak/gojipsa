@@ -33,23 +33,33 @@ public class NewsServiceImpl implements NewsService {
 	private static final String CLIENT_ID = "a3BcriZ4YkKH61jGDQEs"; // 애플리케이션 클라이언트 아이디
 	private static final String CLIENT_SECRET = "MFXDrjdCNo"; // 애플리케이션 클라이언트 시크릿
 
+	/**
+	 * Naver 뉴스 검색 API 요청
+	 */
 	@Override
 	public List<NewsDto> getNews(String currentPage) throws ParseException, UnsupportedEncodingException {
 		List<NewsDto> newsList = null;
 
+		//API query, display할 뉴스 개수, 가져올 start 위치, sort 방법 정의
 		String apiURL = String.format("https://openapi.naver.com/v1/search/news.json?query=%s&display=5&start=%s&sort=date",
 				URLEncoder.encode("부동산", "UTF-8"), currentPage);
 		
-
+		// 헤더 설정
 		Map<String, String> requestHeaders = new HashMap<>();
+		// 클라이언트 아이디
 		requestHeaders.put("X-Naver-Client-Id", CLIENT_ID);
+		// 클라이언트 비밀키
 		requestHeaders.put("X-Naver-Client-Secret", CLIENT_SECRET);
 
+		// 요청 후 response 받기
 		String responseBody = get(apiURL, requestHeaders);
 
+		// JSON 파싱
 		JSONParser parser = new JSONParser();
 		JSONObject obj = (JSONObject) parser.parse(responseBody);
 		JSONArray items = (JSONArray) obj.get("items");
+		
+		// 뉴스 리스트 담기
 		newsList = new ArrayList<NewsDto>();
 		for (int idx = 0; idx < items.size(); idx++) {
 			NewsDto newsDto = new NewsDto();
@@ -65,6 +75,12 @@ public class NewsServiceImpl implements NewsService {
 		return newsList;
 	}
 
+	/**
+	 * 해당 API 주소와 request헤더로 요청보내기
+	 * @param apiUrl
+	 * @param requestHeaders
+	 * @return
+	 */
 	private static String get(String apiUrl, Map<String, String> requestHeaders) {
 		HttpURLConnection con = connect(apiUrl);
 		try {

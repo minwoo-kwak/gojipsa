@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("api/v1/apartment")
-@Api("아파트 정보 컨트롤러 API V1")
+@Api(tags= {"아파트 정보 컨트롤러 API V1"})
 public class ApartmentController {
 
 	private final ApartmentService apartmentService;
@@ -37,6 +37,10 @@ public class ApartmentController {
 		this.apartmentService = apartmentService;
 	}
 	
+	/**
+	 * 시도 이름을 불러옵니다.
+	 * @return 시도 이름 리스트
+	 */
 	@GetMapping("/sido")
 	@ApiOperation(value="시/도 이름 받기", notes="시/도 이름을 받는 API")
 	public ResponseEntity<List<String>> getSidoName() {
@@ -47,6 +51,11 @@ public class ApartmentController {
 		return new ResponseEntity<List<String>>(sidoNameList, HttpStatus.OK);
 	}
 	
+	/**
+	 * 선택된 시도에 해당하는 구군 이름들을 가져옵니다.
+	 * @param sidoName 선택된 시도
+	 * @return 선택된 시도에 해당하는 구군 이름 리스트
+	 */
 	@GetMapping("/gugun/{sidoName}")
 	@ApiOperation(value="구/군 이름 받기",notes="시/도 이름으로 구/군 이름을 받는 API")
 	@ApiImplicitParam(name="sidoName",value="시/도 이름")
@@ -58,6 +67,11 @@ public class ApartmentController {
 		return new ResponseEntity<List<String>>(gugunNameList, HttpStatus.OK);
 	}
 	
+	/**
+	 * 선택된 시도와 구군에 해당하는 동 이름들을 받아옵니다.
+	 * @param map 선택한 시도와 구군을 param으로 가져옵니다.
+	 * @return 동 이름 리스트
+	 */
 	@GetMapping("/dongname")
 	@ApiOperation(value="동 이름 받기", notes="구/군 이름으로 동 이름을 받는 API")
 	public ResponseEntity<List<String>> getDongName(@RequestParam Map<String, String> map) {
@@ -69,6 +83,11 @@ public class ApartmentController {
 		return new ResponseEntity<List<String>>(dongNameList, HttpStatus.OK);
 	}
 	
+	/**
+	 * 선택된 시도와 구군 동에 해당하는 동 코드를 반환합니다.
+	 * @param params 선택된 시도, 구군, 동
+	 * @return 동코드
+	 */
 	// 406ERROR ==> produces = "application/json"
 	@GetMapping(value = "/dongcode", produces = "application/json")
 	@ApiOperation(value="동 코드 받기", notes="시/도, 구/군, 동 이름으로 동 코드를 받는 API")
@@ -80,7 +99,12 @@ public class ApartmentController {
 		return new ResponseEntity<DongCode>(dongCode, HttpStatus.OK);
 	}
 	
-	// dongCode로 아파트 전체 정보 얻기
+	/**
+	 * 동코드에 해당하는 아파트 리스트를 받아옵니다.
+	 * @param dongcode 선택된 동코드
+	 * @param pageNo 현재 페이지 
+	 * @return 해당 페이지와 동코드에 속하는 아파트 리스트
+	 */
 	@GetMapping("/{dongcode}")
 	@ApiOperation(value="동 코드에 해당하는 아파트 리스트 받기", notes="특정 동코드 아파트 리스트를 받는 API")
 	public ResponseEntity<?> getApartList(@PathVariable("dongcode") @ApiParam(value = "동코드", required = true) String dongcode,
@@ -126,7 +150,11 @@ public class ApartmentController {
 		return ResponseEntity.ok().body(response);
 	}
 	
-	// 아파트 상세 정보 얻기
+	/**
+	 * 아파트 상세 정보 얻기
+	 * @param aptCode 아파트 코드
+	 * @return 아파트 상세정보
+	 */
 	@GetMapping("/detail/{aptCode}")
 	@ApiOperation(value="아파트 상세 정보 받기", notes="특정 아파트 코드로 아파트의 상세 정보를 받는 API")
 	public ResponseEntity<HouseDetailInfo> getApartDetail(@PathVariable("aptCode") @ApiParam(value = "아파트 코드", required = true) long aptCode){
@@ -136,7 +164,11 @@ public class ApartmentController {
 		return new ResponseEntity<HouseDetailInfo>(info, HttpStatus.OK);
 	}
 	
-	// 특정 아파트 거래 내역 얻기(오래된 순서대로)
+	/**
+	 * 특정 아파트 거래 내역 얻기(오래된 순서대로)
+	 * @param aptCode 해당 아파트 코드
+	 * @return 해당 아파트 거래 내역
+	 */
 	@GetMapping("/deal/{aptCode}")
 	@ApiOperation(value="아파트 거래 금액 받기",notes="특정 아파트 코드로 아파트 거래액을 시간 순대로 받는 API")
 	public ResponseEntity<List<HouseDeal>> getApartDeal(@PathVariable("aptCode") @ApiParam(value = "아파트 코드", required = true) long aptCode){

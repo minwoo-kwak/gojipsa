@@ -31,6 +31,10 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 @Service
 public class WordCloudServiceImpl implements WordCloudService {
 
+	/**
+	 * PDF를 단어별로 파싱해옵니다.
+	 * @return 파싱된 텍스트
+	 */
 	@Override
 	public String parsePDF() {
 		String filePath = "C:/report.pdf";
@@ -67,6 +71,9 @@ public class WordCloudServiceImpl implements WordCloudService {
 		return null;
 	}
 
+	/**
+	 * 형태소 분석기를 활용해서 파싱된 텍스트에서 명사들만 추출합니다.
+	 */
 	@Override
 	public List<String> getNounList(String text) {
 
@@ -79,6 +86,9 @@ public class WordCloudServiceImpl implements WordCloudService {
 		return nounList;
 	}
 
+	/**
+	 * 추출된 명사 리스트에서 명사들의 개수를 셉니다.
+	 */
 	@Override
 	public List<Map<String, Object>> doWordCount(List<String> pList) throws Exception {
 
@@ -108,6 +118,11 @@ public class WordCloudServiceImpl implements WordCloudService {
 		return rList;
 	}
 
+	/**
+	 * 해당 키워드들은 제외하기 위해 설정해줍니다.
+	 * @param word
+	 * @return 해당 키워드에 속하면 true, 아니면 false
+	 */
 	public static boolean isKeyword(String word) {
 		// 특정 키워드들
 		Set<String> keywords = new HashSet<>(
@@ -117,6 +132,9 @@ public class WordCloudServiceImpl implements WordCloudService {
 		return keywords.contains(word);
 	}
 
+	/**
+	 * 파싱된 텍스트를 읽어와, 명사들을 추출하고 명사들의 개수를 세어서, 명사와 명사 개수를 담은 객체리스트를 반환합니다.
+	 */
 	@Override
 	public List<Map<String, Object>> doWordAnalysis() throws Exception {
 		// 파일 경로를 지정합니다.

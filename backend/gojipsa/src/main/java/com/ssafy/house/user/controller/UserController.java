@@ -28,10 +28,12 @@ import com.ssafy.house.user.model.dto.User;
 import com.ssafy.house.user.model.service.UserService;
 import com.ssafy.house.util.JWTUtil;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("api/v1/user")
+@Api(tags= {"회원 컨트롤러 API V1"})
 public class UserController {
 	private final UserService userService;
 	private final JWTUtil jwtUtil;
@@ -252,6 +254,7 @@ public class UserController {
      * @return 유효 여부
      */
     @PostMapping("/checkPassword")
+    @ApiOperation(value = "비밀번호 유효성 체크", notes = "회원정보수정시 현재 비밀번호의 유효성을 확인합니다.")
     public ResponseEntity<Map<String, Boolean>> checkCurrentPassword(@RequestBody Map<String, Object> map) {
         Map<String, Boolean> resultMap = new HashMap<>();
         boolean isValid = userService.checkCurrentPassword((String) map.get("userId"),(String) map.get("currentPassword"));

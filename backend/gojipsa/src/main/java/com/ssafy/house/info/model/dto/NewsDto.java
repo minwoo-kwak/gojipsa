@@ -2,6 +2,7 @@ package com.ssafy.house.info.model.dto;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,8 +18,12 @@ public class NewsDto {
 	 * "title":"30억 넘는 회삿돈 횡령\u2026경리 女직원 수법 보니",
 	 * "pubDate":"Mon, 13 Nov 2023 23:42:00 +0900"}
 	 */
+	@ApiModelProperty(value="뉴스 인덱스")
 	private int id;
+	@ApiModelProperty(value="뉴스 제목")
 	private String title;
+	@ApiModelProperty(value="뉴스 링크")
 	private String link;
+	@ApiModelProperty(value="뉴스 날짜")
 	private String pubDate;
 }

@@ -15,6 +15,7 @@ export const instance = axios.create({
     baseURL: SERVER_URL.value + PORT.value + VERSION.value
 })
 
+console.log("유저헤더 설정!!")
 instance.defaults.headers.common['Authorization']
     = sessionStorage.getItem('userStore') == null
         ? '' : JSON.parse(sessionStorage.getItem('userStore'))['Authorization']

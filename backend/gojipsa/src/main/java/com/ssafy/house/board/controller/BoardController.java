@@ -29,12 +29,14 @@ import com.ssafy.house.board.model.dto.BoardDto;
 import com.ssafy.house.board.model.service.BoardService;
 import com.ssafy.house.util.BoardPageConstant;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/v1/board")
+@Api(tags= {"공지사항 컨트롤러 API V1"})
 public class BoardController {
 
 	// Service
