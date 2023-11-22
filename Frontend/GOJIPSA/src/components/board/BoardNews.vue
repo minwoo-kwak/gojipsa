@@ -105,7 +105,7 @@ const navigateToNews = (url) => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .news-container {
   height: 100vh;
   width: 100%;
@@ -115,14 +115,17 @@ const navigateToNews = (url) => {
   }
   .news-img {
     width: 50%;
-    height: 70%;
-    background-color: #7685ad;
+    height: 65%;
+    background-image:url('../../assets/img/main-apartment.jpg');
+    background-size:cover;
     border-radius: 10%;
     margin: 1rem;
-    font-size: 6rem;
+    font-size: 5.5rem;
     font-weight: bold;
     color: white;
     padding: 5rem;
+
   }
+
 }
 </style>
