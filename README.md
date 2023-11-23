@@ -20,6 +20,7 @@ GOJIPSA 서비스를 이용하면, 집(JIP)을 사러(SA) 갈(GO) 수 있다는 
 3. <b>대출 이자 계산기</b> : 실거래가 그래프로 지불해야 할 대출이자 금액을 미리 계산할 수 있다.
 
 ## STACK
+<p>
 <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white&display=inline"/>
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white&display=inline"/>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white&display=inline"/>
@@ -29,6 +30,7 @@ GOJIPSA 서비스를 이용하면, 집(JIP)을 사러(SA) 갈(GO) 수 있다는 
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white&display=inline"/>
 <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-square&logo=Vue.js&logoColor=white&display=inline"/>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=Spring Boot&logoColor=yellow&display=inline">
+</p>
 
 ## Usecase Diagram
 <img src="./assets/Usecase_diagram.png">
